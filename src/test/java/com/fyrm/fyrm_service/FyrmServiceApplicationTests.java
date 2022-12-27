@@ -8,6 +8,5 @@ class FyrmServiceApplicationTests {
 
   @Test
   void contextLoads() {
-    assert (false);
   }
 }

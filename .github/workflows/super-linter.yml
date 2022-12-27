@@ -6,11 +6,6 @@ on:
 
 jobs:
   lint:
-    strategy:
-      fail-fast: false
-      matrix:
-        language:
-          - java
     runs-on: ubuntu-latest
     steps:
       - name: Setup repository
@@ -23,17 +18,11 @@ jobs:
           java-version: 17
           distribution: 'adopt'
           cache: maven
-      - name: Run check style
-        uses: nikitasavinov/checkstyle-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tool_name: 'testtool'
       - name: Lint codebase
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
-          VALIDATE_GOOGLE_JAVA_FORMAT: true
           VALIDATE_JAVA: true
-          LOG_LEVEL: TRACE
+          LOG_LEVEL: VERBOSE
