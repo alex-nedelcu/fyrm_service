@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FyrmServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FyrmServiceApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    int a = 3;
+    SpringApplication.run(FyrmServiceApplication.class, args);
+  }
 }
