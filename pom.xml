@@ -82,6 +82,18 @@
       <groupId>org.springframework.boot</groupId>
       <version>${spring-boot.version}</version>
     </dependency>
+
+    <dependency>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <groupId>jakarta.persistence</groupId>
+      <version>${jakarta-persistence.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <version>${spring-boot.version}</version>
+    </dependency>
   </dependencies>
   <description>FYRM service</description>
   <groupId>com.fyrm</groupId>
@@ -99,11 +111,11 @@
   </profiles>
 
   <properties>
+    <jakarta-persistence.version>3.1.0</jakarta-persistence.version>
     <java.version>17</java.version>
     <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
     <spring-boot.version>3.0.1</spring-boot.version>
   </properties>
 
   <version>0.0.1-SNAPSHOT</version>
-
 </project>

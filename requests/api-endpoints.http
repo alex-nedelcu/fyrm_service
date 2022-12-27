@@ -1,0 +1,11 @@
+### GET entities
+GET http://localhost:8080/entities
+Accept: application/json
+
+### POST entity
+POST http://localhost:8080/entities
+Content-Type: application/json
+
+{
+  "field": "value"
+}
