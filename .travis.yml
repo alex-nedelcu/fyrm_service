@@ -1,6 +1,10 @@
 language: java
 
-jdk: jdk17
+jdk: openjdk17
+
+env:
+  global:
+    - JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.4.jdk/Contents/Home
 
 deploy:
   provider: pages
