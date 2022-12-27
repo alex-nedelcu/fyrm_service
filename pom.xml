@@ -1,89 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<artifactId>fyrm_service</artifactId>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<artifactId>lombok</artifactId>
-							<groupId>org.projectlombok</groupId>
-						</exclude>
-					</excludes>
-				</configuration>
-				<groupId>org.springframework.boot</groupId>
-			</plugin>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>fyrm_service</artifactId>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <artifactId>lombok</artifactId>
+              <groupId>org.projectlombok</groupId>
+            </exclude>
+          </excludes>
+        </configuration>
+        <groupId>org.springframework.boot</groupId>
+      </plugin>
 
-			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<failsOnError>false</failsOnError>
-				</configuration>
-				<groupId>org.apache.maven.plugins</groupId>
-				<version>${maven-checkstyle-plugin.version}</version>
-			</plugin>
-		</plugins>
-	</build>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <failsOnError>false</failsOnError>
+        </configuration>
+        <executions>
+          <execution>
+            <configuration>
+              <consoleOutput>true</consoleOutput>
+              <encoding>UTF-8</encoding>
+              <failsOnError>true</failsOnError>
+              <suppressionsFileExpression>
+                checkstyle.suppressions.file
+              </suppressionsFileExpression>
+              <suppressionsLocation>
+                checkstyle-suppressions.xml
+              </suppressionsLocation>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <id>verify</id>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>${maven-checkstyle-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
 
-	<dependencies>
-		<dependency>
-			<artifactId>spring-boot-starter</artifactId>
-			<groupId>org.springframework.boot</groupId>
-		</dependency>
+  <dependencies>
+    <dependency>
+      <artifactId>spring-boot-starter</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
 
-		<dependency>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-			<groupId>org.springframework.boot</groupId>
-		</dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
 
-		<dependency>
-			<artifactId>postgresql</artifactId>
-			<groupId>org.postgresql</groupId>
-			<scope>runtime</scope>
-		</dependency>
+    <dependency>
+      <artifactId>postgresql</artifactId>
+      <groupId>org.postgresql</groupId>
+      <scope>runtime</scope>
+    </dependency>
 
-		<dependency>
-			<artifactId>lombok</artifactId>
-			<groupId>org.projectlombok</groupId>
-			<optional>true</optional>
-		</dependency>
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <optional>true</optional>
+    </dependency>
 
-		<dependency>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<groupId>org.springframework.boot</groupId>
-			<scope>test</scope>
-		</dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <scope>test</scope>
+    </dependency>
 
-		<dependency>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<groupId>org.springframework.boot</groupId>
-			<version>${spring-boot.version}</version>
-		</dependency>
-	</dependencies>
-	<description>FYRM service</description>
-	<groupId>com.fyrm</groupId>
-	<modelVersion>4.0.0</modelVersion>
-	<name>fyrm_service</name>
+    <dependency>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <version>${spring-boot.version}</version>
+    </dependency>
+  </dependencies>
+  <description>FYRM service</description>
+  <groupId>com.fyrm</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <name>fyrm_service</name>
 
-	<parent>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<groupId>org.springframework.boot</groupId>
-		<relativePath/>
-		<version>3.0.1</version> <!-- lookup parent from repository -->
-	</parent>
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>3.0.1</version> <!-- lookup parent from repository -->
+  </parent>
 
-	<profiles>
-	</profiles>
+  <profiles>
+  </profiles>
 
-	<properties>
-		<java.version>17</java.version>
-		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-		<spring-boot.version>3.0.1</spring-boot.version>
-	</properties>
+  <properties>
+    <java.version>17</java.version>
+    <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+    <spring-boot.version>3.0.1</spring-boot.version>
+  </properties>
 
-	<version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
 
 </project>
