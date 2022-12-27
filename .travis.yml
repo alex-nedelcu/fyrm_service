@@ -1,11 +1,16 @@
 language: java
 
+sudo: required
+
 os: osx
 
 before_install:
   - docker pull openjdk:17-jdk-slim
 
-script: mvn -DskipTests=true clean verify
+script: ./mvnw -DskipTests=true clean install
+
+services:
+  - docker
 
 deploy:
   provider: pages
