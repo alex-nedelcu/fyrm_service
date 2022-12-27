@@ -1,8 +1,7 @@
 language: java
 
-jdk: jdk-17.0.4
-
-install: true
+before_install:
+  - docker pull openjdk:17-jdk-slim
 
 script: mvn -DskipTests=true clean verify
 
