@@ -30,4 +30,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JAVA: true
-          LOG_LEVEL: VERBOSE
+          VALIDATE_XML: true
+          VALIDATE_YAML: true
