@@ -4,10 +4,7 @@ sudo: required
 
 os: osx
 
-before_install:
-  - docker pull openjdk:17-jdk-slim
-
-script: ./mvnw -DskipTests=true clean install
+script: echo 'Test'
 
 services:
   - docker
