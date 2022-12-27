@@ -18,6 +18,11 @@ jobs:
           java-version: 17
           distribution: 'adopt'
           cache: maven
+      - uses: dbelyaev/action-checkstyle@v0.6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: warning
       - name: Lint codebase
         uses: github/super-linter@v4
         env:
