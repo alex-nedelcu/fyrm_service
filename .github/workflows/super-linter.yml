@@ -1,11 +1,11 @@
-name: build
+name: super-linter
 
 on:
   push:
     branches: [ '**' ]
 
 jobs:
-  validate:
+  lint:
     strategy:
       fail-fast: false
       matrix:
@@ -36,3 +36,4 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_GOOGLE_JAVA_FORMAT: true
           VALIDATE_JAVA: true
+          LOG_LEVEL: TRACE
