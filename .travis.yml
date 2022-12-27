@@ -1,10 +1,10 @@
 language: java
 
-jdk: openjdk17
+jdk: jdk-17.0.4
 
-env:
-  global:
-    - JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.4.jdk
+install: true
+
+script: mvn -DskipTests=true clean verify
 
 deploy:
   provider: pages
