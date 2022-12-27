@@ -6,4 +6,5 @@
 <suppressions>
   <suppress checks="Javadoc" files="."/>
   <suppress checks="HideUtilityClassConstructor" files="."/>
+  <suppress checks="FinalParameters" files="."/>
 </suppressions>
