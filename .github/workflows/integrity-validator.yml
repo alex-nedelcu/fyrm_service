@@ -1,15 +1,22 @@
-name: build
+name: integrity-validator
 
 on:
   push:
     branches: [ '**' ]
 
 jobs:
-  build:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+          - java
     runs-on: ubuntu-latest
     steps:
       - name: Setup repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -21,7 +28,9 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          debug: true
-          languages: java
+          languages: ${{ matrix.language }}
+          queries: +security-and-quality
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
