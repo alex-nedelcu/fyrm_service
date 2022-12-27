@@ -1,14 +1,14 @@
-package com.fyrm.fyrm_service;
+package com.fyrm.fyrm_service.adapters.out.persistence.entity.base;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Transient;
 import java.io.Serial;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -32,7 +32,7 @@ public abstract class Identifiable implements Persistable<Long>, Serializable {
 
   @Override
   @Transient
-  public boolean isNew() {
+  public final boolean isNew() {
     return id == null;
   }
 }

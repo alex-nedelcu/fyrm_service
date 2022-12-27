@@ -1,0 +1,59 @@
+openapi: 3.0.1
+info:
+  title: FYRM Service API docs
+  version: 0.0.1
+servers:
+  - url: /api/v1/fyrm
+    description: local
+
+tags:
+  - name: user
+
+paths:
+  '/users/name/{name}':
+    get:
+      parameters:
+        - $ref: '#/components/parameters/userNamePathParameter'
+      summary: Filter users by name
+      operationId: getUsersByName
+      tags:
+        - user
+      responses:
+        '200':
+          description: Users filtered by name
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+
+components:
+  schemas:
+    Users:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+
+  parameters:
+    userNamePathParameter:
+      name: name
+      in: path
+      required: true
+      schema:
+        type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: [ ]
