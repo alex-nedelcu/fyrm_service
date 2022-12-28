@@ -1,0 +1,2 @@
+CREATE DATABASE fyrm WITH OWNER = postgres;
+ALTER USER postgres WITH SUPERUSER;

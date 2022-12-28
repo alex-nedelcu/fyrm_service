@@ -2,6 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>fyrm_service</artifactId>
+
   <build>
     <plugins>
       <plugin>
@@ -197,7 +198,25 @@
       <version>${javax-validation.version}</version>
     </dependency>
 
+    <dependency>
+      <artifactId>postgresql</artifactId>
+      <groupId>org.testcontainers</groupId>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <artifactId>testcontainers-bom</artifactId>
+        <groupId>org.testcontainers</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>${testcontainers.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <description>FYRM service</description>
   <groupId>com.fyrm</groupId>
   <modelVersion>4.0.0</modelVersion>
@@ -223,6 +242,7 @@
     <spring-boot.version>2.7.7</spring-boot.version>
     <springfox-swagger2.version>3.0.0</springfox-swagger2.version>
     <swagger-ui.version>4.15.0</swagger-ui.version>
+    <testcontainers.version>1.17.5</testcontainers.version>
     <webjars-locator.version>0.46</webjars-locator.version>
   </properties>
 

@@ -1,3 +1,0 @@
-CREATE DATABASE fyrm;
-
-USE fyrm;
