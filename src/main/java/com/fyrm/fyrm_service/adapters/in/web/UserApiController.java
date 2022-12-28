@@ -22,7 +22,7 @@ public class UserApiController implements UserApi {
   private final UserDtoConverter userDtoConverter;
 
   @Override
-  public final ResponseEntity<List<UserDto>> getUsersByName(String name) {
+  public ResponseEntity<List<UserDto>> getUsersByName(String name) {
     var getUsersByNameCommand = new GetUsersByNameCommand(name);
     var users = getUsersByNameUseCase.get(getUsersByNameCommand);
     return ResponseEntity.ok(users.stream().map(userDtoConverter).toList());

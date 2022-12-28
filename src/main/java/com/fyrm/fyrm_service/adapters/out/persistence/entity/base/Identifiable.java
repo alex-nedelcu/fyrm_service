@@ -32,7 +32,7 @@ public abstract class Identifiable implements Persistable<Long>, Serializable {
 
   @Override
   @Transient
-  public final boolean isNew() {
+  public boolean isNew() {
     return id == null;
   }
 }

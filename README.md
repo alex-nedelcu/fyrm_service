@@ -4,9 +4,12 @@
 
 #### Prerequisites:
 
-- PostgreSQL@14
+- [PostgreSQL@14.6](https://postgresapp.com/downloads.html)
 
 #### Steps:
 
-- run `brew services stop postgresql@14 && brew services start postgresql@14`
+- start PostgreSQL server by one of the following methods:
+    - execute `brew services start postgresql@14`
+    - using Postgres.app GUI
+- locally create a database called `fyrm`
 - start Spring Boot Application

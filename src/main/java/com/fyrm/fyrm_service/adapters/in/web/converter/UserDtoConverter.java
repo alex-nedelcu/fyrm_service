@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class UserDtoConverter implements Converter<User, UserDto> {
 
   @Override
-  public final UserDto apply(User user) {
+  public UserDto apply(User user) {
 
     if (user == null) {
       throw new IllegalArgumentException("User must not be null for converting to dto!");

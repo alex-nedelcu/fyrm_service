@@ -15,7 +15,7 @@ public class GetUsersByNameService implements GetUsersByNameUseCase {
   private final FindUserPort findUserPort;
 
   @Override
-  public final List<User> get(GetUsersByNameCommand getUsersByNameCommand) {
+  public List<User> get(GetUsersByNameCommand getUsersByNameCommand) {
     return findUserPort.findAllByName(getUsersByNameCommand.getName());
   }
 }

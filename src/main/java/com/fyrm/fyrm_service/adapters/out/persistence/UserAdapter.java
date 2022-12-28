@@ -14,7 +14,7 @@ public class UserAdapter implements FindUserPort {
   private final UserRepository userRepository;
 
   @Override
-  public final List<User> findAllByName(String name) {
+  public List<User> findAllByName(String name) {
     return userRepository.findAllByNameContainsIgnoreCase(name)
         .stream()
         .map(userEntity -> User.builder().id(userEntity.getId()).name(userEntity.getName()).build())
