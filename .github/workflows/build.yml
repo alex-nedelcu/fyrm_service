@@ -30,7 +30,6 @@ jobs:
         -B -V --no-transfer-progress
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
         with:
           repository: alex-nedelcu/fyrm_service
           path: fyrm_service

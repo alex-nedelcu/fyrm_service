@@ -16,10 +16,9 @@ import org.testcontainers.utility.DockerImageName;
 
 public class PostgreSQLInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-  private static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER = new PostgreSQLContainer<>
-      (DockerImageName.parse("postgres:14.6").asCompatibleSubstituteFor("postgres"))
-      .withUsername("postgres")
-      .withStartupAttempts(3);
+  private static final PostgreSQLContainer<?> POSTGRESQL_CONTAINER = new PostgreSQLContainer<>(
+      DockerImageName.parse("postgres:14.6").asCompatibleSubstituteFor("postgres")
+  ).withUsername("postgres").withStartupAttempts(3);
 
   @Override
   public void initialize(ConfigurableApplicationContext applicationContext) {
@@ -47,11 +46,11 @@ public class PostgreSQLInitializer implements ApplicationContextInitializer<Conf
       connectionProps.put("user", "postgres");
       connectionProps.put("password", "test");
 
-      String jdbcUrl = "jdbc:postgresql://" +
-          POSTGRESQL_CONTAINER.getHost() +
-          ":" +
-          POSTGRESQL_CONTAINER.getMappedPort(POSTGRESQL_PORT) +
-          "/";
+      String jdbcUrl = "jdbc:postgresql://"
+          + POSTGRESQL_CONTAINER.getHost()
+          + ":"
+          + POSTGRESQL_CONTAINER.getMappedPort(POSTGRESQL_PORT)
+          + "/";
 
       return DriverManager.getConnection(jdbcUrl, connectionProps);
     } catch (SQLException error) {
