@@ -1,4 +1,4 @@
-name: build
+name: builder
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build_with_postgres:
-    name: Build with PostgreSQL ${{ matrix.postgres }}
+    name: build with PostgreSQL ${{ matrix.postgres }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -29,9 +29,9 @@ jobs:
         -Djdbc.driver=org.postgresql.Driver
         -B -V --no-transfer-progress
     steps:
-      - name: Setup repository step 1
+      - name: Setup repository [1/2]
         uses: actions/checkout@v3
-      - name: Setup repository step 2
+      - name: Setup repository [2/2]
         uses: actions/checkout@v3
         with:
           repository: alex-nedelcu/fyrm_service
