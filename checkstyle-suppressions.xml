@@ -7,4 +7,10 @@
   <suppress checks="Javadoc" files="."/>
   <suppress checks="HideUtilityClassConstructor" files="."/>
   <suppress checks="FinalParameters" files="."/>
+  <suppress checks="LineLength" files="."/>
+  <suppress checks="HiddenField" files="."/>
+  <suppress checks="DesignForExtension" files="."/>
+  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/domain"/>
+  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/application/port/in/command"/>
+  <suppress checks="[a-zA-Z0-9]*" files="[\\/]generated-sources[\\/]"/>
 </suppressions>
