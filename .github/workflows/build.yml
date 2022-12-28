@@ -29,7 +29,10 @@ jobs:
         -Djdbc.driver=org.postgresql.Driver
         -B -V --no-transfer-progress
     steps:
-      - uses: actions/checkout@v3
+      - name: Setup repository step 1
+        uses: actions/checkout@v3
+      - name: Setup repository step 2
+        uses: actions/checkout@v3
         with:
           repository: alex-nedelcu/fyrm_service
           path: fyrm_service
@@ -39,9 +42,10 @@ jobs:
           java-version: 17
           distribution: 'adopt'
           cache: maven
-      - name: Install FYRM Service Snapshot
+      - name: Install FYRM Service Snapshot with 1 thread per CPU core
         working-directory: fyrm_service/
         run: ./mvnw -T 1C clean install -DskipTests -B -V --no-transfer-progress
-      - run: ./mvnw -T 1C install -D skipTests
+      - name: Install with 1 thread per CPU core
+        run: ./mvnw -T 1C install -D skipTests
       - name: Run tests
         run: ./mvnw clean test
