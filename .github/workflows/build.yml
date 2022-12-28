@@ -1,0 +1,48 @@
+name: build
+
+on:
+  push:
+    branches: [ '**' ]
+
+jobs:
+  build_with_postgres:
+    name: Build with PostgreSQL ${{ matrix.postgres }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        postgres: [ 14.6 ]
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5 --tmpfs /var/lib/postgresql/data:rw
+    env:
+      MAVEN_CONFIG: >-
+        -Djdbc.url=jdbc:postgresql://localhost:5432/fyrm
+        -Djdbc.username=postgres
+        -Djdbc.password=postgres
+        -Djdbc.driver=org.postgresql.Driver
+        -B -V --no-transfer-progress
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: alex-nedelcu/fyrm_service
+          path: fyrm_service
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: maven
+      - name: Install FYRM Service Snapshot
+        working-directory: fyrm_service/
+        run: ./mvnw -T 1C clean install -DskipTests -B -V --no-transfer-progress
+      - run: ./mvnw -T 1C install -D skipTests
+      - name: Run tests
+        run: ./mvnw clean test
