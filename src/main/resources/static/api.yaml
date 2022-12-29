@@ -25,13 +25,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Users'
+        '422':
+          description: Invalid name path parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
 
 components:
   schemas:
+    BusinessException:
+      type: object
+      properties:
+        code:
+          type: string
+          description: |
+            Indicates a predefined error that can occur.
+            * `INVALID_FIELD` - A data transfer object field is invalid
+
+          enum:
+            - INVALID_FIELD
+        messages:
+          type: array
+          items:
+            type: string
+          description: Error messages displayed to the end user.
+
     Users:
       type: array
       items:
         $ref: '#/components/schemas/User'
+
     User:
       type: object
       properties:
