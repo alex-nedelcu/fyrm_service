@@ -8,6 +8,7 @@ servers:
 
 tags:
   - name: account
+  - name: authentication
 
 paths:
   '/accounts/name/{name}':
@@ -32,6 +33,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessException'
 
+  '/authentication/signup':
+    post:
+      summary: Sign up user
+      operationId: signupUser
+      tags:
+        - authentication
+      requestBody:
+        description: Contains sign up information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: Successfully sign up user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Invalid sign up information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
 components:
   schemas:
     BusinessException:
@@ -41,10 +69,12 @@ components:
           type: string
           description: |
             Indicates a predefined error that can occur.
-            * `INVALID_FIELD` - A data transfer object field is invalid
+            * `FIELD_NOT_VALID` - A data transfer object field is invalid
+            * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
 
           enum:
-            - INVALID_FIELD
+            - FIELD_NOT_VALID
+            - SIGNUP_INFORMATION_NOT_VALID
         messages:
           type: array
           items:
@@ -64,6 +94,31 @@ components:
           format: int64
         name:
           type: string
+
+    SignupRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - email
+        - role
+        - password
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
 
   parameters:
     namePathParameter:

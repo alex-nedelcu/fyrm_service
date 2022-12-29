@@ -4,3 +4,17 @@
 %}
 GET http://localhost:8080/api/v1/fyrm/accounts/name/{{name}}
 Accept: application/json
+
+### POST sign up request
+POST http://localhost:8080/api/v1/fyrm/authentication/signup
+accept: */*
+Content-Type: application/json
+
+{
+  "username": "third",
+  "email": "third@yahoo.com",
+  "password": "test123",
+  "role": "ROLE_USER"
+}
+
+

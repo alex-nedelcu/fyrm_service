@@ -46,11 +46,6 @@ public class JwtUtils {
   }
 
   public boolean validateJwtToken(String jwtToken) {
-    if (jwtToken == null) {
-      LOGGER.error("JWT token cannot be null!");
-      return false;
-    }
-
     try {
       Jwts.parserBuilder().setSigningKey(toKey(jwtSecret)).build().parseClaimsJws(jwtToken);
       return true;
