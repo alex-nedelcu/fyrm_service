@@ -7,24 +7,24 @@ servers:
     description: local
 
 tags:
-  - name: user
+  - name: account
 
 paths:
-  '/users/name/{name}':
+  '/accounts/name/{name}':
     get:
       parameters:
-        - $ref: '#/components/parameters/userNamePathParameter'
-      summary: Filter users by name
-      operationId: getUsersByName
+        - $ref: '#/components/parameters/namePathParameter'
+      summary: Filter accounts by name
+      operationId: getAccountsByName
       tags:
-        - user
+        - account
       responses:
         '200':
-          description: Users filtered by name
+          description: Accounts filtered by name
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Users'
+                $ref: '#/components/schemas/Accounts'
         '422':
           description: Invalid name path parameter.
           content:
@@ -51,12 +51,12 @@ components:
             type: string
           description: Error messages displayed to the end user.
 
-    Users:
+    Accounts:
       type: array
       items:
-        $ref: '#/components/schemas/User'
+        $ref: '#/components/schemas/Account'
 
-    User:
+    Account:
       type: object
       properties:
         id:
@@ -66,7 +66,7 @@ components:
           type: string
 
   parameters:
-    userNamePathParameter:
+    namePathParameter:
       name: name
       in: path
       required: true

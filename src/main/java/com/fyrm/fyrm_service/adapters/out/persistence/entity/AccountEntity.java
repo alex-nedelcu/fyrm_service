@@ -13,14 +13,14 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "accounts", schema = "public")
 @SuperBuilder
 @Data
 @EqualsAndHashCode
 @ToString(callSuper = true)
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class UserEntity extends Identifiable {
+public class AccountEntity extends Identifiable {
 
   @Column(name = "name")
   private String name;

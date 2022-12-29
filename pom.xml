@@ -209,6 +209,25 @@
       <groupId>org.apache.commons</groupId>
       <version>${commons-collections4.version}</version>
     </dependency>
+
+    <dependency>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <version>${spring-boot.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>spring-security-test</artifactId>
+      <groupId>org.springframework.security</groupId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <artifactId>jjwt-api</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <version>${jjwt-api.version}</version>
+    </dependency>
+    
   </dependencies>
 
   <dependencyManagement>
@@ -243,6 +262,7 @@
     <jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
     <java.version>17</java.version>
     <javax-validation.version>2.0.1.Final</javax-validation.version>
+    <jjwt-api.version>0.11.5</jjwt-api.version>
     <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <openapi-generator-maven-plugin.version>6.2.1</openapi-generator-maven-plugin.version>
     <spring-boot.version>2.7.7</spring-boot.version>
