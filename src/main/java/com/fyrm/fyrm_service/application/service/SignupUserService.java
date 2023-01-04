@@ -4,7 +4,9 @@ import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
 import com.fyrm.fyrm_service.application.port.in.usecasse.SignupUserUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindRolePort;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
+import com.fyrm.fyrm_service.application.port.out.FindVerifiedStudentPort;
 import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
+import com.fyrm.fyrm_service.domain.VerifiedStudent;
 import com.fyrm.fyrm_service.domain.exception.InvalidSignupInformationException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.ERole;
@@ -21,7 +23,7 @@ public class SignupUserService implements SignupUserUseCase {
   private final FindUserPort findUserPort;
   private final FindRolePort findRolePort;
   private final PersistUserPort persistUserPort;
-
+  private final FindVerifiedStudentPort findVerifiedStudentPort;
   private final PasswordEncoder encoder;
 
   @Override
@@ -32,14 +34,20 @@ public class SignupUserService implements SignupUserUseCase {
     String email = signupUserCommand.getEmail();
     String password = signupUserCommand.getPassword();
     String roleName = signupUserCommand.getRole();
-
     Role role = findRolePort.findByName(ERole.valueOf(roleName)).orElse(new Role(ERole.ROLE_USER));
+    VerifiedStudent verifiedStudent = findVerifiedStudentPort.findByEmail(email);
 
     User user = User.builder()
         .username(username)
         .email(email)
         .password(encoder.encode(password))
         .role(role)
+        .firstName(verifiedStudent.getFirstName())
+        .lastName(verifiedStudent.getLastName())
+        .birthDate(verifiedStudent.getBirthDate())
+        .university(verifiedStudent.getUniversity())
+        .faculty(verifiedStudent.getFaculty())
+        .enabled(false)
         .build();
 
     persistUserPort.persist(user);

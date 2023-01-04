@@ -4,8 +4,8 @@ accept: */*
 Content-Type: application/json
 
 {
-  "username": "bbb",
-  "email": "bbb@gmail.com",
+  "username": "dan",
+  "email": "dan@ubb.ro",
   "password": "test123",
   "role": "ROLE_USER"
 }

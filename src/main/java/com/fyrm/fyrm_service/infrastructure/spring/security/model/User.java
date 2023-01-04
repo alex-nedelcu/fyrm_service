@@ -1,5 +1,6 @@
 package com.fyrm.fyrm_service.infrastructure.spring.security.model;
 
+import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,4 +53,22 @@ public class User {
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
+
+  @Column(columnDefinition = "boolean default false", nullable = false)
+  private Boolean enabled;
+
+  @Column(name = "first_name", nullable = false)
+  private String firstName;
+
+  @Column(name = "last_name", nullable = false)
+  private String lastName;
+
+  @Column(name = "birth_date", nullable = false)
+  private ZonedDateTime birthDate;
+
+  @Column(name = "university", nullable = false)
+  private String university;
+
+  @Column(name = "faculty", nullable = false)
+  private String faculty;
 }

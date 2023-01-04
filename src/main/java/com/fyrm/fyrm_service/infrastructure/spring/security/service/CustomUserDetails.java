@@ -3,6 +3,7 @@ package com.fyrm.fyrm_service.infrastructure.spring.security.service;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import java.io.Serial;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class CustomUserDetails implements UserDetails {
 
   @Serial
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   /**
    * User identifier
@@ -31,6 +32,18 @@ public class CustomUserDetails implements UserDetails {
   private String username;
   @JsonIgnore
   private String password;
+  @Getter
+  private String firstName;
+  @Getter
+  private String lastName;
+  @Getter
+  private String university;
+  @Getter
+  private String faculty;
+  @Getter
+  private ZonedDateTime birthDate;
+  @Getter
+  private Boolean enabled;
   private Collection<? extends GrantedAuthority> authorities;
 
   public static CustomUserDetails build(User user) {
@@ -42,6 +55,12 @@ public class CustomUserDetails implements UserDetails {
         user.getEmail(),
         user.getUsername(),
         user.getPassword(),
+        user.getFirstName(),
+        user.getLastName(),
+        user.getUniversity(),
+        user.getFaculty(),
+        user.getBirthDate(),
+        user.getEnabled(),
         authorities
     );
   }
