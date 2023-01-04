@@ -10,13 +10,18 @@ Content-Type: application/json
   "role": "ROLE_USER"
 }
 
+### POST confirm account
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=651358
+accept: */*
+Content-Type: application/json
+
 ### POST log in
 POST http://localhost:8080/api/v1/fyrm/authentication/login
 accept: */*
 Content-Type: application/json
 
 {
-  "username": "alex",
+  "username": "dan",
   "password": "test123"
 }
 

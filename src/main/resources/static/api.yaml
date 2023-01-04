@@ -72,6 +72,35 @@ paths:
         '401':
           description: Bad credentials.
 
+  '/authentication/confirm':
+    post:
+      summary: Confirm user account
+      operationId: confirmAccount
+      tags:
+        - authentication
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Confirmation code used for enabling the account
+      responses:
+        '200':
+          description: Successfully confirm account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Confirmation code is not associated to any account or it is expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+        '400':
+          description: Confirmation code query parameters misses.
+
 components:
   schemas:
     BusinessException:
@@ -84,11 +113,13 @@ components:
             * `FIELD_NOT_VALID` - A data transfer object field is invalid
             * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
             * `LOGIN_FAILED` - Something unexpected happened during log in process
+            * `CONFIRMATION_CODE_NOT_VALID` - Confirmation code is not associated to any account or it is expired
 
           enum:
             - FIELD_NOT_VALID
             - SIGNUP_INFORMATION_NOT_VALID
             - LOGIN_FAILED
+            - CONFIRMATION_CODE_NOT_VALID
         messages:
           type: array
           items:
