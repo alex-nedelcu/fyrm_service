@@ -60,6 +60,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessException'
 
+  '/authentication/login':
+    post:
+      summary: Log in user
+      operationId: loginUser
+      tags:
+        - authentication
+      requestBody:
+        description: Contains log in information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successfully log in user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtLoginResponse'
+        '422':
+          description: Log in process failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
 components:
   schemas:
     BusinessException:
@@ -71,10 +98,12 @@ components:
             Indicates a predefined error that can occur.
             * `FIELD_NOT_VALID` - A data transfer object field is invalid
             * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
+            * `LOGIN_FAILED` - Something unexpected happened during log in process
 
           enum:
             - FIELD_NOT_VALID
             - SIGNUP_INFORMATION_NOT_VALID
+            - LOGIN_FAILED
         messages:
           type: array
           items:
@@ -112,6 +141,17 @@ components:
         - role
         - password
 
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+
     MessageResponse:
       type: object
       properties:
@@ -119,6 +159,30 @@ components:
           type: string
       required:
         - message
+
+    JwtLoginResponse:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        token:
+          type: string
+        tokenType:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+      required:
+        - userId
+        - token
+        - tokenType
+        - username
+        - email
+        - role
 
   parameters:
     namePathParameter:

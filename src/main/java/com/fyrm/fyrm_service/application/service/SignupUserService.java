@@ -11,6 +11,7 @@ import com.fyrm.fyrm_service.infrastructure.spring.security.model.ERole;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.Role;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @UseCase
@@ -51,6 +52,10 @@ public class SignupUserService implements SignupUserUseCase {
 
     if (findUserPort.existsByEmail(signupUserCommand.getEmail())) {
       throw new InvalidSignupInformationException("Duplicate email!");
+    }
+
+    if (!EnumUtils.isValidEnum(ERole.class, signupUserCommand.getRole())) {
+      throw new InvalidSignupInformationException("Role " + signupUserCommand.getRole() + " not supported!");
     }
 
     if (!findRolePort.existsByName(ERole.valueOf(signupUserCommand.getRole()))) {

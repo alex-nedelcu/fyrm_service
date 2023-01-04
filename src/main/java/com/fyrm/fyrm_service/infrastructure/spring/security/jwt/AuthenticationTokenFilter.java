@@ -59,7 +59,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     String authorizationHeader = request.getHeader("Authorization");
 
     if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(AUTHORIZATION_HEADER_PREFIX)) {
-      int skipFirst = authorizationHeader.length();
+      int skipFirst = AUTHORIZATION_HEADER_PREFIX.length();
       return authorizationHeader.substring(skipFirst);
     }
 

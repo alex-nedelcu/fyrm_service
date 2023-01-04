@@ -10,6 +10,7 @@ import com.fyrm.fyrm_service.infrastructure.spring.mvc.controller.FyrmApiControl
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,6 +23,7 @@ public class AccountApiController implements AccountApi {
   private final AccountDtoConverter accountDtoConverter;
 
   @Override
+  @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
   public ResponseEntity<List<AccountDto>> getAccountsByName(String name) {
     var getAccountsByNameCommand = new GetAccountsByNameCommand(name);
     var accounts = getAccountsByNameUseCase.get(getAccountsByNameCommand);

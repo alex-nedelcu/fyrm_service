@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,7 +40,6 @@ public class User {
 
   @NotBlank
   @Size(max = EMAIL_MAXIMUM_SIZE)
-  @Email
   @Column(name = "email", nullable = false, unique = true)
   private String email;
 

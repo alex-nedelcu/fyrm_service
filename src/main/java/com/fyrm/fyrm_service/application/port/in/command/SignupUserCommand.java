@@ -1,6 +1,7 @@
 package com.fyrm.fyrm_service.application.port.in.command;
 
 import com.fyrm.fyrm_service.infrastructure.validation.SelfValidating;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ public class SignupUserCommand extends SelfValidating<SignupUserCommand> {
   String username;
 
   @NotBlank(message = "error.validation.email.is.mandatory")
+  @Email(message = "error.validation.email.format.is.not.valid")
   @Size(min = MINIMUM_LENGTH, max = EMAIL_MAXIMUM_LENGTH, message = "error.validation.email.size.is.not.valid")
   String email;
 

@@ -40,7 +40,7 @@ public class JwtUtils {
     return Jwts.parserBuilder()
         .setSigningKey(toKey(jwtSecret))
         .build()
-        .parseClaimsJwt(jwtToken)
+        .parseClaimsJws(jwtToken)
         .getBody()
         .getSubject();
   }

@@ -261,6 +261,20 @@
       <groupId>org.mapstruct</groupId>
       <version>${mapstruct.version}</version>
     </dependency>
+
+    <dependency>
+      <artifactId>jjwt-impl</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <scope>runtime</scope>
+      <version>${jjwt-impl.version}</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>jjwt-jackson</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <scope>runtime</scope>
+      <version>${jjwt-jackson.version}</version>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -296,6 +310,8 @@
     <java.version>17</java.version>
     <javax-validation.version>2.0.1.Final</javax-validation.version>
     <jjwt-api.version>0.11.5</jjwt-api.version>
+    <jjwt-impl.version>0.11.5</jjwt-impl.version>
+    <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
     <mapstruct.version>1.5.2.Final</mapstruct.version>
     <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>

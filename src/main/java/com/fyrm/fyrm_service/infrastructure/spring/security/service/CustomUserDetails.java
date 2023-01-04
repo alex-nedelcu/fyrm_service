@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,9 +20,15 @@ public class CustomUserDetails implements UserDetails {
 
   @Serial
   private static final long serialVersionUID = 1L;
+
+  /**
+   * User identifier
+   */
+  @Getter
   private Long id;
-  private String username;
+  @Getter
   private String email;
+  private String username;
   @JsonIgnore
   private String password;
   private Collection<? extends GrantedAuthority> authorities;
@@ -32,8 +39,8 @@ public class CustomUserDetails implements UserDetails {
 
     return new CustomUserDetails(
         user.getId(),
-        user.getUsername(),
         user.getEmail(),
+        user.getUsername(),
         user.getPassword(),
         authorities
     );
