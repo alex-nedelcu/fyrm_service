@@ -35,6 +35,10 @@ public class LoginUserService implements LoginUserUseCase {
 
     CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+    if (!userDetails.getEnabled()) {
+      throw new LoginFailedException("Account is not enabled!");
+    }
+
     String role = userDetails.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)
         .findFirst()

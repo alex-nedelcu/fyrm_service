@@ -53,8 +53,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Invalid sign up information from business perspective.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
         '422':
-          description: Invalid sign up information.
+          description: Invalid sign up information from validation perspective.
           content:
             application/json:
               schema:
@@ -80,12 +86,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JwtLoginResponse'
-        '422':
-          description: Log in process failed.
+        '400':
+          description: Account is not enabled.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessException'
+        '401':
+          description: Bad credentials.
 
 components:
   schemas:
