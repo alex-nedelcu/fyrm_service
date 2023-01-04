@@ -1,23 +1,30 @@
 package com.fyrm.fyrm_service.adapters.out.persistence;
 
-import com.fyrm.fyrm_service.adapters.out.persistence.repository.UserRepository;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
-import com.fyrm.fyrm_service.domain.User;
+import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
-import java.util.List;
+import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
+import com.fyrm.fyrm_service.infrastructure.spring.security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
 @RequiredArgsConstructor
-public class UserAdapter implements FindUserPort {
+public class UserAdapter implements FindUserPort, PersistUserPort {
 
   private final UserRepository userRepository;
 
   @Override
-  public List<User> findAllByName(String name) {
-    return userRepository.findAllByNameContainsIgnoreCase(name)
-        .stream()
-        .map(userEntity -> User.builder().id(userEntity.getId()).name(userEntity.getName()).build())
-        .toList();
+  public boolean existsByUsername(String username) {
+    return userRepository.existsByUsername(username);
+  }
+
+  @Override
+  public boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
+  @Override
+  public void persist(User user) {
+    userRepository.save(user);
   }
 }

@@ -1,6 +1,33 @@
-### GET users
-< {%
-  request.variables.set("name", "alex")
+### POST sign up request
+POST http://localhost:8080/api/v1/fyrm/authentication/signup
+accept: */*
+Content-Type: application/json
+
+{
+  "username": "bbb",
+  "email": "bbb@gmail.com",
+  "password": "test123",
+  "role": "ROLE_USER"
+}
+
+### POST log in
+POST http://localhost:8080/api/v1/fyrm/authentication/login
+accept: */*
+Content-Type: application/json
+
+{
+  "username": "aaa",
+  "password": "test123"
+}
+
+> {%
+  client.global.set("jwt_token", response.body.token);
 %}
-GET http://localhost:8080/api/v1/fyrm/users/name/{{name}}
+
+### GET accounts by name
+< {%
+  request.variables.set("name", "bob");
+%}
+GET http://localhost:8080/api/v1/fyrm/accounts/name/{{name}}
 Accept: application/json
+Authorization: Bearer {{jwt_token}}

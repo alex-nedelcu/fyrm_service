@@ -7,26 +7,81 @@ servers:
     description: local
 
 tags:
-  - name: user
+  - name: account
+  - name: authentication
 
 paths:
-  '/users/name/{name}':
+  '/accounts/name/{name}':
     get:
       parameters:
-        - $ref: '#/components/parameters/userNamePathParameter'
-      summary: Filter users by name
-      operationId: getUsersByName
+        - $ref: '#/components/parameters/namePathParameter'
+      summary: Filter accounts by name
+      operationId: getAccountsByName
       tags:
-        - user
+        - account
       responses:
         '200':
-          description: Users filtered by name
+          description: Accounts filtered by name
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Users'
+                $ref: '#/components/schemas/Accounts'
         '422':
           description: Invalid name path parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
+  '/authentication/signup':
+    post:
+      summary: Sign up user
+      operationId: signupUser
+      tags:
+        - authentication
+      requestBody:
+        description: Contains sign up information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: Successfully sign up user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Invalid sign up information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
+  '/authentication/login':
+    post:
+      summary: Log in user
+      operationId: loginUser
+      tags:
+        - authentication
+      requestBody:
+        description: Contains log in information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successfully log in user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtLoginResponse'
+        '422':
+          description: Log in process failed.
           content:
             application/json:
               schema:
@@ -41,22 +96,26 @@ components:
           type: string
           description: |
             Indicates a predefined error that can occur.
-            * `INVALID_FIELD` - A data transfer object field is invalid
+            * `FIELD_NOT_VALID` - A data transfer object field is invalid
+            * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
+            * `LOGIN_FAILED` - Something unexpected happened during log in process
 
           enum:
-            - INVALID_FIELD
+            - FIELD_NOT_VALID
+            - SIGNUP_INFORMATION_NOT_VALID
+            - LOGIN_FAILED
         messages:
           type: array
           items:
             type: string
           description: Error messages displayed to the end user.
 
-    Users:
+    Accounts:
       type: array
       items:
-        $ref: '#/components/schemas/User'
+        $ref: '#/components/schemas/Account'
 
-    User:
+    Account:
       type: object
       properties:
         id:
@@ -65,8 +124,68 @@ components:
         name:
           type: string
 
+    SignupRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - email
+        - role
+        - password
+
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    JwtLoginResponse:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        token:
+          type: string
+        tokenType:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+      required:
+        - userId
+        - token
+        - tokenType
+        - username
+        - email
+        - role
+
   parameters:
-    userNamePathParameter:
+    namePathParameter:
       name: name
       in: path
       required: true
