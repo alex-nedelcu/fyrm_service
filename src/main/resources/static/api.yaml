@@ -7,32 +7,9 @@ servers:
     description: local
 
 tags:
-  - name: account
   - name: authentication
 
 paths:
-  '/accounts/name/{name}':
-    get:
-      parameters:
-        - $ref: '#/components/parameters/namePathParameter'
-      summary: Filter accounts by name
-      operationId: getAccountsByName
-      tags:
-        - account
-      responses:
-        '200':
-          description: Accounts filtered by name
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Accounts'
-        '422':
-          description: Invalid name path parameter.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessException'
-
   '/authentication/signup':
     post:
       summary: Sign up user
@@ -118,20 +95,6 @@ components:
             type: string
           description: Error messages displayed to the end user.
 
-    Accounts:
-      type: array
-      items:
-        $ref: '#/components/schemas/Account'
-
-    Account:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-
     SignupRequest:
       type: object
       properties:
@@ -192,13 +155,7 @@ components:
         - email
         - role
 
-  parameters:
-    namePathParameter:
-      name: name
-      in: path
-      required: true
-      schema:
-        type: string
+  parameters: { }
 
   securitySchemes:
     bearerAuth:
