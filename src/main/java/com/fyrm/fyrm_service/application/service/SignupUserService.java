@@ -8,6 +8,7 @@ import com.fyrm.fyrm_service.application.port.out.FindVerifiedStudentPort;
 import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
 import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
 import com.fyrm.fyrm_service.application.service.confirmation_code.ConfirmationCodeService;
+import com.fyrm.fyrm_service.application.service.email.EmailService;
 import com.fyrm.fyrm_service.domain.ConfirmationCode;
 import com.fyrm.fyrm_service.domain.VerifiedStudent;
 import com.fyrm.fyrm_service.domain.exception.InvalidSignupInformationException;
@@ -30,6 +31,7 @@ public class SignupUserService implements SignupUserUseCase {
   private final FindVerifiedStudentPort findVerifiedStudentPort;
   private final ConfirmationCodeService confirmationCodeService;
   private final PersistConfirmationCodePort persistConfirmationCodePort;
+  private final EmailService emailService;
   private final PasswordEncoder encoder;
 
   @Override
@@ -61,6 +63,7 @@ public class SignupUserService implements SignupUserUseCase {
 
     persistUserPort.persist(user);
     persistConfirmationCodePort.persist(confirmationCode);
+    emailService.sendConfirmationEmail(user, confirmationCode);
   }
 
   private void validateSignupInformation(SignupUserCommand signupUserCommand) {

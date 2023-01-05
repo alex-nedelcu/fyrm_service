@@ -37,7 +37,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessException'
         '422':
-          description: Invalid sign up information from validation perspective.
+          description: Invalid sign up information from validation perspective or email sending mechanism failed.
           content:
             application/json:
               schema:
@@ -114,12 +114,14 @@ components:
             * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
             * `LOGIN_FAILED` - Something unexpected happened during log in process
             * `CONFIRMATION_CODE_NOT_VALID` - Confirmation code is not associated to any account or it is expired
+            * `EMAIL_SENDING_FAILED` - Confirmation email sending process failed
 
           enum:
             - FIELD_NOT_VALID
             - SIGNUP_INFORMATION_NOT_VALID
             - LOGIN_FAILED
             - CONFIRMATION_CODE_NOT_VALID
+            - EMAIL_SENDING_FAILED
         messages:
           type: array
           items:
