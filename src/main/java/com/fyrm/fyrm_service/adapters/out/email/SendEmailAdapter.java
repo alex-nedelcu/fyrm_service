@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 
 @OutboundAdapter
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class SendEmailAdapter implements SendEmailPort {
   private final JavaMailSender mailSender;
 
   @Override
+  @Async
   public void send(EmailDetails emailDetails) {
     try {
       MimeMessage message = mailSender.createMimeMessage();
