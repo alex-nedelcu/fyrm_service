@@ -1,7 +1,9 @@
 package com.fyrm.fyrm_service.adapters.in.web;
 
+import com.fyrm.fyrm_service.application.port.in.command.ConfirmAccountCommand;
 import com.fyrm.fyrm_service.application.port.in.command.LoginUserCommand;
 import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
+import com.fyrm.fyrm_service.application.port.in.usecasse.ConfirmAccountUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecasse.LoginUserUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecasse.SignupUserUseCase;
 import com.fyrm.fyrm_service.generatedapi.AuthenticationApi;
@@ -22,17 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationApiController implements AuthenticationApi {
 
   private final SignupUserUseCase signupUserUseCase;
+  private final ConfirmAccountUseCase confirmAccountUseCase;
   private final LoginUserUseCase loginUserUseCase;
-
-  @Override
-  public ResponseEntity<JwtLoginResponseDto> loginUser(LoginRequestDto loginRequestDto) {
-    LoginUserCommand loginUserCommand = new LoginUserCommand(
-        loginRequestDto.getUsername(),
-        loginRequestDto.getPassword()
-    );
-    JwtLoginResponseDto response = loginUserUseCase.login(loginUserCommand);
-    return ResponseEntity.ok(response);
-  }
 
   @Override
   public ResponseEntity<MessageResponseDto> signupUser(SignupRequestDto signupRequestDto) {
@@ -44,5 +37,22 @@ public class AuthenticationApiController implements AuthenticationApi {
     );
     signupUserUseCase.signup(signupUserCommand);
     return ResponseEntity.ok(new MessageResponseDto().message("User successfully signed up!"));
+  }
+
+  @Override
+  public ResponseEntity<MessageResponseDto> confirmAccount(String code) {
+    ConfirmAccountCommand confirmAccountCommand = new ConfirmAccountCommand(code);
+    confirmAccountUseCase.confirm(confirmAccountCommand);
+    return ResponseEntity.ok(new MessageResponseDto().message("Account successfully confirmed!"));
+  }
+
+  @Override
+  public ResponseEntity<JwtLoginResponseDto> loginUser(LoginRequestDto loginRequestDto) {
+    LoginUserCommand loginUserCommand = new LoginUserCommand(
+        loginRequestDto.getUsername(),
+        loginRequestDto.getPassword()
+    );
+    JwtLoginResponseDto response = loginUserUseCase.login(loginUserCommand);
+    return ResponseEntity.ok(response);
   }
 }

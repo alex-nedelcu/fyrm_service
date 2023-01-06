@@ -7,13 +7,13 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class GetAccountsByNameCommand extends SelfValidating<GetAccountsByNameCommand> {
+public class ConfirmAccountCommand extends SelfValidating<ConfirmAccountCommand> {
 
-  @NotBlank(message = "error.validation.account.name.is.mandatory")
-  String name;
+  @NotBlank(message = "error.validation.code.is.mandatory")
+  String code;
 
-  public GetAccountsByNameCommand(String name) {
-    this.name = name;
+  public ConfirmAccountCommand(String code) {
+    this.code = code;
     validateSelf();
   }
 }

@@ -7,32 +7,9 @@ servers:
     description: local
 
 tags:
-  - name: account
   - name: authentication
 
 paths:
-  '/accounts/name/{name}':
-    get:
-      parameters:
-        - $ref: '#/components/parameters/namePathParameter'
-      summary: Filter accounts by name
-      operationId: getAccountsByName
-      tags:
-        - account
-      responses:
-        '200':
-          description: Accounts filtered by name
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Accounts'
-        '422':
-          description: Invalid name path parameter.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessException'
-
   '/authentication/signup':
     post:
       summary: Sign up user
@@ -60,7 +37,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessException'
         '422':
-          description: Invalid sign up information from validation perspective.
+          description: Invalid sign up information from validation perspective or email sending mechanism failed.
           content:
             application/json:
               schema:
@@ -95,6 +72,35 @@ paths:
         '401':
           description: Bad credentials.
 
+  '/authentication/confirm':
+    post:
+      summary: Confirm user account
+      operationId: confirmAccount
+      tags:
+        - authentication
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Confirmation code used for enabling the account
+      responses:
+        '200':
+          description: Successfully confirm account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Confirmation code is not associated to any account or it is expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+        '400':
+          description: Confirmation code query parameters misses.
+
 components:
   schemas:
     BusinessException:
@@ -107,30 +113,20 @@ components:
             * `FIELD_NOT_VALID` - A data transfer object field is invalid
             * `SIGNUP_INFORMATION_NOT_VALID` - Sign up information is invalid
             * `LOGIN_FAILED` - Something unexpected happened during log in process
+            * `CONFIRMATION_CODE_NOT_VALID` - Confirmation code is not associated to any account or it is expired
+            * `EMAIL_SENDING_FAILED` - Confirmation email sending process failed
 
           enum:
             - FIELD_NOT_VALID
             - SIGNUP_INFORMATION_NOT_VALID
             - LOGIN_FAILED
+            - CONFIRMATION_CODE_NOT_VALID
+            - EMAIL_SENDING_FAILED
         messages:
           type: array
           items:
             type: string
           description: Error messages displayed to the end user.
-
-    Accounts:
-      type: array
-      items:
-        $ref: '#/components/schemas/Account'
-
-    Account:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
 
     SignupRequest:
       type: object
@@ -192,13 +188,7 @@ components:
         - email
         - role
 
-  parameters:
-    namePathParameter:
-      name: name
-      in: path
-      required: true
-      schema:
-        type: string
+  parameters: { }
 
   securitySchemes:
     bearerAuth:

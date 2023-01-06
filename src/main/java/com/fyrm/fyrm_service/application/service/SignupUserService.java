@@ -5,7 +5,11 @@ import com.fyrm.fyrm_service.application.port.in.usecasse.SignupUserUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindRolePort;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
 import com.fyrm.fyrm_service.application.port.out.FindVerifiedStudentPort;
+import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
 import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
+import com.fyrm.fyrm_service.application.service.confirmation_code.ConfirmationCodeService;
+import com.fyrm.fyrm_service.application.service.email.EmailService;
+import com.fyrm.fyrm_service.domain.ConfirmationCode;
 import com.fyrm.fyrm_service.domain.VerifiedStudent;
 import com.fyrm.fyrm_service.domain.exception.InvalidSignupInformationException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
@@ -15,6 +19,7 @@ import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -24,11 +29,15 @@ public class SignupUserService implements SignupUserUseCase {
   private final FindRolePort findRolePort;
   private final PersistUserPort persistUserPort;
   private final FindVerifiedStudentPort findVerifiedStudentPort;
+  private final ConfirmationCodeService confirmationCodeService;
+  private final PersistConfirmationCodePort persistConfirmationCodePort;
+  private final EmailService emailService;
   private final PasswordEncoder encoder;
 
   @Override
+  @Transactional
   public void signup(SignupUserCommand signupUserCommand) {
-    validateUserData(signupUserCommand);
+    validateSignupInformation(signupUserCommand);
 
     String username = signupUserCommand.getUsername();
     String email = signupUserCommand.getEmail();
@@ -50,10 +59,14 @@ public class SignupUserService implements SignupUserUseCase {
         .enabled(false)
         .build();
 
+    ConfirmationCode confirmationCode = confirmationCodeService.generateUniqueForUser(user);
+
     persistUserPort.persist(user);
+    persistConfirmationCodePort.persist(confirmationCode);
+    emailService.sendConfirmationEmail(user, confirmationCode);
   }
 
-  private void validateUserData(SignupUserCommand signupUserCommand) {
+  private void validateSignupInformation(SignupUserCommand signupUserCommand) {
     if (findUserPort.existsByUsername(signupUserCommand.getUsername())) {
       throw new InvalidSignupInformationException("Duplicate username!");
     }

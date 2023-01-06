@@ -275,6 +275,16 @@
       <scope>runtime</scope>
       <version>${jjwt-jackson.version}</version>
     </dependency>
+    <dependency>
+      <artifactId>spring-context-support</artifactId>
+      <groupId>org.springframework</groupId>
+      <version>5.3.23</version>
+    </dependency>
+    <dependency>
+      <artifactId>jakarta.mail</artifactId>
+      <groupId>com.sun.mail</groupId>
+      <version>1.6.7</version>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
