@@ -70,11 +70,11 @@ public class SignupUserService implements SignupUserUseCase {
 
   private void validateSignupInformation(SignupUserCommand signupUserCommand) {
     if (findUserPort.existsByUsername(signupUserCommand.getUsername())) {
-      throw new InvalidSignupInformationException("Duplicate username!");
+      throw new InvalidSignupInformationException("There is already an account with this username");
     }
 
     if (findUserPort.existsByEmail(signupUserCommand.getEmail())) {
-      throw new InvalidSignupInformationException("Duplicate email!");
+      throw new InvalidSignupInformationException("There is already an account with this email");
     }
 
     if (!EnumUtils.isValidEnum(ERole.class, signupUserCommand.getRole())) {
