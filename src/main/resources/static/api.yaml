@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MessageResponse'
+                $ref: '#/components/schemas/SignupResponse'
         '400':
           description: Invalid sign up information from business perspective.
           content:
@@ -156,12 +156,16 @@ components:
         - username
         - password
 
-    MessageResponse:
+    SignupResponse:
       type: object
       properties:
+        userId:
+          type: integer
+          format: int64
         message:
           type: string
       required:
+        - userId
         - message
 
     JwtLoginResponse:
@@ -187,6 +191,14 @@ components:
         - username
         - email
         - role
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
 
   parameters: { }
 

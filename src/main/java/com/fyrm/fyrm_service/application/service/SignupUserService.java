@@ -36,7 +36,7 @@ public class SignupUserService implements SignupUserUseCase {
 
   @Override
   @Transactional
-  public void signup(SignupUserCommand signupUserCommand) {
+  public Long signup(SignupUserCommand signupUserCommand) {
     validateSignupInformation(signupUserCommand);
 
     String username = signupUserCommand.getUsername();
@@ -61,9 +61,11 @@ public class SignupUserService implements SignupUserUseCase {
 
     ConfirmationCode confirmationCode = confirmationCodeService.generateUniqueForUser(user);
 
-    persistUserPort.persist(user);
+    Long userId = persistUserPort.persist(user);
     persistConfirmationCodePort.persist(confirmationCode);
     emailService.sendConfirmationEmail(user, confirmationCode);
+
+    return userId;
   }
 
   private void validateSignupInformation(SignupUserCommand signupUserCommand) {

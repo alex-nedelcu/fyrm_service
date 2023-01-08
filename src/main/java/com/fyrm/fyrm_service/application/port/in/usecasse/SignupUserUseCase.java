@@ -4,5 +4,5 @@ import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
 
 public interface SignupUserUseCase {
 
-  void signup(SignupUserCommand signupUserCommand);
+  Long signup(SignupUserCommand signupUserCommand);
 }

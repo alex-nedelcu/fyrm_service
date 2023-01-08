@@ -24,7 +24,8 @@ public class UserAdapter implements FindUserPort, PersistUserPort {
   }
 
   @Override
-  public void persist(User user) {
-    userRepository.save(user);
+  public Long persist(User user) {
+    User savedUser = userRepository.save(user);
+    return savedUser.getId();
   }
 }

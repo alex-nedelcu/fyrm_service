@@ -4,5 +4,5 @@ import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 
 public interface PersistUserPort {
 
-  void persist(User user);
+  Long persist(User user);
 }
