@@ -19,7 +19,7 @@ public class VerifiedStudentAdapter implements FindVerifiedStudentPort {
   @Override
   public VerifiedStudent findByEmail(String email) {
     VerifiedStudentEntity entity = verifiedStudentRepository.findByEmail(email).orElseThrow(
-        () -> new InvalidSignupInformationException("Sign up email " + email + " does not belong to verified student!")
+        () -> new InvalidSignupInformationException("Please use your official student email address")
     );
 
     return verifiedStudentMapper.toDomain(entity);
