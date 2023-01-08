@@ -15,4 +15,15 @@ public class ConfirmationCode {
   ZonedDateTime createdAt;
   ZonedDateTime expiresAt;
   ZonedDateTime confirmedAt;
+
+  public ConfirmationCode deepCloneWithConfirmedAt(ZonedDateTime newConfirmedAt) {
+    return builder()
+        .id(id)
+        .user(user)
+        .code(code)
+        .createdAt(createdAt)
+        .expiresAt(expiresAt)
+        .confirmedAt(newConfirmedAt)
+        .build();
+  }
 }

@@ -2,7 +2,7 @@ package com.fyrm.fyrm_service.adapters.out.email;
 
 import com.fyrm.fyrm_service.application.port.out.SendEmailPort;
 import com.fyrm.fyrm_service.domain.email.EmailDetails;
-import com.fyrm.fyrm_service.domain.exception.EmailSendingFailed;
+import com.fyrm.fyrm_service.domain.exception.EmailSendingFailedException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -36,7 +36,7 @@ public class SendEmailAdapter implements SendEmailPort {
       mailSender.send(message);
     } catch (MessagingException messagingException) {
       LOGGER.error("Error while sending confirmation email: {}", messagingException.toString());
-      throw new EmailSendingFailed("Error while sending confirmation email: " + messagingException);
+      throw new EmailSendingFailedException("Error while sending confirmation email: " + messagingException);
     }
   }
 }

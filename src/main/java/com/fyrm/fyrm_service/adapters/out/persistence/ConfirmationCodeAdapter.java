@@ -7,6 +7,7 @@ import com.fyrm.fyrm_service.application.port.out.FindConfirmationCodePort;
 import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
 import com.fyrm.fyrm_service.domain.ConfirmationCode;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
@@ -15,6 +16,12 @@ public class ConfirmationCodeAdapter implements FindConfirmationCodePort, Persis
 
   private final ConfirmationCodeRepository confirmationCodeRepository;
   private final ConfirmationCodeMapper confirmationCodeMapper;
+
+  @Override
+  public Optional<ConfirmationCode> findByCode(String code) {
+    Optional<ConfirmationCodeEntity> entity = confirmationCodeRepository.findByCode(code);
+    return entity.map(confirmationCodeMapper::toDomain);
+  }
 
   @Override
   public boolean existsByCode(String code) {

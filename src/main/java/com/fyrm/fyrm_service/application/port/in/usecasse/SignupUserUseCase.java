@@ -1,8 +1,9 @@
 package com.fyrm.fyrm_service.application.port.in.usecasse;
 
 import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
+import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 
 public interface SignupUserUseCase {
 
-  void signup(SignupUserCommand signupUserCommand);
+  User signup(SignupUserCommand signupUserCommand);
 }

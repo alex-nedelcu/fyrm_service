@@ -6,4 +6,5 @@ public enum BusinessExceptionType {
   LOGIN_FAILED,
   CONFIRMATION_CODE_NOT_VALID,
   EMAIL_SENDING_FAILED,
+  RESOURCE_NOT_FOUND,
 }

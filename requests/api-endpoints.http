@@ -10,10 +10,28 @@ Content-Type: application/json
   "role": "ROLE_USER"
 }
 
+> {%
+  client.global.set("user_id", response.body.userId);
+%}
+
 ### POST confirm account
-POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=651358
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=046585
 accept: */*
 Content-Type: application/json
+
+
+{
+  "userId": {{user_id}}
+}
+
+### POST resend confirmation code
+POST http://localhost:8080/api/v1/fyrm/authentication/confirmationcode/resend
+accept: */*
+Content-Type: application/json
+
+{
+  "userId": {{user_id}}
+}
 
 ### POST log in
 POST http://localhost:8080/api/v1/fyrm/authentication/login

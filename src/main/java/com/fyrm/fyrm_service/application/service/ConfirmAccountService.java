@@ -1,14 +1,16 @@
 package com.fyrm.fyrm_service.application.service;
 
-import com.fyrm.fyrm_service.adapters.out.persistence.entity.ConfirmationCodeEntity;
-import com.fyrm.fyrm_service.adapters.out.persistence.repository.ConfirmationCodeRepository;
 import com.fyrm.fyrm_service.application.port.in.command.ConfirmAccountCommand;
 import com.fyrm.fyrm_service.application.port.in.usecasse.ConfirmAccountUseCase;
+import com.fyrm.fyrm_service.application.port.out.FindConfirmationCodePort;
+import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
+import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
+import com.fyrm.fyrm_service.domain.ConfirmationCode;
 import com.fyrm.fyrm_service.domain.exception.InvalidConfirmationCodeException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
-import com.fyrm.fyrm_service.infrastructure.spring.security.repository.UserRepository;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,31 +18,36 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ConfirmAccountService implements ConfirmAccountUseCase {
 
-  private final UserRepository userRepository;
-  private final ConfirmationCodeRepository confirmationCodeRepository;
+  private final PersistUserPort persistUserPort;
+  private final PersistConfirmationCodePort persistConfirmationCodePort;
+  private final FindConfirmationCodePort findConfirmationCodePort;
 
   @Override
   @Transactional
   public void confirm(ConfirmAccountCommand confirmAccountCommand) {
     String code = confirmAccountCommand.getCode();
-    ConfirmationCodeEntity confirmationCodeEntity = confirmationCodeRepository
+    ConfirmationCode confirmationCode = findConfirmationCodePort
         .findByCode(code)
         .orElseThrow(() -> new InvalidConfirmationCodeException("Confirmation code is not associated to any account!"));
 
-    User associatedUser = confirmationCodeEntity.getUser();
+    User associatedUser = confirmationCode.getUser();
 
-    confirmationCodeEntity.setConfirmedAt(ZonedDateTime.now());
-    confirmationCodeRepository.save(confirmationCodeEntity);
+    if (!Objects.equals(associatedUser.getId(), confirmAccountCommand.getUserId())) {
+      throw new InvalidConfirmationCodeException("User trying to confirm account is different than user associated to confirmation code!");
+    }
 
-    if (confirmedAfterExpiration(confirmationCodeEntity)) {
+    confirmationCode = confirmationCode.deepCloneWithConfirmedAt(ZonedDateTime.now());
+    persistConfirmationCodePort.persist(confirmationCode);
+
+    if (confirmedAfterExpiration(confirmationCode)) {
       throw new InvalidConfirmationCodeException("Confirmation code for user with username " + associatedUser.getUsername() + " has expired!");
     }
 
     associatedUser.setEnabled(true);
-    userRepository.save(associatedUser);
+    persistUserPort.persist(associatedUser);
   }
 
-  private boolean confirmedAfterExpiration(ConfirmationCodeEntity confirmationCodeEntity) {
-    return confirmationCodeEntity.getConfirmedAt().isAfter(confirmationCodeEntity.getExpiresAt());
+  private boolean confirmedAfterExpiration(ConfirmationCode confirmationCode) {
+    return confirmationCode.getConfirmedAt().isAfter(confirmationCode.getExpiresAt());
   }
 }

@@ -5,6 +5,7 @@ import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import com.fyrm.fyrm_service.infrastructure.spring.security.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
@@ -12,6 +13,11 @@ import lombok.RequiredArgsConstructor;
 public class UserAdapter implements FindUserPort, PersistUserPort {
 
   private final UserRepository userRepository;
+
+  @Override
+  public Optional<User> findById(Long id) {
+    return userRepository.findById(id);
+  }
 
   @Override
   public boolean existsByUsername(String username) {
@@ -24,7 +30,7 @@ public class UserAdapter implements FindUserPort, PersistUserPort {
   }
 
   @Override
-  public void persist(User user) {
-    userRepository.save(user);
+  public User persist(User user) {
+    return userRepository.save(user);
   }
 }
