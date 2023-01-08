@@ -72,12 +72,42 @@ paths:
         '401':
           description: Bad credentials.
 
+  '/authentication/confirmationcode/resend':
+    post:
+      summary: Resend confirmation code
+      operationId: resendConfirmationCode
+      tags:
+        - authentication
+      requestBody:
+        description: Contains user id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendConfirmationCodeRequest'
+      responses:
+        '204':
+          description: Successfully resent confirmation code.
+        '400':
+          description: User does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
   '/authentication/confirm':
     post:
       summary: Confirm user account
       operationId: confirmAccount
       tags:
         - authentication
+      requestBody:
+        description: Contains user id
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmAccountRequest'
       parameters:
         - in: query
           name: code
@@ -115,6 +145,7 @@ components:
             * `LOGIN_FAILED` - Something unexpected happened during log in process
             * `CONFIRMATION_CODE_NOT_VALID` - Confirmation code is not associated to any account or it is expired
             * `EMAIL_SENDING_FAILED` - Confirmation email sending process failed
+            * `RESOURCE_NOT_FOUND` - Resource not found
 
           enum:
             - FIELD_NOT_VALID
@@ -122,6 +153,7 @@ components:
             - LOGIN_FAILED
             - CONFIRMATION_CODE_NOT_VALID
             - EMAIL_SENDING_FAILED
+            - RESOURCE_NOT_FOUND
         messages:
           type: array
           items:
@@ -156,16 +188,37 @@ components:
         - username
         - password
 
+    ConfirmAccountRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+      required:
+        - userId
+
+    ResendConfirmationCodeRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+      required:
+        - userId
+
     SignupResponse:
       type: object
       properties:
         userId:
           type: integer
           format: int64
+        email:
+          type: string
         message:
           type: string
       required:
         - userId
+        - email
         - message
 
     JwtLoginResponse:

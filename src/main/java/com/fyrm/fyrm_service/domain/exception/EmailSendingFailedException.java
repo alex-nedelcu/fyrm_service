@@ -5,17 +5,17 @@ import static com.fyrm.fyrm_service.domain.exception.base.BusinessExceptionType.
 import com.fyrm.fyrm_service.domain.exception.base.BusinessException;
 import java.util.List;
 
-public class EmailSendingFailed extends BusinessException {
+public class EmailSendingFailedException extends BusinessException {
 
-  public EmailSendingFailed() {
+  public EmailSendingFailedException() {
     super(EMAIL_SENDING_FAILED, "error.exception.email.sending.failed", null);
   }
 
-  public EmailSendingFailed(String message) {
+  public EmailSendingFailedException(String message) {
     super(EMAIL_SENDING_FAILED, message, null);
   }
 
-  public EmailSendingFailed(List<String> params) {
+  public EmailSendingFailedException(List<String> params) {
     super(EMAIL_SENDING_FAILED, "error.exception.email.sending.failed", params);
   }
 }

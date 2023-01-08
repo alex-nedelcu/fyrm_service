@@ -1,23 +1,19 @@
 package com.fyrm.fyrm_service.application.port.in.command;
 
 import com.fyrm.fyrm_service.infrastructure.validation.SelfValidating;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class ConfirmAccountCommand extends SelfValidating<ConfirmAccountCommand> {
+public class ResendConfirmationCodeCommand extends SelfValidating<ResendConfirmationCodeCommand> {
 
   @NotNull(message = "error.validation.user.id.is.mandatory")
   Long userId;
-  @NotBlank(message = "error.validation.code.is.mandatory")
-  String code;
 
-  public ConfirmAccountCommand(Long userId, String code) {
+  public ResendConfirmationCodeCommand(Long userId) {
     this.userId = userId;
-    this.code = code;
     validateSelf();
   }
 }

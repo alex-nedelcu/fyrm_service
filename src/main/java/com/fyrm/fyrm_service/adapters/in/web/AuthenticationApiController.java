@@ -2,18 +2,23 @@ package com.fyrm.fyrm_service.adapters.in.web;
 
 import com.fyrm.fyrm_service.application.port.in.command.ConfirmAccountCommand;
 import com.fyrm.fyrm_service.application.port.in.command.LoginUserCommand;
+import com.fyrm.fyrm_service.application.port.in.command.ResendConfirmationCodeCommand;
 import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
 import com.fyrm.fyrm_service.application.port.in.usecasse.ConfirmAccountUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecasse.LoginUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecasse.ResendConfirmationCodeUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecasse.SignupUserUseCase;
 import com.fyrm.fyrm_service.generatedapi.AuthenticationApi;
+import com.fyrm.fyrm_service.generatedapi.dtos.ConfirmAccountRequestDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.JwtLoginResponseDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.LoginRequestDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.MessageResponseDto;
+import com.fyrm.fyrm_service.generatedapi.dtos.ResendConfirmationCodeRequestDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.SignupRequestDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.SignupResponseDto;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.InboundAdapter;
 import com.fyrm.fyrm_service.infrastructure.spring.mvc.controller.FyrmApiController;
+import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +32,7 @@ public class AuthenticationApiController implements AuthenticationApi {
   private final SignupUserUseCase signupUserUseCase;
   private final ConfirmAccountUseCase confirmAccountUseCase;
   private final LoginUserUseCase loginUserUseCase;
+  private final ResendConfirmationCodeUseCase resendConfirmationCodeUseCase;
 
   @Override
   public ResponseEntity<SignupResponseDto> signupUser(SignupRequestDto signupRequestDto) {
@@ -36,17 +42,19 @@ public class AuthenticationApiController implements AuthenticationApi {
         signupRequestDto.getPassword(),
         signupRequestDto.getRole()
     );
-    Long userId = signupUserUseCase.signup(signupUserCommand);
+
+    User user = signupUserUseCase.signup(signupUserCommand);
     return ResponseEntity.ok(
         new SignupResponseDto()
-            .userId(userId)
+            .userId(user.getId())
+            .email(user.getEmail())
             .message("User successfully signed up!")
     );
   }
 
   @Override
-  public ResponseEntity<MessageResponseDto> confirmAccount(String code) {
-    ConfirmAccountCommand confirmAccountCommand = new ConfirmAccountCommand(code);
+  public ResponseEntity<MessageResponseDto> confirmAccount(String code, ConfirmAccountRequestDto confirmAccountRequestDto) {
+    ConfirmAccountCommand confirmAccountCommand = new ConfirmAccountCommand(confirmAccountRequestDto.getUserId(), code);
     confirmAccountUseCase.confirm(confirmAccountCommand);
     return ResponseEntity.ok(new MessageResponseDto().message("Account successfully confirmed!"));
   }
@@ -59,5 +67,12 @@ public class AuthenticationApiController implements AuthenticationApi {
     );
     JwtLoginResponseDto response = loginUserUseCase.login(loginUserCommand);
     return ResponseEntity.ok(response);
+  }
+
+  @Override
+  public ResponseEntity<Void> resendConfirmationCode(ResendConfirmationCodeRequestDto resendConfirmationCodeRequestDto) {
+    ResendConfirmationCodeCommand resendConfirmationCodeCommand = new ResendConfirmationCodeCommand(resendConfirmationCodeRequestDto.getUserId());
+    resendConfirmationCodeUseCase.resend(resendConfirmationCodeCommand);
+    return ResponseEntity.noContent().build();
   }
 }
