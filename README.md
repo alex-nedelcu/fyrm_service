@@ -20,6 +20,14 @@
 - go to http://0.0.0.0:1080 to see the emails
 - start Spring Boot Application
 
+### Run application in Docker
+
+- generate application JAR file: `./mvnw clean package -DskipTests`
+- move generated JAR file under `/src/main/docker/`
+- move to Docker configuration directory: `cd src/main/docker/`
+- start containers: `docker-compose up`
+- stop containers: `docker-compose down`
+
 ### Steps for running tests
 
 - start [Docker Desktop](https://www.docker.com/products/docker-desktop/)
