@@ -16,6 +16,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_MAIL_HOST=maildev
 
   db:
     image: 'postgres:14.6'
@@ -29,7 +30,7 @@ services:
       - ./init_database_docker.sql:/docker-entrypoint-initdb.d/init_database_docker.sql
 
   maildev:
-    image: maildev/maildev
+    image: 'maildev/maildev:latest'
     container_name: maildev
     ports:
       - "1080:1080"
