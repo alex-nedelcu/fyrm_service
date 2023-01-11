@@ -10,16 +10,28 @@ services:
       - "8080:8080"
     depends_on:
       - db
+      - maildev
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/fyrm
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_MAIL_HOST=maildev
 
   db:
     image: 'postgres:14.6'
+    restart: always
     container_name: db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=fyrm
+    volumes:
+      - ./init_database_docker.sql:/docker-entrypoint-initdb.d/init_database_docker.sql
+
+  maildev:
+    image: 'maildev/maildev:latest'
+    container_name: maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
