@@ -50,6 +50,9 @@ public class LoginUserService implements LoginUserUseCase {
         .email(userDetails.getEmail())
         .username(userDetails.getUsername())
         .role(role)
-        .tokenType(TOKEN_TYPE);
+        .tokenType(TOKEN_TYPE)
+        .birthDate(userDetails.getBirthDateAsString())
+        .description(userDetails.getDescription())
+        .isSearching(userDetails.getIsSearching());
   }
 }

@@ -57,6 +57,7 @@ public class SignupUserService implements SignupUserUseCase {
         .university(verifiedStudent.getUniversity())
         .faculty(verifiedStudent.getFaculty())
         .enabled(false)
+        .isSearching(true)
         .build();
 
     ConfirmationCode confirmationCode = confirmationCodeService.generateUniqueForUser(user);

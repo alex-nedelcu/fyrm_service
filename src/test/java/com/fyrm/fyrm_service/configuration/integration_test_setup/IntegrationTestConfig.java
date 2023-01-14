@@ -1,4 +1,4 @@
-package com.fyrm.fyrm_service.integration_test_setup;
+package com.fyrm.fyrm_service.configuration.integration_test_setup;
 
 import com.fyrm.fyrm_service.FyrmServiceApplication;
 import org.springframework.context.annotation.Configuration;
