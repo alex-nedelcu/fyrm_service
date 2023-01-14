@@ -1,6 +1,7 @@
 CREATE DATABASE fyrm WITH OWNER = postgres;
 ALTER USER postgres WITH SUPERUSER;
 
+-- roles
 CREATE TABLE IF NOT EXISTS roles
 (
     id BIGINT NOT NULL,

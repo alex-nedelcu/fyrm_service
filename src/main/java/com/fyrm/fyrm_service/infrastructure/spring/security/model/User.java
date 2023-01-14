@@ -54,7 +54,7 @@ public class User {
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
 
-  @Column(columnDefinition = "boolean default false", nullable = false)
+  @Column(name = "enabled", columnDefinition = "boolean default false", nullable = false)
   private Boolean enabled;
 
   @Column(name = "first_name", nullable = false)
@@ -71,4 +71,10 @@ public class User {
 
   @Column(name = "faculty", nullable = false)
   private String faculty;
+
+  @Column(name = "description")
+  private String description;
+
+  @Column(name = "is_searching", columnDefinition = "boolean default true", nullable = false)
+  private Boolean isSearching;
 }

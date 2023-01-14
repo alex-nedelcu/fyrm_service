@@ -8,6 +8,7 @@ servers:
 
 tags:
   - name: authentication
+  - name: user
 
 paths:
   '/authentication/signup':
@@ -131,6 +132,27 @@ paths:
         '400':
           description: Confirmation code query parameters misses.
 
+  '/users/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    patch:
+      summary: Updates user identified by id
+      operationId: updateUser
+      requestBody:
+        description: Contains updated user information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      tags:
+        - user
+      responses:
+        '200':
+          description: Successfully updated user
+        '404':
+          $ref: '#/components/responses/NotFound'
+
 components:
   schemas:
     BusinessException:
@@ -237,6 +259,12 @@ components:
           type: string
         role:
           type: string
+        birthDate:
+          type: string
+        description:
+          type: string
+        isSearching:
+          type: boolean
       required:
         - userId
         - token
@@ -244,6 +272,9 @@ components:
         - username
         - email
         - role
+        - birthDate
+        - description
+        - isSearching
 
     MessageResponse:
       type: object
@@ -253,7 +284,26 @@ components:
       required:
         - message
 
-  parameters: { }
+    UpdateUser:
+      type: object
+      properties:
+        description:
+          type: string
+        isSearching:
+          type: boolean
+      required:
+        - description
+        - isSearching
+
+  parameters:
+    userIdPathParameter:
+      name: userId
+      description: User id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
 
   securitySchemes:
     bearerAuth:

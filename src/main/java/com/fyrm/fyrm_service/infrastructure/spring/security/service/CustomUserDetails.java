@@ -44,6 +44,10 @@ public class CustomUserDetails implements UserDetails {
   private ZonedDateTime birthDate;
   @Getter
   private Boolean enabled;
+  @Getter
+  private String description;
+  @Getter
+  private Boolean isSearching;
   private Collection<? extends GrantedAuthority> authorities;
 
   public static CustomUserDetails build(User user) {
@@ -61,6 +65,8 @@ public class CustomUserDetails implements UserDetails {
         user.getFaculty(),
         user.getBirthDate(),
         user.getEnabled(),
+        user.getDescription(),
+        user.getIsSearching(),
         authorities
     );
   }
@@ -98,5 +104,13 @@ public class CustomUserDetails implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public String getBirthDateAsString() {
+    if (birthDate == null) {
+      return null;
+    }
+
+    return birthDate.getDayOfMonth() + "/" + birthDate.getMonthValue() + "/" + birthDate.getYear();
   }
 }
