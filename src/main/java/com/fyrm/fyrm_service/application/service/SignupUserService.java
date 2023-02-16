@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.application.service;
 
 import com.fyrm.fyrm_service.application.port.in.command.SignupUserCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.SignupUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.SignupUserUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindRolePort;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
 import com.fyrm.fyrm_service.application.port.out.FindVerifiedStudentPort;

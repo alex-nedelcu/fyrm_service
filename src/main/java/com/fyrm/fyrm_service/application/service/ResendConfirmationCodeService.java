@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.application.service;
 
 import com.fyrm.fyrm_service.application.port.in.command.ResendConfirmationCodeCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.ResendConfirmationCodeUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.ResendConfirmationCodeUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
 import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
 import com.fyrm.fyrm_service.application.service.confirmation_code.ConfirmationCodeService;

@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.adapters.in.web;
 
 import com.fyrm.fyrm_service.application.port.in.command.UpdateUserCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.UpdateUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.UpdateUserUseCase;
 import com.fyrm.fyrm_service.generatedapi.UserApi;
 import com.fyrm.fyrm_service.generatedapi.dtos.UpdateUserDto;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.InboundAdapter;

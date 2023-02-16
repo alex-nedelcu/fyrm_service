@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "password": "testTest1"
+  "password": "alexAlex1"
 }
 
 > {%
@@ -55,4 +55,31 @@ Authorization: Bearer {{jwt_token}}
 {
   "description": "I am Alex",
   "isSearching": "true"
+}
+
+### POST create search profile
+POST http://localhost:8080/api/v1/fyrm/search-profiles
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "userId": 74,
+  "rentPriceLowerBound": 120.0,
+  "rentPriceUpperBound": 260.0,
+  "latitude": 47.231,
+  "longitude": -28.4392,
+  "rentMatesGenderOptions": [
+    "any"
+  ],
+  "rentMateCountOptions": [
+    "1"
+  ],
+  "bedroomOptions": [
+    "own"
+  ],
+  "bathroomOptions": [
+    "2",
+    "> 2"
+  ]
 }

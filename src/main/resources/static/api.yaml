@@ -9,6 +9,7 @@ servers:
 tags:
   - name: authentication
   - name: user
+  - name: search-profile
 
 paths:
   '/authentication/signup':
@@ -153,6 +154,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/search-profiles':
+    post:
+      summary: Create search profile
+      operationId: createSearchProfile
+      tags:
+        - search-profile
+      requestBody:
+        description: Contains search profile information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchProfile'
+      responses:
+        '201':
+          description: Search profile successfully created.
+        '401':
+          description: Unauthorized.
+
 components:
   schemas:
     BusinessException:
@@ -294,6 +314,51 @@ components:
       required:
         - description
         - isSearching
+
+    SearchProfile:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        rentPriceLowerBound:
+          type: number
+          format: double
+        rentPriceUpperBound:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        rentMatesGenderOptions:
+          type: array
+          items:
+            type: string
+        rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        bedroomOptions:
+          type: array
+          items:
+            type: string
+        bathroomOptions:
+          type: array
+          items:
+            type: string
+      required:
+        - userId
+        - rentPriceLowerBound
+        - rentPriceUpperBound
+        - latitude
+        - longitude
+        - rentMatesGenderOptions
+        - rentMateCountOptions
+        - bedroomOptions
+        - bathroomOptions
 
   parameters:
     userIdPathParameter:
