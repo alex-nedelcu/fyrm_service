@@ -83,3 +83,8 @@ Authorization: Bearer {{jwt_token}}
     "> 2"
   ]
 }
+
+### GET search profiles by user id
+GET http://localhost:8080/api/v1/fyrm/users/74/search-profiles
+Accept: application/json
+Authorization: Bearer {{jwt_token}}

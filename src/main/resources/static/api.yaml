@@ -154,10 +154,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/users/{userId}/search-profiles':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Finds the search profiles associated with a user
+      operationId: findAll
+      tags:
+        - search-profile
+      responses:
+        '200':
+          description: Successfully returns search profiles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProfilesByUser'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   '/search-profiles':
     post:
       summary: Create search profile
-      operationId: createSearchProfile
+      operationId: create
       tags:
         - search-profile
       requestBody:
@@ -359,6 +377,16 @@ components:
         - rentMateCountOptions
         - bedroomOptions
         - bathroomOptions
+
+    SearchProfilesByUser:
+      type: object
+      properties:
+        searchProfiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchProfile'
+      required:
+        - searchProfiles
 
   parameters:
     userIdPathParameter:
