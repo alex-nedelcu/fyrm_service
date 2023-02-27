@@ -3,16 +3,18 @@ package com.fyrm.fyrm_service.adapters.out.persistence;
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.SearchProfileEntity;
 import com.fyrm.fyrm_service.adapters.out.persistence.mapper.SearchProfileMapper;
 import com.fyrm.fyrm_service.adapters.out.persistence.repository.SearchProfileRepository;
+import com.fyrm.fyrm_service.application.port.out.DeleteSearchProfilePort;
 import com.fyrm.fyrm_service.application.port.out.FindSearchProfilePort;
 import com.fyrm.fyrm_service.application.port.out.PersistSearchProfilePort;
 import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @OutboundAdapter
 @RequiredArgsConstructor
-public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearchProfilePort {
+public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearchProfilePort, DeleteSearchProfilePort {
 
   private final SearchProfileRepository searchProfileRepository;
   private final SearchProfileMapper searchProfileMapper;
@@ -28,5 +30,11 @@ public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearc
   public List<SearchProfile> findAllByUserId(Long userId) {
     List<SearchProfileEntity> entities = searchProfileRepository.findAllByUserId(userId);
     return searchProfileMapper.toDomainList(entities);
+  }
+
+  @Override
+  @Transactional
+  public void delete(Long id) {
+    searchProfileRepository.deleteById(id);
   }
 }

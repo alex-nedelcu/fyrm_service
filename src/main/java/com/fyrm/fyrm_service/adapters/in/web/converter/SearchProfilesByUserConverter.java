@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SearchProfilesByUserConverter implements Converter<List<SearchProfile>, SearchProfilesByUserDto> {
 
-  private final SearchProfileConverter searchProfileConverter;
+  private final SearchProfileByUserConverter searchProfileByUserConverter;
 
   @Override
   public SearchProfilesByUserDto apply(List<SearchProfile> searchProfilesByUser) {
@@ -19,6 +19,6 @@ public class SearchProfilesByUserConverter implements Converter<List<SearchProfi
       throw new IllegalArgumentException("Search profiles by user must not be null for converting to dto");
     }
 
-    return new SearchProfilesByUserDto().searchProfiles(searchProfileConverter.toList(searchProfilesByUser));
+    return new SearchProfilesByUserDto().searchProfiles(searchProfileByUserConverter.toList(searchProfilesByUser));
   }
 }

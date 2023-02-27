@@ -20,12 +20,12 @@ public class UserApiController implements UserApi {
 
   @Override
   public ResponseEntity<Void> updateUser(Long userId, UpdateUserDto updateUserDto) {
-    UpdateUserCommand updateUserCommand = new UpdateUserCommand(
+    UpdateUserCommand command = new UpdateUserCommand(
         userId,
         updateUserDto.getDescription(),
         updateUserDto.getIsSearching()
     );
-    updateUserUseCase.update(updateUserCommand);
+    updateUserUseCase.update(command);
     return ResponseEntity.ok().build();
   }
 }

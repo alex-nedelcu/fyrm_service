@@ -36,14 +36,14 @@ public class AuthenticationApiController implements AuthenticationApi {
 
   @Override
   public ResponseEntity<SignupResponseDto> signupUser(SignupRequestDto signupRequestDto) {
-    var signupUserCommand = new SignupUserCommand(
+    SignupUserCommand command = new SignupUserCommand(
         signupRequestDto.getUsername(),
         signupRequestDto.getEmail(),
         signupRequestDto.getPassword(),
         signupRequestDto.getRole()
     );
 
-    User user = signupUserUseCase.signup(signupUserCommand);
+    User user = signupUserUseCase.signup(command);
     return ResponseEntity.ok(
         new SignupResponseDto()
             .userId(user.getId())
@@ -54,25 +54,25 @@ public class AuthenticationApiController implements AuthenticationApi {
 
   @Override
   public ResponseEntity<MessageResponseDto> confirmAccount(String code, ConfirmAccountRequestDto confirmAccountRequestDto) {
-    ConfirmAccountCommand confirmAccountCommand = new ConfirmAccountCommand(confirmAccountRequestDto.getUserId(), code);
-    confirmAccountUseCase.confirm(confirmAccountCommand);
+    ConfirmAccountCommand command = new ConfirmAccountCommand(confirmAccountRequestDto.getUserId(), code);
+    confirmAccountUseCase.confirm(command);
     return ResponseEntity.ok(new MessageResponseDto().message("Account successfully confirmed!"));
   }
 
   @Override
   public ResponseEntity<JwtLoginResponseDto> loginUser(LoginRequestDto loginRequestDto) {
-    LoginUserCommand loginUserCommand = new LoginUserCommand(
+    LoginUserCommand command = new LoginUserCommand(
         loginRequestDto.getUsername(),
         loginRequestDto.getPassword()
     );
-    JwtLoginResponseDto response = loginUserUseCase.login(loginUserCommand);
+    JwtLoginResponseDto response = loginUserUseCase.login(command);
     return ResponseEntity.ok(response);
   }
 
   @Override
   public ResponseEntity<Void> resendConfirmationCode(ResendConfirmationCodeRequestDto resendConfirmationCodeRequestDto) {
-    ResendConfirmationCodeCommand resendConfirmationCodeCommand = new ResendConfirmationCodeCommand(resendConfirmationCodeRequestDto.getUserId());
-    resendConfirmationCodeUseCase.resend(resendConfirmationCodeCommand);
+    ResendConfirmationCodeCommand command = new ResendConfirmationCodeCommand(resendConfirmationCodeRequestDto.getUserId());
+    resendConfirmationCodeUseCase.resend(command);
     return ResponseEntity.noContent().build();
   }
 }
