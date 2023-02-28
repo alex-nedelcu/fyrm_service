@@ -9,6 +9,7 @@ import com.fyrm.fyrm_service.application.port.out.PersistSearchProfilePort;
 import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,12 @@ public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearc
     SearchProfileEntity entity = searchProfileMapper.toEntity(searchProfile);
     SearchProfileEntity savedEntity = searchProfileRepository.save(entity);
     return searchProfileMapper.toDomain(savedEntity);
+  }
+
+  @Override
+  public Optional<SearchProfile> findById(Long id) {
+    Optional<SearchProfileEntity> optionalEntity = searchProfileRepository.findById(id);
+    return optionalEntity.map(searchProfileMapper::toDomain);
   }
 
   @Override

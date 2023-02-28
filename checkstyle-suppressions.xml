@@ -13,5 +13,6 @@
   <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/domain"/>
   <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/application/port/in/command"/>
   <suppress checks="ParameterNumber" files="com/fyrm/fyrm_service/application/port/in/command/CreateSearchProfileCommand.java"/>
+  <suppress checks="ParameterNumber" files="com/fyrm/fyrm_service/application/port/in/command/UpdateSearchProfileCommand.java"/>
   <suppress checks="[a-zA-Z0-9]*" files="[\\/]generated-sources[\\/]"/>
 </suppressions>

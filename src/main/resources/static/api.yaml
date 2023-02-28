@@ -204,6 +204,23 @@ paths:
           description: Successfully deleted search profile
         '404':
           $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Updates search profile
+      operationId: updateSearchProfile
+      requestBody:
+        description: Contains updated search profile information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSearchProfile'
+      tags:
+        - search-profile
+      responses:
+        '200':
+          description: Successfully updated search profile
+        '404':
+          $ref: '#/components/responses/NotFound'
 
 components:
   schemas:
@@ -383,6 +400,47 @@ components:
             type: string
       required:
         - userId
+        - rentPriceLowerBound
+        - rentPriceUpperBound
+        - latitude
+        - longitude
+        - rentMatesGenderOptions
+        - rentMateCountOptions
+        - bedroomOptions
+        - bathroomOptions
+
+    UpdateSearchProfile:
+      type: object
+      properties:
+        rentPriceLowerBound:
+          type: number
+          format: double
+        rentPriceUpperBound:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        rentMatesGenderOptions:
+          type: array
+          items:
+            type: string
+        rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        bedroomOptions:
+          type: array
+          items:
+            type: string
+        bathroomOptions:
+          type: array
+          items:
+            type: string
+      required:
         - rentPriceLowerBound
         - rentPriceUpperBound
         - latitude
