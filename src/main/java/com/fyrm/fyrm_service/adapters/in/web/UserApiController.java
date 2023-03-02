@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.adapters.in.web;
 
 import com.fyrm.fyrm_service.application.port.in.command.UpdateUserCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.UpdateUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.UpdateUserUseCase;
 import com.fyrm.fyrm_service.generatedapi.UserApi;
 import com.fyrm.fyrm_service.generatedapi.dtos.UpdateUserDto;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.InboundAdapter;
@@ -20,12 +20,12 @@ public class UserApiController implements UserApi {
 
   @Override
   public ResponseEntity<Void> updateUser(Long userId, UpdateUserDto updateUserDto) {
-    UpdateUserCommand updateUserCommand = new UpdateUserCommand(
+    UpdateUserCommand command = new UpdateUserCommand(
         userId,
         updateUserDto.getDescription(),
         updateUserDto.getIsSearching()
     );
-    updateUserUseCase.update(updateUserCommand);
+    updateUserUseCase.update(command);
     return ResponseEntity.ok().build();
   }
 }

@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.application.service;
 
 import com.fyrm.fyrm_service.application.port.in.command.LoginUserCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.LoginUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.LoginUserUseCase;
 import com.fyrm.fyrm_service.domain.exception.LoginFailedException;
 import com.fyrm.fyrm_service.generatedapi.dtos.JwtLoginResponseDto;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;

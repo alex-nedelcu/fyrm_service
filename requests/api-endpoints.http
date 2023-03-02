@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "password": "testTest1"
+  "password": "alexAlex1"
 }
 
 > {%
@@ -56,3 +56,67 @@ Authorization: Bearer {{jwt_token}}
   "description": "I am Alex",
   "isSearching": "true"
 }
+
+### POST create search profile
+POST http://localhost:8080/api/v1/fyrm/search-profiles
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "userId": 74,
+  "rentPriceLowerBound": 120.0,
+  "rentPriceUpperBound": 260.0,
+  "latitude": 47.231,
+  "longitude": -28.4392,
+  "rentMatesGenderOptions": [
+    "any"
+  ],
+  "rentMateCountOptions": [
+    "1"
+  ],
+  "bedroomOptions": [
+    "own"
+  ],
+  "bathroomOptions": [
+    "2",
+    "> 2"
+  ]
+}
+
+
+### PATCH update search profile
+PATCH http://localhost:8080/api/v1/fyrm/search-profiles/14
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "rentPriceLowerBound": 0.0,
+  "rentPriceUpperBound": 800.0,
+  "latitude": 69.123,
+  "longitude": -69.123,
+  "rentMatesGenderOptions": [
+    "female"
+  ],
+  "rentMateCountOptions": [
+    "1",
+    "2"
+  ],
+  "bedroomOptions": [
+    "shared"
+  ],
+  "bathroomOptions": [
+    "1"
+  ]
+}
+
+### GET search profiles by user id
+GET http://localhost:8080/api/v1/fyrm/users/74/search-profiles
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### DELETE search profile
+DELETE http://localhost:8080/api/v1/fyrm/search-profiles/8
+Accept: application/json
+Authorization: Bearer {{jwt_token}}

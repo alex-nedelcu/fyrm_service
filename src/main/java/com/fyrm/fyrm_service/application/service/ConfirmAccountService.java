@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.application.service;
 
 import com.fyrm.fyrm_service.application.port.in.command.ConfirmAccountCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.ConfirmAccountUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.ConfirmAccountUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindConfirmationCodePort;
 import com.fyrm.fyrm_service.application.port.out.PersistConfirmationCodePort;
 import com.fyrm.fyrm_service.application.port.out.PersistUserPort;

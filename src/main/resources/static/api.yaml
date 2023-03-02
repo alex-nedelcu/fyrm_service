@@ -9,6 +9,7 @@ servers:
 tags:
   - name: authentication
   - name: user
+  - name: search-profile
 
 paths:
   '/authentication/signup':
@@ -150,6 +151,74 @@ paths:
       responses:
         '200':
           description: Successfully updated user
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/users/{userId}/search-profiles':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Finds the search profiles associated with a user
+      operationId: findAll
+      tags:
+        - search-profile
+      responses:
+        '200':
+          description: Successfully returns search profiles.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchProfilesByUser'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/search-profiles':
+    post:
+      summary: Create search profile
+      operationId: create
+      tags:
+        - search-profile
+      requestBody:
+        description: Contains search profile information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSearchProfile'
+      responses:
+        '201':
+          description: Search profile successfully created.
+        '401':
+          description: Unauthorized.
+
+  '/search-profiles/{id}':
+    parameters:
+      - $ref: '#/components/parameters/searchProfileIdPathParameter'
+    delete:
+      summary: Deletes a search profile
+      operationId: deleteSearchProfile
+      tags:
+        - search-profile
+      responses:
+        '204':
+          description: Successfully deleted search profile
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      summary: Updates search profile
+      operationId: updateSearchProfile
+      requestBody:
+        description: Contains updated search profile information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSearchProfile'
+      tags:
+        - search-profile
+      responses:
+        '200':
+          description: Successfully updated search profile
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -295,10 +364,164 @@ components:
         - description
         - isSearching
 
+    CreateSearchProfile:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        rentPriceLowerBound:
+          type: number
+          format: double
+        rentPriceUpperBound:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        rentMatesGenderOptions:
+          type: array
+          items:
+            type: string
+        rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        bedroomOptions:
+          type: array
+          items:
+            type: string
+        bathroomOptions:
+          type: array
+          items:
+            type: string
+      required:
+        - userId
+        - rentPriceLowerBound
+        - rentPriceUpperBound
+        - latitude
+        - longitude
+        - rentMatesGenderOptions
+        - rentMateCountOptions
+        - bedroomOptions
+        - bathroomOptions
+
+    UpdateSearchProfile:
+      type: object
+      properties:
+        rentPriceLowerBound:
+          type: number
+          format: double
+        rentPriceUpperBound:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        rentMatesGenderOptions:
+          type: array
+          items:
+            type: string
+        rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        bedroomOptions:
+          type: array
+          items:
+            type: string
+        bathroomOptions:
+          type: array
+          items:
+            type: string
+      required:
+        - rentPriceLowerBound
+        - rentPriceUpperBound
+        - latitude
+        - longitude
+        - rentMatesGenderOptions
+        - rentMateCountOptions
+        - bedroomOptions
+        - bathroomOptions
+
+    SearchProfileByUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        rentPriceLowerBound:
+          type: number
+          format: double
+        rentPriceUpperBound:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        rentMatesGenderOptions:
+          type: array
+          items:
+            type: string
+        rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        bedroomOptions:
+          type: array
+          items:
+            type: string
+        bathroomOptions:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - userId
+        - rentPriceLowerBound
+        - rentPriceUpperBound
+        - latitude
+        - longitude
+        - rentMatesGenderOptions
+        - rentMateCountOptions
+        - bedroomOptions
+        - bathroomOptions
+
+    SearchProfilesByUser:
+      type: object
+      properties:
+        searchProfiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchProfileByUser'
+      required:
+        - searchProfiles
+
   parameters:
     userIdPathParameter:
       name: userId
       description: User id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+    searchProfileIdPathParameter:
+      name: id
+      description: Search profile id
       in: path
       required: true
       schema:

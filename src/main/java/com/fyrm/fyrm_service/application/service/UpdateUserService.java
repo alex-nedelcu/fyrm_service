@@ -1,7 +1,7 @@
 package com.fyrm.fyrm_service.application.service;
 
 import com.fyrm.fyrm_service.application.port.in.command.UpdateUserCommand;
-import com.fyrm.fyrm_service.application.port.in.usecasse.UpdateUserUseCase;
+import com.fyrm.fyrm_service.application.port.in.usecase.UpdateUserUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
 import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
 import com.fyrm.fyrm_service.domain.exception.ResourceNotFoundException;
