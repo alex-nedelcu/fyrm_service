@@ -40,6 +40,12 @@ public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearc
   }
 
   @Override
+  public List<SearchProfile> findAllByIds(List<Long> ids) {
+    List<SearchProfileEntity> entities = searchProfileRepository.findAllById(ids);
+    return searchProfileMapper.toDomainList(entities);
+  }
+
+  @Override
   @Transactional
   public void delete(Long id) {
     searchProfileRepository.deleteById(id);
