@@ -1,6 +1,7 @@
 package com.fyrm.fyrm_service.infrastructure.spring.security.model;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,4 +78,8 @@ public class User {
 
   @Column(name = "is_searching", columnDefinition = "boolean default true", nullable = false)
   private Boolean isSearching;
+
+  public boolean isNot(User other) {
+    return other != null && !Objects.equals(id, other.getId());
+  }
 }

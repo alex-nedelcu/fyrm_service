@@ -1,6 +1,6 @@
 package com.fyrm.fyrm_service.adapters.in.web;
 
-import com.fyrm.fyrm_service.adapters.in.web.converter.SearchProfilesByUserConverter;
+import com.fyrm.fyrm_service.adapters.in.web.converter.searchprofile.SearchProfilesByUserConverter;
 import com.fyrm.fyrm_service.application.port.in.command.CreateSearchProfileCommand;
 import com.fyrm.fyrm_service.application.port.in.command.DeleteSearchProfileCommand;
 import com.fyrm.fyrm_service.application.port.in.command.FindSearchProfilesByUserCommand;
