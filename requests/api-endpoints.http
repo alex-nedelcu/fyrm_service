@@ -4,8 +4,8 @@ accept: */*
 Content-Type: application/json
 
 {
-  "username": "alex",
-  "email": "alex@ubb.ro",
+  "username": "john",
+  "email": "john@ubb.ro",
   "password": "testTest1",
   "role": "ROLE_USER"
 }
@@ -15,7 +15,7 @@ Content-Type: application/json
 %}
 
 ### POST confirm account
-POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=853612
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=938608
 accept: */*
 Content-Type: application/json
 
@@ -38,8 +38,8 @@ accept: */*
 Content-Type: application/json
 
 {
-  "username": "alex",
-  "password": "alexAlex1"
+  "username": "john",
+  "password": "testTest1"
 }
 
 > {%
@@ -64,7 +64,7 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "userId": 74,
+  "userId": 75,
   "rentPriceLowerBound": 120.0,
   "rentPriceUpperBound": 260.0,
   "latitude": 47.231,
@@ -120,3 +120,17 @@ Authorization: Bearer {{jwt_token}}
 DELETE http://localhost:8080/api/v1/fyrm/search-profiles/8
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
+
+### POST propose rent mates
+POST http://localhost:8080/api/v1/fyrm/propose-rent-mates
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "initiatorId": 75,
+  "proposalMaximumSize": 2,
+  "searchProfileIds": [
+    26
+  ]
+}
