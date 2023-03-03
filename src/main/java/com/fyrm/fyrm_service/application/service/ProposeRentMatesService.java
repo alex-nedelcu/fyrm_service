@@ -16,6 +16,7 @@ import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
   private final PersistRentMateProposalPort persistRentMateProposalPort;
 
   @Override
+  @Transactional
   public RentMateProposal propose(ProposeRentMatesCommand proposeRentMatesCommand) {
     RentConnection rentConnection = convertToRentConnectionWithStatus(proposeRentMatesCommand, RentConnectionStatus.ACTIVE);
     var rentConnectionId = persistRentConnectionPort.persistAndFlush(rentConnection);
