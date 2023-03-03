@@ -11,6 +11,6 @@ public class RentConnection {
   Long id;
   Long initiatorId;
   int proposalMaximumSize;
-  List<SearchProfile> usedSearchProfiles;
   RentConnectionStatus status;
+  List<SearchProfile> usedSearchProfiles;
 }
