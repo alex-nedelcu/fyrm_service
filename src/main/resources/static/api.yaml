@@ -592,23 +592,16 @@ components:
         userId:
           type: integer
           format: int64
-        rentConnectionId:
-          type: integer
-          format: int64
         username:
           type: string
         email:
-          type: string
-        birthDate:
           type: string
         description:
           type: string
       required:
         - userId
-        - rentConnectionId
         - username
         - email
-        - birthDate
         - description
 
     ActiveRentConnection:
@@ -633,7 +626,7 @@ components:
     InitiatorStatus:
       type: object
       properties:
-        status:
+        initiatorStatus:
           type: string
           description: |
             Indicates a predefined list of possible statuses in which the initiator can be.
@@ -653,7 +646,7 @@ components:
         associatedRentMateProposal:
           $ref: '#/components/schemas/RentMateProposal'
       required:
-        - status
+        - initiatorStatus
 
   parameters:
     userIdPathParameter:
