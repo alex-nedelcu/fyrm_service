@@ -9,4 +9,6 @@ public interface FindSearchProfilePort {
   Optional<SearchProfile> findById(Long id);
 
   List<SearchProfile> findAllByUserId(Long userId);
+
+  List<SearchProfile> findAllByIds(List<Long> ids);
 }
