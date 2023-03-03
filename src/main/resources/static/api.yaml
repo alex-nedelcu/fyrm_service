@@ -10,6 +10,7 @@ tags:
   - name: authentication
   - name: user
   - name: search-profile
+  - name: rent-connection
 
 paths:
   '/authentication/signup':
@@ -219,6 +220,47 @@ paths:
       responses:
         '200':
           description: Successfully updated search profile
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/propose-rent-mates':
+    post:
+      summary: Creates a list of proposed rent mates based on a similarity score for the rent connection initiator
+      operationId: proposeRentMates
+      tags:
+        - rent-connection
+      requestBody:
+        description: Contains details about the rent connection (initiator, search profiles, proposal size etc.)
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentConnection'
+      responses:
+        '200':
+          description: Successfully proposed rent mates.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentMateProposal'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/find-initiator-status/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Decides the scenario in which the initiator of a rent connection is (MUST_WAIT, CAN_FINALISE, CAN_CREATE)
+      operationId: findInitiatorStatus
+      tags:
+        - rent-connection
+      responses:
+        '200':
+          description: Successfully returns the status of the initiator.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InitiatorStatus'
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -508,6 +550,110 @@ components:
             $ref: '#/components/schemas/SearchProfileByUser'
       required:
         - searchProfiles
+
+    RentConnection:
+      type: object
+      properties:
+        initiatorId:
+          type: integer
+          format: int64
+        proposalMaximumSize:
+          type: integer
+        searchProfileIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+      required:
+        - initiatorId
+        - proposalMaximumSize
+        - searchProfileIds
+
+    RentMateProposal:
+      type: object
+      properties:
+        rentConnectionId:
+          type: integer
+          format: int64
+        proposalSize:
+          type: integer
+        rentMates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProposedRentMate'
+      required:
+        - initiatorId
+        - proposalSize
+        - rentMates
+
+    ProposedRentMate:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        rentConnectionId:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+        birthDate:
+          type: string
+        description:
+          type: string
+      required:
+        - userId
+        - rentConnectionId
+        - username
+        - email
+        - birthDate
+        - description
+
+    ActiveRentConnection:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        initiatorId:
+          type: integer
+          format: int64
+        searchProfileIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+      required:
+        - id
+        - initiatorId
+        - searchProfileIds
+
+    InitiatorStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+            Indicates a predefined list of possible statuses in which the initiator can be.
+
+            * `MUST_WAIT` - Initiator created a rent connection in the last 24 hours and must wait until he/she can create another one
+            * `CAN_FINALISE` - Initiator has an active rent connection which is older than 24 hours and can finalise it in order to create a new one
+            * `CAN_CREATE` - Initiator does not have any active rent connection
+
+          enum:
+            - MUST_WAIT
+            - CAN_FINALISE
+            - CAN_CREATE
+        hoursToWait:
+          type: integer
+        activeRentConnection:
+          $ref: '#/components/schemas/ActiveRentConnection'
+        associatedRentMateProposal:
+          $ref: '#/components/schemas/RentMateProposal'
+      required:
+        - status
 
   parameters:
     userIdPathParameter:
