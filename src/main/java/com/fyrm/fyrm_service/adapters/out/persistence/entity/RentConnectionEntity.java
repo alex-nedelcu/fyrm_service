@@ -1,7 +1,8 @@
 package com.fyrm.fyrm_service.adapters.out.persistence.entity;
 
-import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Identifiable;
+import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
 import com.fyrm.fyrm_service.domain.RentConnectionStatus;
+import java.time.ZonedDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -23,7 +25,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class RentConnectionEntity extends Identifiable {
+public class RentConnectionEntity extends Auditable {
 
   @Column(name = "initiator_id", nullable = false)
   private Long initiatorId;
@@ -33,6 +35,10 @@ public class RentConnectionEntity extends Identifiable {
 
   @Column(name = "status", nullable = false)
   private RentConnectionStatus status;
+
+  @CreationTimestamp
+  @Column(name = "created_at", nullable = false)
+  private ZonedDateTime createdAt;
 
   @ManyToMany(mappedBy = "rentConnections")
   private List<SearchProfileEntity> searchProfiles;
