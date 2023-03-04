@@ -1,7 +1,6 @@
 package com.fyrm.fyrm_service.adapters.in.web.converter.rentconnection;
 
 import com.fyrm.fyrm_service.domain.RentConnection;
-import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.generatedapi.dtos.ActiveRentConnectionDto;
 import com.fyrm.fyrm_service.infrastructure.spring.mvc.Converter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ public class ActiveRentConnectionConverter implements Converter<RentConnection, 
 
     return new ActiveRentConnectionDto()
         .id(rentConnection.getId())
-        .initiatorId(rentConnection.getInitiatorId())
-        .searchProfileIds(rentConnection.getUsedSearchProfiles().stream().map(SearchProfile::getId).toList());
+        .initiatorId(rentConnection.getInitiatorId());
   }
 }

@@ -634,15 +634,9 @@ components:
         initiatorId:
           type: integer
           format: int64
-        searchProfileIds:
-          type: array
-          items:
-            type: integer
-            format: int64
       required:
         - id
         - initiatorId
-        - searchProfileIds
 
     UpdateRentConnection:
       type: object
@@ -660,6 +654,8 @@ components:
             - ACTIVE
             - SUCCESS
             - FAILURE
+      required:
+        - rentConnectionStatus
 
     InitiatorStatus:
       type: object

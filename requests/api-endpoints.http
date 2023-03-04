@@ -140,3 +140,13 @@ GET http://localhost:8080/api/v1/fyrm/find-initiator-status/1
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
+
+### PATCH update rent connection
+PATCH http://localhost:8080/api/v1/fyrm/rent-connections/2
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "rentConnectionStatus": "SUCCESS"
+}
