@@ -56,7 +56,7 @@ public class RentConnectionApiController implements RentConnectionApi {
   @Override
   public ResponseEntity<Void> updateRentConnection(Long id, UpdateRentConnectionDto updateRentConnectionDto) {
     UpdateRentConnectionCommand command = new UpdateRentConnectionCommand(
-        rentConnectionStatusMapper.toDomain(updateRentConnectionDto.getRentConnectionStatus())
+        id, rentConnectionStatusMapper.toDomain(updateRentConnectionDto.getRentConnectionStatus())
     );
     updateRentConnectionUseCase.update(command);
     return ResponseEntity.noContent().build();

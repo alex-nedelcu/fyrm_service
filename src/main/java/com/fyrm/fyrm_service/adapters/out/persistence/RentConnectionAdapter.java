@@ -27,6 +27,12 @@ public class RentConnectionAdapter implements PersistRentConnectionPort, FindRen
   }
 
   @Override
+  public Long persist(RentConnection rentConnection) {
+    var savedRentConnectionEntity = rentConnectionRepository.save(rentConnectionMapper.toEntity(rentConnection));
+    return savedRentConnectionEntity.getId();
+  }
+
+  @Override
   public Optional<RentConnection> findById(Long id) {
     Optional<RentConnectionEntity> optionalEntity = rentConnectionRepository.findById(id);
     return optionalEntity.map(rentConnectionMapper::toDomain);
