@@ -6,4 +6,8 @@ import java.util.Optional;
 public interface FindRentConnectionPort {
 
   Optional<RentConnection> findById(Long id);
+
+  Optional<RentConnection> findLatestActiveByUserId(Long userId);
+
+  boolean hasAnyActive(Long userId);
 }
