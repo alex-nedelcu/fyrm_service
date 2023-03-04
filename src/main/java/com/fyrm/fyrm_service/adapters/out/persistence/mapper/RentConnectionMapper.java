@@ -18,6 +18,7 @@ public class RentConnectionMapper implements IDomainEntityMapper<RentConnectionE
         .proposalMaximumSize(rentConnection.getProposalMaximumSize())
         .status(rentConnection.getStatus())
         .searchProfiles(searchProfileMapper.toEntityList(rentConnection.getUsedSearchProfiles()))
+        .createdAt(rentConnection.getCreatedAt())
         .build();
   }
 
@@ -29,6 +30,7 @@ public class RentConnectionMapper implements IDomainEntityMapper<RentConnectionE
         .proposalMaximumSize(rentConnectionEntity.getProposalMaximumSize())
         .status(rentConnectionEntity.getStatus())
         .usedSearchProfiles(searchProfileMapper.toDomainList(rentConnectionEntity.getSearchProfiles()))
+        .createdAt(rentConnectionEntity.getCreatedAt())
         .build();
   }
 }
