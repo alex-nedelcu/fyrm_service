@@ -1,5 +1,6 @@
 package com.fyrm.fyrm_service.domain;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,9 @@ public class RentConnection {
   int proposalMaximumSize;
   RentConnectionStatus status;
   List<SearchProfile> usedSearchProfiles;
+  ZonedDateTime createdAt;
+
+  public boolean isActive() {
+    return status != null && status == RentConnectionStatus.ACTIVE;
+  }
 }

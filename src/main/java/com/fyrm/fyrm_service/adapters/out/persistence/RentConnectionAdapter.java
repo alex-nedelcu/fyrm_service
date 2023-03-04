@@ -1,5 +1,7 @@
 package com.fyrm.fyrm_service.adapters.out.persistence;
 
+import static com.fyrm.fyrm_service.domain.RentConnectionStatus.ACTIVE;
+
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.RentConnectionEntity;
 import com.fyrm.fyrm_service.adapters.out.persistence.mapper.RentConnectionMapper;
 import com.fyrm.fyrm_service.adapters.out.persistence.repository.RentConnectionRepository;
@@ -7,6 +9,7 @@ import com.fyrm.fyrm_service.application.port.out.FindRentConnectionPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentConnectionPort;
 import com.fyrm.fyrm_service.domain.RentConnection;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
@@ -27,5 +30,19 @@ public class RentConnectionAdapter implements PersistRentConnectionPort, FindRen
   public Optional<RentConnection> findById(Long id) {
     Optional<RentConnectionEntity> optionalEntity = rentConnectionRepository.findById(id);
     return optionalEntity.map(rentConnectionMapper::toDomain);
+  }
+
+  @Override
+  public Optional<RentConnection> findLatestActiveByUserId(Long userId) {
+    Optional<RentConnectionEntity> optionalEntity = rentConnectionRepository.findFirstByInitiatorIdAndStatusOrderByCreatedAtDesc(
+        userId, ACTIVE
+    );
+    return optionalEntity.map(rentConnectionMapper::toDomain);
+  }
+
+  @Override
+  public boolean hasAnyActive(Long userId) {
+    List<RentConnection> rentConnections = rentConnectionMapper.toDomainList(rentConnectionRepository.findAllByInitiatorId(userId));
+    return rentConnections.stream().anyMatch(RentConnection::isActive);
   }
 }

@@ -1,8 +1,12 @@
 package com.fyrm.fyrm_service.adapters.in.web;
 
+import com.fyrm.fyrm_service.adapters.in.web.converter.rentconnection.InitiatorCurrentStateConverter;
 import com.fyrm.fyrm_service.adapters.in.web.converter.rentconnection.RentMateProposalConverter;
+import com.fyrm.fyrm_service.application.port.in.command.FindInitiatorStatusCommand;
 import com.fyrm.fyrm_service.application.port.in.command.ProposeRentMatesCommand;
+import com.fyrm.fyrm_service.application.port.in.usecase.FindInitiatorStatusUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecase.ProposeRentMatesUseCase;
+import com.fyrm.fyrm_service.domain.InitiatorCurrentState;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
 import com.fyrm.fyrm_service.generatedapi.RentConnectionApi;
 import com.fyrm.fyrm_service.generatedapi.dtos.InitiatorStatusDto;
@@ -21,12 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class RentConnectionApiController implements RentConnectionApi {
 
   private final ProposeRentMatesUseCase proposeRentMatesUseCase;
+  private final FindInitiatorStatusUseCase findInitiatorStatusUseCase;
   private final RentMateProposalConverter rentMateProposalConverter;
+  private final InitiatorCurrentStateConverter initiatorCurrentStateConverter;
 
   @Override
-
   public ResponseEntity<InitiatorStatusDto> findInitiatorStatus(Long userId) {
-    return null;
+    FindInitiatorStatusCommand command = new FindInitiatorStatusCommand(userId);
+    InitiatorCurrentState state = findInitiatorStatusUseCase.findStatus(command);
+    return ResponseEntity.ok(initiatorCurrentStateConverter.apply(state));
   }
 
   @Override
