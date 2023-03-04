@@ -264,6 +264,27 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/rent-connections/{rentConnectionId}':
+    parameters:
+      - $ref: '#/components/parameters/rentConnectionIdPathParameter'
+    patch:
+      summary: Updates rent connection
+      operationId: updateRentConnection
+      requestBody:
+        description: Contains updated rent connection information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRentConnection'
+      tags:
+        - rent-connection
+      responses:
+        '200':
+          description: Successfully updated rent connection
+        '404':
+          $ref: '#/components/responses/NotFound'
+
 components:
   schemas:
     BusinessException:
@@ -623,6 +644,23 @@ components:
         - initiatorId
         - searchProfileIds
 
+    UpdateRentConnection:
+      type: object
+      properties:
+        rentConnectionStatus:
+          type: string
+          description: |
+            Indicates a predefined list of possible statuses in which a rent connection can be.
+
+            * `ACTIVE` - Rent connection is still active
+            * `SUCCESS` - Rent connection is finalised as successful
+            * `FAILURE` - Rent connection is finalised as failure
+
+          enum:
+            - ACTIVE
+            - SUCCESS
+            - FAILURE
+
     InitiatorStatus:
       type: object
       properties:
@@ -662,6 +700,15 @@ components:
     searchProfileIdPathParameter:
       name: id
       description: Search profile id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+    rentConnectionIdPathParameter:
+      name: id
+      description: Rent connection id
       in: path
       required: true
       schema:
