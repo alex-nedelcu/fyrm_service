@@ -1,6 +1,6 @@
 package com.fyrm.fyrm_service.adapters.out.persistence.entity;
 
-import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Identifiable;
+import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -29,7 +29,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class SearchProfileEntity extends Identifiable {
+public class SearchProfileEntity extends Auditable {
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)

@@ -1,6 +1,6 @@
 package com.fyrm.fyrm_service.adapters.out.persistence.entity;
 
-import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Identifiable;
+import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class RentMateProposalEntity extends Identifiable {
+public class RentMateProposalEntity extends Auditable {
 
   @Column(name = "rent_connection_id", nullable = false)
   private Long rentConnectionId;
