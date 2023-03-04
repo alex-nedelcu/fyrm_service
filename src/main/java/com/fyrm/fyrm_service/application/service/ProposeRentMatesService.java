@@ -6,6 +6,7 @@ import com.fyrm.fyrm_service.application.port.out.FindSearchProfilePort;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentConnectionPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentMateProposalPort;
+import com.fyrm.fyrm_service.domain.ProposedRentMate;
 import com.fyrm.fyrm_service.domain.RentConnection;
 import com.fyrm.fyrm_service.domain.RentConnectionStatus;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
@@ -13,6 +14,7 @@ import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.domain.exception.ResourceNotFoundException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,7 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
         .proposalMaximumSize(proposeRentMatesCommand.getProposalMaximumSize())
         .status(status)
         .usedSearchProfiles(findSearchProfilePort.findAllByIds(proposeRentMatesCommand.getSearchProfileIds()))
+        .createdAt(ZonedDateTime.now())
         .build();
   }
 
@@ -58,8 +61,21 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
     List<User> allUsersExceptInitiator = findUserPort.findAll().stream().filter(user -> user.isNot(initiator)).toList();
 
     // Algorithm start (mock)
-    List<User> proposed = new ArrayList<>();
-    proposed.addAll(allUsersExceptInitiator.subList(0, proposalMaximumSize));
+    List<ProposedRentMate> proposed = new ArrayList<>();
+    proposed.addAll(
+        allUsersExceptInitiator
+            .subList(0, proposalMaximumSize)
+            .stream()
+            .map(user -> ProposedRentMate.builder()
+                .userId(user.getId())
+                .rentConnectionId(rentConnectionId)
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .description(user.getDescription())
+                .build()
+            )
+            .toList()
+    );
     // Algorithm end (mock)
 
     RentMateProposal proposal = RentMateProposal.builder()
