@@ -641,6 +641,7 @@ components:
             - CAN_CREATE
         hoursToWait:
           type: integer
+          format: int64
         activeRentConnection:
           $ref: '#/components/schemas/ActiveRentConnection'
         associatedRentMateProposal:
