@@ -148,5 +148,5 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "rentConnectionStatus": "SUCCESS"
+  "rentConnectionStatus": "FAILURE"
 }

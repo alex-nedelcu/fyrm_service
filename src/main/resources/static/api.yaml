@@ -703,7 +703,7 @@ components:
         format: int64
 
     rentConnectionIdPathParameter:
-      name: id
+      name: rentConnectionId
       description: Rent connection id
       in: path
       required: true
