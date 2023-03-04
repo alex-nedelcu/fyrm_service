@@ -79,6 +79,6 @@ public class SearchProfileApiController implements SearchProfileApi {
         updateSearchProfileDto.getBathroomOptions()
     );
     updateSearchProfileUseCase.update(command);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }
