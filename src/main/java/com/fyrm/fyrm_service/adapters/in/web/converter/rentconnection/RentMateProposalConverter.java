@@ -1,8 +1,10 @@
 package com.fyrm.fyrm_service.adapters.in.web.converter.rentconnection;
 
+import com.fyrm.fyrm_service.domain.ProposedRentMate;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
 import com.fyrm.fyrm_service.generatedapi.dtos.RentMateProposalDto;
 import com.fyrm.fyrm_service.infrastructure.spring.mvc.Converter;
+import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,11 @@ public class RentMateProposalConverter implements Converter<RentMateProposal, Re
     return new RentMateProposalDto()
         .rentConnectionId(rentMateProposal.getRentConnectionId())
         .proposalSize(rentMateProposal.getProposedRentMates().size())
-        .rentMates(rentMateProposal.getProposedRentMates().stream().map(proposedRentMateConverter).toList());
+        .rentMates(rentMateProposal.getProposedRentMates()
+            .stream()
+            .sorted(Comparator.comparing(ProposedRentMate::getUserId))
+            .map(proposedRentMateConverter)
+            .toList()
+        );
   }
 }
