@@ -64,7 +64,7 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
     List<ProposedRentMate> proposed = new ArrayList<>();
     proposed.addAll(
         allUsersExceptInitiator
-            .subList(0, proposalMaximumSize)
+            .subList(0, Math.min(proposalMaximumSize, allUsersExceptInitiator.size()))
             .stream()
             .map(user -> ProposedRentMate.builder()
                 .userId(user.getId())
