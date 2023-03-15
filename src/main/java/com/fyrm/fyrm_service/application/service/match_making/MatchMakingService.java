@@ -66,9 +66,11 @@ public class MatchMakingService {
     String firstGenderOption = first.getRentMatesGenderOptions().get(0);
     String secondGenderOption = second.getRentMatesGenderOptions().get(0);
 
-    boolean match = isAny(firstGenderOption)
-        || isAny(secondGenderOption)
-        || areIdentical(firstGenderOption, secondGenderOption);
+    boolean areBothAny = isAny(firstGenderOption) && isAny(secondGenderOption);
+    boolean firstAnyOrMatching = isAny(firstGenderOption) || areIdentical(firstGenderOption, second.getUser().getGender());
+    boolean secondAnyOrMatching = isAny(secondGenderOption) || areIdentical(secondGenderOption, first.getUser().getGender());
+    boolean notBothAnyButCompatible = !areBothAny && firstAnyOrMatching && secondAnyOrMatching;
+    boolean match = areBothAny || notBothAnyButCompatible;
 
     return match ? IS_MATCH_TWO_OPTIONS_SCORE : IS_NOT_MATCH_TWO_OPTIONS_SCORE;
   }
