@@ -287,6 +287,13 @@
       <groupId>com.sun.mail</groupId>
       <version>${jakarta-mail.version}</version>
     </dependency>
+
+    <dependency>
+      <artifactId>lucene-core</artifactId>
+      <groupId>org.apache.lucene</groupId>
+      <version>9.5.0</version>
+    </dependency>
+
   </dependencies>
 
   <dependencyManagement>

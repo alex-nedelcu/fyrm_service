@@ -40,4 +40,7 @@ public class VerifiedStudentEntity extends Auditable {
 
   @Column(name = "faculty", nullable = false)
   private String faculty;
+
+  @Column(name = "gender", nullable = false)
+  private String gender;
 }
