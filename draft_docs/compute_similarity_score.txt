@@ -1,0 +1,61 @@
+locations:
+  distance in km: x
+  categories:          <1km, <3km, <5km, <8km, >8km
+  scores per category:   50,   35,   15, 5,     -70
+
+[done]count options score:
+  common elems: x
+  weight: 5
+  score: x * 5
+
+[done]gender score:
+  valid:    + 40
+  no valid: - 30
+
+price:
+  difference between averages: x
+  categories:          <50$, <100$, <200$, >200$
+  scores per category:   50,    30,    10,   -70
+
+[done]bedroom score: 
+  valid:    + 40
+  no valid: - 30
+
+[done]bathroom score:
+  common elems: x
+  weight: 3
+  score: x * 3
+
+------------------------------------------------------------------------------------------------------------------------------
+
+List<String> rentMatesGenderOptions;
+  - initaitor search profile gender: any => candidates that have search profile gender any / male / female are valid
+  - initaitor search profile gender: male => candidates that have search profile gender  male are valid
+  - initaitor search profile gender: female male => candidates that have search profile gender female male are valid
+
+List<String> bedroomOptions;
+  - initaitor search profile bedroom: any => all candidates are valid
+  - initaitor search profile bedroom: shared => all candidates are valid except those who have bedroom own and count 1
+  - initaitor search profile bedroom: own => all candidates are valid except those who have bedroom shared and count 1
+
+List<String> bathroomOptions;
+  - same as for count
+  - candidate is valid if any of bathroom options can be found in initiator bathroom options
+
+List<String> rentMateCountOptions (1,2,3,>3);
+  - initaitor search profile count contains: 1 => candidates whose search profile count contains 1 are valid
+  - initaitor search profile count contains: 2 => candidates whose search profile count contains 2 are valid
+  - initaitor search profile count contains: 3 => candidates whose search profile count contains 3 are valid
+  - initaitor search profile count contains: > 3 => candidates whose search profile count contains > 3 are valid
+
+double latitude;
+double longitude;
+  - location 1 (latitude 1, longitude 1)
+  - location 2 (latitude 2, longitude 2)
+  - compute the distance between the 2 locations * weight coefficient
+
+double rentPriceLowerBound;
+double rentPriceUpperBound;
+  - find average between rentPriceLowerBound and rentPriceUpperBound and calculate the difference * weight
+
+------------------------------------------------------------------------------------------------------------------------------
