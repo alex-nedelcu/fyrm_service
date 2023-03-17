@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class MatchMakingService {
 
   private static final String ANY = "any";
+  private static final double ONE_KILOMETER_IN_METERS = 1000.0;
   private final List<String> COUNT_OPTIONS_LARGER_THAN_ONE = List.of("2", "3", ">3");
   private final List<Pair<Double, Double>> DISTANCE_CATEGORIES = List.of(Pair.of(1.0, 50.0), Pair.of(3.0, 35.0), Pair.of(5.0, 15.0), Pair.of(8.0, 5.0));
   private final List<Pair<Double, Double>> PRICE_DIFFERENCE_CATEGORIES = List.of(Pair.of(50.0, 50.0), Pair.of(100.0, 30.0), Pair.of(200.0, 10.0));
@@ -32,12 +33,12 @@ public class MatchMakingService {
   private double COUNT_OPTIONS_WEIGHT;
 
   public double computeMatchingScore(SearchProfile first, SearchProfile second) {
-    return computeRentPriceScore(first, second) +
-        computeDesiredLocationMatch(first, second) +
-        computeGenderOptionsMatch(first, second) +
-        computeCountOptionsMatch(first, second) +
-        computeBedroomOptionsMatch(first, second) +
-        computeBathroomOptionsMatch(first, second);
+    return computeRentPriceScore(first, second)
+        + computeDesiredLocationMatch(first, second)
+        + computeGenderOptionsMatch(first, second)
+        + computeCountOptionsMatch(first, second)
+        + computeBedroomOptionsMatch(first, second)
+        + computeBathroomOptionsMatch(first, second);
   }
 
   private double computeBathroomOptionsMatch(SearchProfile first, SearchProfile second) {
@@ -108,8 +109,7 @@ public class MatchMakingService {
   }
 
   private double distanceInKilometersBetween(double latitude1, double longitude1, double latitude2, double longitude2) {
-    double kilometerInMeters = 1000.0;
-    return SloppyMath.haversinMeters(latitude1, longitude1, latitude2, longitude2) / kilometerInMeters;
+    return SloppyMath.haversinMeters(latitude1, longitude1, latitude2, longitude2) / ONE_KILOMETER_IN_METERS;
   }
 
   private boolean commonCountOptionLargerThanOne(List<String> firstCountOptions, List<String> secondCountOptions) {

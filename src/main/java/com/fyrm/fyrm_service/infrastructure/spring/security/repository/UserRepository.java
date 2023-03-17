@@ -1,6 +1,7 @@
 package com.fyrm.fyrm_service.infrastructure.spring.security.repository;
 
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
   boolean existsByUsername(String username);
 
   boolean existsByEmail(String email);
+
+  List<User> findByIsSearchingAndIdNot(boolean isSearching, Long id);
 }

@@ -1,3 +1,7 @@
+Avoid users that were already proposed in the last X days but the rent connection was registered as a failure
+
+------------------------------------------------------------------------------------------------------------------------------
+
 locations:
   distance in km: x
   categories:          <1km, <3km, <5km, <8km, >8km

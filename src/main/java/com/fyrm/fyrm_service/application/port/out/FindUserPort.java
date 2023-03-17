@@ -10,6 +10,8 @@ public interface FindUserPort {
 
   List<User> findAll();
 
+  List<User> findSearchingUsersExcept(Long exceptId);
+
   boolean existsByUsername(String username);
 
   boolean existsByEmail(String email);

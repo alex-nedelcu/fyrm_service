@@ -26,6 +26,11 @@ public class UserAdapter implements FindUserPort, PersistUserPort {
   }
 
   @Override
+  public List<User> findSearchingUsersExcept(Long exceptId) {
+    return userRepository.findByIsSearchingAndIdNot(true, exceptId);
+  }
+
+  @Override
   public boolean existsByUsername(String username) {
     return userRepository.existsByUsername(username);
   }
