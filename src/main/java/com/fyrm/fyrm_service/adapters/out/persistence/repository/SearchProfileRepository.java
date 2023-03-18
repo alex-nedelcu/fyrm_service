@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SearchProfileRepository extends BaseRepository<SearchProfileEntity, Long> {
 
-  List<SearchProfileEntity> findAllByUserId(Long userId);
+  List<SearchProfileEntity> findAllByUser_Id(Long userId);
+
+  List<SearchProfileEntity> findAllByUser_IdIn(List<Long> userIds);
 }

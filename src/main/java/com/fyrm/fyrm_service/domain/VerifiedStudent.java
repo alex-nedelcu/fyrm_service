@@ -15,4 +15,5 @@ public class VerifiedStudent {
   ZonedDateTime birthDate;
   String university;
   String faculty;
+  String gender;
 }

@@ -16,6 +16,7 @@ public class VerifiedStudentMapper implements IDomainEntityMapper<VerifiedStuden
         .birthDate(verifiedStudent.getBirthDate())
         .university(verifiedStudent.getUniversity())
         .faculty(verifiedStudent.getLastName())
+        .gender(verifiedStudent.getGender())
         .build();
   }
 
@@ -29,6 +30,7 @@ public class VerifiedStudentMapper implements IDomainEntityMapper<VerifiedStuden
         .birthDate(verifiedStudentEntity.getBirthDate())
         .university(verifiedStudentEntity.getUniversity())
         .faculty(verifiedStudentEntity.getFaculty())
+        .gender(verifiedStudentEntity.getGender())
         .build();
   }
 }

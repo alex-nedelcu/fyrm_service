@@ -1,13 +1,13 @@
 package com.fyrm.fyrm_service.adapters.out.persistence.entity;
 
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
-import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
-import java.time.ZonedDateTime;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,28 +17,19 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "confirmation_codes", schema = "public")
+@Table(name = "rent_mate_proposals", schema = "public")
 @SuperBuilder
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ConfirmationCodeEntity extends Auditable {
+public class RentMateProposalEntity extends Auditable {
 
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @Column(name = "rent_connection_id", nullable = false)
+  private Long rentConnectionId;
 
-  @Column(name = "code", nullable = false, unique = true)
-  private String code;
-
-  @Column(name = "created_at", nullable = false)
-  private ZonedDateTime createdAt;
-
-  @Column(name = "expires_at", nullable = false)
-  private ZonedDateTime expiresAt;
-
-  @Column(name = "confirmed_at")
-  private ZonedDateTime confirmedAt;
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "rent_mate_proposal_id", nullable = false)
+  private List<ProposedRentMateEntity> proposedRentMates;
 }

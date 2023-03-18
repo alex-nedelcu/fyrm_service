@@ -4,8 +4,8 @@ accept: */*
 Content-Type: application/json
 
 {
-  "username": "alex",
-  "email": "alex@ubb.ro",
+  "username": "john",
+  "email": "john@ubb.ro",
   "password": "testTest1",
   "role": "ROLE_USER"
 }
@@ -15,7 +15,7 @@ Content-Type: application/json
 %}
 
 ### POST confirm account
-POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=853612
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=839030
 accept: */*
 Content-Type: application/json
 
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "password": "alexAlex1"
+  "password": "testTest1"
 }
 
 > {%
@@ -47,7 +47,7 @@ Content-Type: application/json
 %}
 
 ### PATCH update user with description and isSearching flag
-PATCH http://localhost:8080/api/v1/fyrm/users/69
+PATCH http://localhost:8080/api/v1/fyrm/users/1
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
@@ -64,38 +64,38 @@ Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "userId": 74,
-  "rentPriceLowerBound": 120.0,
-  "rentPriceUpperBound": 260.0,
-  "latitude": 47.231,
-  "longitude": -28.4392,
+  "userId": 1,
+  "rentPriceLowerBound": 400.0,
+  "rentPriceUpperBound": 500.0,
+  "latitude": 1.1,
+  "longitude": -2.2,
   "rentMatesGenderOptions": [
-    "any"
+    "female"
   ],
   "rentMateCountOptions": [
-    "1"
+    "1",
+    "2"
   ],
   "bedroomOptions": [
-    "own"
+    "shared"
   ],
   "bathroomOptions": [
-    "2",
-    "> 2"
+    "1"
   ]
 }
 
 
 ### PATCH update search profile
-PATCH http://localhost:8080/api/v1/fyrm/search-profiles/14
+PATCH http://localhost:8080/api/v1/fyrm/search-profiles/1
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 {
-  "rentPriceLowerBound": 0.0,
-  "rentPriceUpperBound": 800.0,
-  "latitude": 69.123,
-  "longitude": -69.123,
+  "rentPriceLowerBound": 300.0,
+  "rentPriceUpperBound": 500.0,
+  "latitude": 1.1,
+  "longitude": -2.2,
   "rentMatesGenderOptions": [
     "female"
   ],
@@ -112,11 +112,41 @@ Authorization: Bearer {{jwt_token}}
 }
 
 ### GET search profiles by user id
-GET http://localhost:8080/api/v1/fyrm/users/74/search-profiles
+GET http://localhost:8080/api/v1/fyrm/users/1/search-profiles
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 ### DELETE search profile
-DELETE http://localhost:8080/api/v1/fyrm/search-profiles/8
+DELETE http://localhost:8080/api/v1/fyrm/search-profiles/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
+
+### POST propose rent mates
+POST http://localhost:8080/api/v1/fyrm/propose-rent-mates
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "initiatorId": 1,
+  "proposalMaximumSize": 2,
+  "searchProfileIds": [
+    1
+  ]
+}
+
+### GET initiator status
+GET http://localhost:8080/api/v1/fyrm/find-initiator-status/1
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+### PATCH update rent connection
+PATCH http://localhost:8080/api/v1/fyrm/rent-connections/2
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "rentConnectionStatus": "FAILURE"
+}

@@ -20,10 +20,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @SuperBuilder
 @Data
-public abstract class Identifiable implements Persistable<Long>, Serializable {
+public abstract class Auditable implements Persistable<Long>, Serializable {
 
   @Serial
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = -2066754388726974124L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,7 +15,12 @@
 - start PostgreSQL server using [Postgres GUI application](https://postgresapp.com/downloads.html)
 - `mvn clean install`
 - locally create a database called `fyrm` owned by user `postgres`
-- start `maildev` mail server: `docker run -p 1080:1080 -p 1025:1025 maildev/maildev`
+- start `maildev` mail server:
+
+```bash 
+docker run -p 1080:1080 -p 1025:1025 maildev/maildev
+```
+
 - go to http://0.0.0.0:1080 to see the emails
 - start Spring Boot Application
 

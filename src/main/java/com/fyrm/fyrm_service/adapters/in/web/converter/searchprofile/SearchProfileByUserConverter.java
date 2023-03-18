@@ -1,4 +1,4 @@
-package com.fyrm.fyrm_service.adapters.in.web.converter;
+package com.fyrm.fyrm_service.adapters.in.web.converter.searchprofile;
 
 import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.generatedapi.dtos.SearchProfileByUserDto;
