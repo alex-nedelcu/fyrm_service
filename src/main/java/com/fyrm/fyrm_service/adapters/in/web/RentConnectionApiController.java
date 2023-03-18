@@ -6,12 +6,14 @@ import com.fyrm.fyrm_service.adapters.in.web.mapper.RentConnectionStatusMapper;
 import com.fyrm.fyrm_service.application.port.in.command.FindInitiatorStatusCommand;
 import com.fyrm.fyrm_service.application.port.in.command.ProposeRentMatesCommand;
 import com.fyrm.fyrm_service.application.port.in.command.UpdateRentConnectionCommand;
+import com.fyrm.fyrm_service.application.port.in.usecase.FindActiveRentConnectionsCountUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecase.FindInitiatorStatusUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecase.ProposeRentMatesUseCase;
 import com.fyrm.fyrm_service.application.port.in.usecase.UpdateRentConnectionUseCase;
 import com.fyrm.fyrm_service.domain.InitiatorCurrentState;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
 import com.fyrm.fyrm_service.generatedapi.RentConnectionApi;
+import com.fyrm.fyrm_service.generatedapi.dtos.ActiveRentConnectionsCountDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.InitiatorStatusDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.RentConnectionDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.RentMateProposalDto;
@@ -31,9 +33,16 @@ public class RentConnectionApiController implements RentConnectionApi {
   private final ProposeRentMatesUseCase proposeRentMatesUseCase;
   private final FindInitiatorStatusUseCase findInitiatorStatusUseCase;
   private final UpdateRentConnectionUseCase updateRentConnectionUseCase;
+  private final FindActiveRentConnectionsCountUseCase findActiveRentConnectionsCountUseCase;
   private final RentMateProposalConverter rentMateProposalConverter;
   private final InitiatorCurrentStateConverter initiatorCurrentStateConverter;
   private final RentConnectionStatusMapper rentConnectionStatusMapper;
+
+  @Override
+  public ResponseEntity<ActiveRentConnectionsCountDto> findActiveRentConnectionsCount() {
+    var response = new ActiveRentConnectionsCountDto().count(findActiveRentConnectionsCountUseCase.find());
+    return ResponseEntity.ok(response);
+  }
 
   @Override
   public ResponseEntity<InitiatorStatusDto> findInitiatorStatus(Long userId) {

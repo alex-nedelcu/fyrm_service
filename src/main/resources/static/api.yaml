@@ -246,6 +246,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/rent-connections/active/count':
+    get:
+      summary: Finds the number of rent connections
+      operationId: findActiveRentConnectionsCount
+      tags:
+        - rent-connection
+      responses:
+        '200':
+          description: Successfully returns the number of active rent connections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActiveRentConnectionsCount'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   '/find-initiator-status/{userId}':
     parameters:
       - $ref: '#/components/parameters/userIdPathParameter'
@@ -682,6 +698,14 @@ components:
           $ref: '#/components/schemas/RentMateProposal'
       required:
         - initiatorStatus
+
+    ActiveRentConnectionsCount:
+      type: object
+      properties:
+        count:
+          type: integer
+      required:
+        - count
 
   parameters:
     userIdPathParameter:

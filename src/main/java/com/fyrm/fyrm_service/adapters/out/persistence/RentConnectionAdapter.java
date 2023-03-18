@@ -66,4 +66,9 @@ public class RentConnectionAdapter implements PersistRentConnectionPort, FindRen
         .map(Auditable::getId)
         .toList();
   }
+
+  @Override
+  public int findActiveRentConnectionsCount() {
+    return rentConnectionRepository.countByStatus(ACTIVE);
+  }
 }
