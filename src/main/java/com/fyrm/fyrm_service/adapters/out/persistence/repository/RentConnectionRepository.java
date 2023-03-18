@@ -16,4 +16,6 @@ public interface RentConnectionRepository extends BaseRepository<RentConnectionE
   List<RentConnectionEntity> findAllByInitiatorId(Long initiatorId);
 
   List<RentConnectionEntity> findAllByInitiatorIdAndStatusAndCreatedAtAfter(Long initiatorId, RentConnectionStatus status, ZonedDateTime after);
+
+  int countByStatus(RentConnectionStatus status);
 }
