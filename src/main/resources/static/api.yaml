@@ -11,6 +11,7 @@ tags:
   - name: user
   - name: search-profile
   - name: rent-connection
+  - name: chat
 
 paths:
   '/authentication/signup':
@@ -298,6 +299,24 @@ paths:
       responses:
         '200':
           description: Successfully updated rent connection
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/chat-messages/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Finds all the messages that are either sent by or sent to user with received id
+      operationId: findChatMessagesByUser
+      tags:
+        - chat
+      responses:
+        '200':
+          description: Successfully returns chat messages of user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessagesByUser'
         '404':
           $ref: '#/components/responses/NotFound'
 
@@ -707,7 +726,7 @@ components:
       required:
         - count
 
-    ChatMessage:
+    ReceivedChatMessage:
       type: object
       properties:
         content:
@@ -725,6 +744,46 @@ components:
         - fromId
         - toId
         - toUsername
+
+    ChatMessagesByUser:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/FetchedChatMessage'
+
+    FetchedChatMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        content:
+          type: string
+        fromId:
+          type: integer
+          format: int64
+        toId:
+          type: integer
+          format: int64
+        fromUsername:
+          type: string
+        toUsername:
+          type: string
+        sentAtHoursMinutesFormat:
+          type: string
+        sentOnDayMonthYearFormat:
+          type: string
+      required:
+        - id
+        - content
+        - fromId
+        - toId
+        - fromUsername
+        - toUsername
+        - sentAtHoursMinutesFormat
+        - sentOnDayMonthYearFormat
 
   parameters:
     userIdPathParameter:

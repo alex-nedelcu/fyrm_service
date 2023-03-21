@@ -39,7 +39,7 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "password": "testTest1"
+  "password": "alexAlex1"
 }
 
 > {%
@@ -150,3 +150,8 @@ Authorization: Bearer {{jwt_token}}
 {
   "rentConnectionStatus": "FAILURE"
 }
+
+### GET messages by user
+GET http://localhost:8080/api/v1/fyrm/chat-messages/3
+Accept: application/json
+Authorization: Bearer {{jwt_token}}

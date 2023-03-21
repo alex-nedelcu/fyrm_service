@@ -8,7 +8,7 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
-public class SendMessageCommand extends SelfValidating<SendMessageCommand> {
+public class ProcessMessageCommand extends SelfValidating<ProcessMessageCommand> {
 
   @NotEmpty(message = "error.validation.content.is.mandatory")
   String content;
@@ -21,7 +21,7 @@ public class SendMessageCommand extends SelfValidating<SendMessageCommand> {
   @NotEmpty(message = "error.validation.username.is.mandatory")
   String toUsername;
 
-  public SendMessageCommand(String content, Long fromId, String fromUsername, Long toId, String toUsername) {
+  public ProcessMessageCommand(String content, Long fromId, String fromUsername, Long toId, String toUsername) {
     this.content = content;
     this.fromId = fromId;
     this.fromUsername = fromUsername;

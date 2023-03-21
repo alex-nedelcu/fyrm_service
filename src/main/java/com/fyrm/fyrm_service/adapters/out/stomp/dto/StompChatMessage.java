@@ -1,12 +1,11 @@
-package com.fyrm.fyrm_service.domain;
+package com.fyrm.fyrm_service.adapters.out.stomp.dto;
 
-import java.time.ZonedDateTime;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class ChatMessage {
+public class StompChatMessage {
 
   Long id;
   String content;
@@ -14,5 +13,6 @@ public class ChatMessage {
   String fromUsername;
   Long toId;
   String toUsername;
-  ZonedDateTime sentAt;
+  String sentAtHoursMinutesFormat;
+  String sentOnDayMonthYearFormat;
 }
