@@ -1,6 +1,7 @@
 package com.fyrm.fyrm_service.adapters.out.stomp;
 
 import com.fyrm.fyrm_service.adapters.out.stomp.converter.StompChatMessageConverter;
+import com.fyrm.fyrm_service.adapters.out.stomp.dto.StompChatMessage;
 import com.fyrm.fyrm_service.application.port.out.SendMessagePort;
 import com.fyrm.fyrm_service.domain.ChatMessage;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
@@ -16,11 +17,19 @@ public class SendMessageStompAdapter implements SendMessagePort {
   private final StompChatMessageConverter stompChatMessageConverter;
 
   @Override
-  public void send(ChatMessage chatMessage) {
+  public void sendToReceiverAndSender(ChatMessage chatMessage) {
+    var destination = Topic.PRIVATE_MESSAGES.getName();
+    var stompChatMessage = stompChatMessageConverter.apply(chatMessage);
+
+    sendToUser(chatMessage.getToUsername(), destination, stompChatMessage);
+    sendToUser(chatMessage.getFromUsername(), destination, stompChatMessage);
+  }
+
+  private void sendToUser(String username, String destination, StompChatMessage message) {
     messagingTemplate.convertAndSendToUser(
-        chatMessage.getToUsername(),
-        Topic.PRIVATE_MESSAGES.getName(),
-        stompChatMessageConverter.apply(chatMessage)
+        username,
+        destination,
+        message
     );
   }
 }

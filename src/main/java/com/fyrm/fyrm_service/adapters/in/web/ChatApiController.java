@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @FyrmApiController
 @InboundAdapter
 @RequiredArgsConstructor
-public class ChatController implements ChatApi {
+public class ChatApiController implements ChatApi {
 
   private final ProcessMessageUseCase processMessageUseCase;
   private final FindUserChatMessagesUseCase findUserChatMessagesUseCase;

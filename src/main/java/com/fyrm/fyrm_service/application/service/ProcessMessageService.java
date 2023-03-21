@@ -29,7 +29,7 @@ public class ProcessMessageService implements ProcessMessageUseCase {
         .sentAt(ZonedDateTime.now())
         .build();
 
-    sendMessagePort.send(message);
+    sendMessagePort.sendToReceiverAndSender(message);
     persistMessagePort.persist(message);
   }
 }

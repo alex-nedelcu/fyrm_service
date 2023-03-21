@@ -4,5 +4,5 @@ import com.fyrm.fyrm_service.domain.ChatMessage;
 
 public interface SendMessagePort {
 
-  void send(ChatMessage chatMessage);
+  void sendToReceiverAndSender(ChatMessage chatMessage);
 }
