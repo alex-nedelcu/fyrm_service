@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatMessageRepository extends BaseRepository<ChatMessageEntity, Long> {
 
-  List<ChatMessageEntity> findAllByFromIdIsOrToIdIs(Long fromId, Long toId);
+  List<ChatMessageEntity> findAllByFromIdIsOrToIdIsOrderBySentAtAsc(Long fromId, Long toId);
 }

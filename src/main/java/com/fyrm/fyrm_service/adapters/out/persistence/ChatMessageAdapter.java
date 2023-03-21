@@ -23,6 +23,6 @@ public class ChatMessageAdapter implements PersistMessagePort, FindMessagePort {
 
   @Override
   public List<ChatMessage> findAllSentOrReceivedBy(Long userId) {
-    return chatMessageMapper.toDomainList(chatMessageRepository.findAllByFromIdIsOrToIdIs(userId, userId));
+    return chatMessageMapper.toDomainList(chatMessageRepository.findAllByFromIdIsOrToIdIsOrderBySentAtAsc(userId, userId));
   }
 }
