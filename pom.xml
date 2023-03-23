@@ -294,6 +294,11 @@
       <version>9.5.0</version>
     </dependency>
 
+    <dependency>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+
   </dependencies>
 
   <dependencyManagement>
