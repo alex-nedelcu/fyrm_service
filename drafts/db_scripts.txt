@@ -31,6 +31,8 @@ DELETE FROM rent_connections;
 
 -- CLEAR DATABASE (except users and verified students)
 
+DELETE FROM chat_messages;
+DELETE FROM notifications;
 DELETE FROM search_profile_bathroom_options;
 DELETE FROM search_profile_bedroom_options;
 DELETE FROM search_profile_gender;
