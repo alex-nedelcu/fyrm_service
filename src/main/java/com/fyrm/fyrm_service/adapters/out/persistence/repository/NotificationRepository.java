@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NotificationRepository extends BaseRepository<NotificationEntity, Long> {
 
-  List<NotificationEntity> findAllByToIdIs(Long userId);
+  List<NotificationEntity> findAllByToIdIsOrderBySentAtAsc(Long userId);
 }

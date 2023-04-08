@@ -55,6 +55,7 @@ public class ProcessMessageService implements ProcessMessageUseCase {
         .toUsername(command.getToUsername())
         .preview(NEW_CHAT_MESSAGE_NOTIFICATION_PREVIEW + command.getFromUsername())
         .sentAt(ZonedDateTime.now())
+        .isRead(false)
         .build();
   }
 }

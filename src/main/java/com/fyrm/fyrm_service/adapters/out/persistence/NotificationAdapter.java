@@ -7,6 +7,7 @@ import com.fyrm.fyrm_service.application.port.out.PersistNotificationPort;
 import com.fyrm.fyrm_service.domain.Notification;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
@@ -23,6 +24,11 @@ public class NotificationAdapter implements PersistNotificationPort, FindNotific
 
   @Override
   public List<Notification> findAllReceivedBy(Long userId) {
-    return notificationMapper.toDomainList(notificationRepository.findAllByToIdIs(userId));
+    return notificationMapper.toDomainList(notificationRepository.findAllByToIdIsOrderBySentAtAsc(userId));
+  }
+
+  @Override
+  public Optional<Notification> findById(Long notificationId) {
+    return notificationRepository.findById(notificationId).map(notificationMapper::toDomain);
   }
 }

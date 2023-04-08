@@ -16,4 +16,17 @@ public class Notification {
   String toUsername;
   boolean isRead;
   ZonedDateTime sentAt;
+
+  public Notification deepCloneWithIsRead(boolean newIsRead) {
+    return builder()
+        .id(id)
+        .preview(preview)
+        .fromId(fromId)
+        .fromUsername(fromUsername)
+        .toId(toId)
+        .toUsername(toUsername)
+        .isRead(newIsRead)
+        .sentAt(sentAt)
+        .build();
+  }
 }

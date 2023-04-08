@@ -339,6 +339,34 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/notifications/read/{notificationId}':
+    parameters:
+      - $ref: '#/components/parameters/notificationIdPathParameter'
+    post:
+      summary: Marks notification as read
+      operationId: markNotificationAsRead
+      tags:
+        - notifications
+      responses:
+        '204':
+          description: Successfully marked notification as read
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/notifications/read-all/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    post:
+      summary: Marks all notification received by user as read
+      operationId: markAllNotificationsAsRead
+      tags:
+        - notifications
+      responses:
+        '204':
+          description: Successfully marked all notification received by user as read
+        '404':
+          $ref: '#/components/responses/NotFound'
+
 components:
   responses:
     NotFound:
@@ -840,6 +868,8 @@ components:
           type: string
         sentOnDayMonthYearFormat:
           type: string
+        isRead:
+          type: boolean
       required:
         - id
         - preview
@@ -848,11 +878,21 @@ components:
         - fromUsername
         - toUsername
         - sentOnDayMonthYearFormat
+        - isRead
 
   parameters:
     userIdPathParameter:
       name: userId
       description: User id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+    notificationIdPathParameter:
+      name: notificationId
+      description: Notification id
       in: path
       required: true
       schema:

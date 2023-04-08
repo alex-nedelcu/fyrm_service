@@ -23,6 +23,7 @@ public class FetchedNotificationConverter implements Converter<Notification, Fet
         .fromUsername(notification.getFromUsername())
         .toId(notification.getToId())
         .toUsername(notification.getToUsername())
+        .isRead(notification.isRead())
         .sentOnDayMonthYearFormat(toDayMonthYearFormat(notification.getSentAt()));
   }
 
