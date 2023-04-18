@@ -54,7 +54,7 @@ Authorization: Bearer {{jwt_token}}
 
 {
   "description": "I am Alex",
-  "isSearching": "true"
+  "isSearching": true
 }
 
 ### POST create search profile
@@ -153,5 +153,20 @@ Authorization: Bearer {{jwt_token}}
 
 ### GET messages by user
 GET http://localhost:8080/api/v1/fyrm/chat-messages/3
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### GET notifications received by user
+GET http://localhost:8080/api/v1/fyrm/notifications/3
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### POST mark notification as read by notification id
+POST http://localhost:8080/api/v1/fyrm/notifications/read/15
+Accept: application/json
+Authorization: Bearer {{jwt_token}}
+
+### POST mark notification as read by notification id
+POST http://localhost:8080/api/v1/fyrm/notifications/read-all/3
 Accept: application/json
 Authorization: Bearer {{jwt_token}}

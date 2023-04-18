@@ -6,9 +6,12 @@ import com.fyrm.fyrm_service.application.port.out.FindRentConnectionPort;
 import com.fyrm.fyrm_service.application.port.out.FindRentMateProposalPort;
 import com.fyrm.fyrm_service.application.port.out.FindSearchProfilePort;
 import com.fyrm.fyrm_service.application.port.out.FindUserPort;
+import com.fyrm.fyrm_service.application.port.out.PersistNotificationPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentConnectionPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentMateProposalPort;
+import com.fyrm.fyrm_service.application.port.out.SendNotificationPort;
 import com.fyrm.fyrm_service.application.service.match_making.MatchMakingService;
+import com.fyrm.fyrm_service.domain.Notification;
 import com.fyrm.fyrm_service.domain.ProposedRentMate;
 import com.fyrm.fyrm_service.domain.RentConnection;
 import com.fyrm.fyrm_service.domain.RentConnectionStatus;
@@ -31,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProposeRentMatesService implements ProposeRentMatesUseCase {
 
   private static final int AVOID_FAILED_PROPOSALS_NEWER_THAN_DAYS = 7;
+  private static final String PROPOSED_RENT_MATE_NOTIFICATION_PREVIEW = "Congratulations, you have been chosen as a potential rent mate! Click here to chat with the initiator";
   private static final Double MINIMUM_VALUE = -Double.MAX_VALUE;
   private final FindUserPort findUserPort;
   private final FindRentConnectionPort findRentConnectionPort;
@@ -38,6 +42,8 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
   private final FindSearchProfilePort findSearchProfilePort;
   private final PersistRentConnectionPort persistRentConnectionPort;
   private final PersistRentMateProposalPort persistRentMateProposalPort;
+  private final SendNotificationPort sendNotificationPort;
+  private final PersistNotificationPort persistNotificationPort;
   private final MatchMakingService matchMakingService;
 
   @Override
@@ -49,6 +55,7 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
     RentMateProposal proposal = generateRentMateProposal(proposeRentMatesCommand, rentConnectionId);
     var proposalId = persistRentMateProposalPort.persist(proposal);
     proposal.setId(proposalId);
+    notifyProposedRentMates(proposeRentMatesCommand.getInitiatorId(), proposal.getProposedRentMates());
 
     return proposal;
   }
@@ -129,5 +136,24 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
             .build()
         )
         .toList();
+  }
+
+  private void notifyProposedRentMates(Long initiatorId, List<ProposedRentMate> proposedRentMates) {
+    User initiator = findUserPort.findById(initiatorId).orElseThrow(() -> new ResourceNotFoundException("Notifications initiator not found!"));
+
+    proposedRentMates.forEach(rentMate -> {
+      var notification = Notification.builder()
+          .preview(PROPOSED_RENT_MATE_NOTIFICATION_PREVIEW)
+          .fromId(initiator.getId())
+          .fromUsername(initiator.getUsername())
+          .toId(rentMate.getUserId())
+          .toUsername(rentMate.getUsername())
+          .sentAt(ZonedDateTime.now())
+          .isRead(false)
+          .build();
+
+      var savedNotification = persistNotificationPort.persist(notification);
+      sendNotificationPort.send(savedNotification);
+    });
   }
 }

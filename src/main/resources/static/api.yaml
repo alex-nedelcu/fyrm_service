@@ -12,6 +12,7 @@ tags:
   - name: search-profile
   - name: rent-connection
   - name: chat
+  - name: notifications
 
 paths:
   '/authentication/signup':
@@ -320,7 +321,61 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/notifications/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Finds all the notifications received by the user
+      operationId: findNotificationReceivedByUser
+      tags:
+        - notifications
+      responses:
+        '200':
+          description: Successfully returns notifications received by the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsReceivedByUser'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/notifications/read/{notificationId}':
+    parameters:
+      - $ref: '#/components/parameters/notificationIdPathParameter'
+    post:
+      summary: Marks notification as read
+      operationId: markNotificationAsRead
+      tags:
+        - notifications
+      responses:
+        '204':
+          description: Successfully marked notification as read
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  '/notifications/read-all/{userId}':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    post:
+      summary: Marks all notification received by user as read
+      operationId: markAllNotificationsAsRead
+      tags:
+        - notifications
+      responses:
+        '204':
+          description: Successfully marked all notification received by user as read
+        '404':
+          $ref: '#/components/responses/NotFound'
+
 components:
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BusinessException'
+
   schemas:
     BusinessException:
       type: object
@@ -753,6 +808,14 @@ components:
           items:
             $ref: '#/components/schemas/FetchedChatMessage'
 
+    NotificationsReceivedByUser:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/FetchedNotification'
+
     FetchedChatMessage:
       type: object
       properties:
@@ -785,10 +848,51 @@ components:
         - sentAtHoursMinutesFormat
         - sentOnDayMonthYearFormat
 
+    FetchedNotification:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        preview:
+          type: string
+        fromId:
+          type: integer
+          format: int64
+        toId:
+          type: integer
+          format: int64
+        fromUsername:
+          type: string
+        toUsername:
+          type: string
+        sentOnDayMonthYearFormat:
+          type: string
+        isRead:
+          type: boolean
+      required:
+        - id
+        - preview
+        - fromId
+        - toId
+        - fromUsername
+        - toUsername
+        - sentOnDayMonthYearFormat
+        - isRead
+
   parameters:
     userIdPathParameter:
       name: userId
       description: User id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+    notificationIdPathParameter:
+      name: notificationId
+      description: Notification id
       in: path
       required: true
       schema:
