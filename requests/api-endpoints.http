@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 > {%
-  client.global.set("user_id", response.body.userId);
+    client.global.set("user_id", response.body.userId);
 %}
 
 ### POST confirm account
@@ -43,7 +43,7 @@ Content-Type: application/json
 }
 
 > {%
-  client.global.set("jwt_token", response.body.token);
+    client.global.set("jwt_token", response.body.token);
 %}
 
 ### PATCH update user with description and isSearching flag
@@ -137,6 +137,12 @@ Authorization: Bearer {{jwt_token}}
 
 ### GET initiator status
 GET http://localhost:8080/api/v1/fyrm/find-initiator-status/1
+accept: */*
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+### GET statistics
+GET http://localhost:8080/api/v1/fyrm/users/6/statistics
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
