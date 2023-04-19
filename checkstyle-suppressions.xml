@@ -1,22 +1,29 @@
 <?xml version="1.0"?>
 
 <!DOCTYPE suppressions PUBLIC
-  "-//Puppy Crawl//DTD Suppressions 1.0//EN" "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN" "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <suppress checks="Javadoc" files="."/>
-  <suppress checks="HideUtilityClassConstructor" files="."/>
-  <suppress checks="FinalParameters" files="."/>
-  <suppress checks="LineLength" files="."/>
-  <suppress checks="HiddenField" files="."/>
-  <suppress checks="DesignForExtension" files="."/>
-  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/domain"/>
-  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/application/port/in/command"/>
-  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/adapters/out/stomp/dto"/>
-  <suppress checks="ParameterNumber" files="com/fyrm/fyrm_service/application/port/in/command/CreateSearchProfileCommand.java"/>
-  <suppress checks="ParameterNumber" files="com/fyrm/fyrm_service/application/port/in/command/UpdateSearchProfileCommand.java"/>
-  <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/adapters/out/persistence/entity/base/Auditable.java"/>
-  <suppress checks="MemberName" files="com/fyrm/fyrm_service/application/service/match_making/MatchMakingService.java"/>
-  <suppress checks="MethodName" files="com/fyrm/fyrm_service/adapters/out/persistence/repository/SearchProfileRepository.java"/>
-  <suppress checks="[a-zA-Z0-9]*" files="[\\/]generated-sources[\\/]"/>
+    <suppress checks="Javadoc" files="."/>
+    <suppress checks="HideUtilityClassConstructor" files="."/>
+    <suppress checks="FinalParameters" files="."/>
+    <suppress checks="LineLength" files="."/>
+    <suppress checks="HiddenField" files="."/>
+    <suppress checks="DesignForExtension" files="."/>
+    <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/domain"/>
+    <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/application/port/in/command"/>
+    <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/adapters/out/stomp/dto"/>
+    <suppress checks="ParameterNumber"
+              files="com/fyrm/fyrm_service/application/port/in/command/CreateSearchProfileCommand.java"/>
+    <suppress checks="ParameterNumber"
+              files="com/fyrm/fyrm_service/application/port/in/command/UpdateSearchProfileCommand.java"/>
+    <suppress checks="VisibilityModifier"
+              files="com/fyrm/fyrm_service/adapters/out/persistence/entity/base/Auditable.java"/>
+    <suppress checks="MemberName"
+              files="com/fyrm/fyrm_service/application/service/match_making/MatchMakingService.java"/>
+    <suppress checks="MethodName"
+              files="com/fyrm/fyrm_service/adapters/out/persistence/repository/SearchProfileRepository.java"/>
+    <suppress checks="MethodName"
+              files="com/fyrm/fyrm_service/adapters/out/persistence/repository/RentMateProposalRepository.java"/>
+    <suppress checks="[a-zA-Z0-9]*" files="[\\/]generated-sources[\\/]"/>
 </suppressions>

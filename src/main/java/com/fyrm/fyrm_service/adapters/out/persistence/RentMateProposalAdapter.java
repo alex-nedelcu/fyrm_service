@@ -8,9 +8,10 @@ import com.fyrm.fyrm_service.application.port.out.FindRentMateProposalPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentMateProposalPort;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
 @RequiredArgsConstructor
@@ -42,5 +43,12 @@ public class RentMateProposalAdapter implements PersistRentMateProposalPort, Fin
         .toList();
 
     return proposedUserIds;
+  }
+
+  @Override
+  public List<RentMateProposal> findByProposedRentMatesContain(Long userId) {
+    return rentMateProposalMapper.toDomainList(
+        rentMateProposalRepository.findAllByProposedRentMates_UserIdIs(userId)
+    );
   }
 }

@@ -175,6 +175,24 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+  '/users/{userId}/statistics':
+    parameters:
+      - $ref: '#/components/parameters/userIdPathParameter'
+    get:
+      summary: Gets statistics about user
+      operationId: getStatistics
+      tags:
+        - user
+      responses:
+        '200':
+          description: Successfully returns statistics.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statistics'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
   '/search-profiles':
     post:
       summary: Create search profile
@@ -661,6 +679,29 @@ components:
             $ref: '#/components/schemas/SearchProfileByUser'
       required:
         - searchProfiles
+
+    Statistics:
+      type: object
+      properties:
+        chattedWithUsers:
+          type: array
+          items:
+            type: integer
+            format: int64
+        suggestedToUsers:
+          type: array
+          items:
+            type: integer
+            format: int64
+        suggestedUsers:
+          type: array
+          items:
+            type: integer
+            format: int64
+      required:
+        - chattedWithUsers
+        - suggestedToUsers
+        - suggestedUsers
 
     RentConnection:
       type: object

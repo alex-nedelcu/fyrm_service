@@ -1,7 +1,5 @@
 package com.fyrm.fyrm_service.adapters.out.persistence;
 
-import static com.fyrm.fyrm_service.domain.RentConnectionStatus.ACTIVE;
-
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.RentConnectionEntity;
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
 import com.fyrm.fyrm_service.adapters.out.persistence.mapper.RentConnectionMapper;
@@ -11,10 +9,13 @@ import com.fyrm.fyrm_service.application.port.out.PersistRentConnectionPort;
 import com.fyrm.fyrm_service.domain.RentConnection;
 import com.fyrm.fyrm_service.domain.RentConnectionStatus;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
+import lombok.RequiredArgsConstructor;
+
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
+
+import static com.fyrm.fyrm_service.domain.RentConnectionStatus.ACTIVE;
 
 @OutboundAdapter
 @RequiredArgsConstructor
@@ -70,5 +71,10 @@ public class RentConnectionAdapter implements PersistRentConnectionPort, FindRen
   @Override
   public int findActiveRentConnectionsCount() {
     return rentConnectionRepository.countByStatus(ACTIVE);
+  }
+
+  @Override
+  public List<RentConnection> findAllInitiatedBy(Long userId) {
+    return rentConnectionMapper.toDomainList(rentConnectionRepository.findAllByInitiatorId(userId));
   }
 }
