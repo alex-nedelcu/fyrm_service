@@ -40,7 +40,11 @@ public class AuthenticationApiController implements AuthenticationApi {
         signupRequestDto.getUsername(),
         signupRequestDto.getEmail(),
         signupRequestDto.getPassword(),
-        signupRequestDto.getRole()
+        signupRequestDto.getRole(),
+        signupRequestDto.getFirstName(),
+        signupRequestDto.getLastName(),
+        signupRequestDto.getGender(),
+        signupRequestDto.getBirthYear()
     );
 
     User user = signupUserUseCase.signup(command);

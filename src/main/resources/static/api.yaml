@@ -433,11 +433,23 @@ components:
           type: string
         password:
           type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          type: string
+        birthYear:
+          type: integer
       required:
         - username
         - email
         - role
         - password
+        - firstName
+        - lastName
+        - gender
+        - birthYear
 
     LoginRequest:
       type: object
@@ -497,10 +509,16 @@ components:
           type: string
         email:
           type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          type: string
         role:
           type: string
-        birthDate:
-          type: string
+        birthYear:
+          type: integer
         description:
           type: string
         isSearching:
@@ -512,9 +530,12 @@ components:
         - username
         - email
         - role
-        - birthDate
+        - birthYear
         - description
         - isSearching
+        - firstName
+        - lastName
+        - gender
 
     MessageResponse:
       type: object

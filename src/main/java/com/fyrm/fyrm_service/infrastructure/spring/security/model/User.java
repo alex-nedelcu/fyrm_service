@@ -1,21 +1,18 @@
 package com.fyrm.fyrm_service.infrastructure.spring.security.model;
 
-import java.time.ZonedDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users", schema = "public")
@@ -49,10 +46,8 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @NotNull
-  @ManyToOne
-  @JoinColumn(name = "role_id", nullable = false)
-  private Role role;
+  @Column(name = "role_id", nullable = false)
+  private Long roleId;
 
   @Column(name = "enabled", columnDefinition = "boolean default false", nullable = false)
   private Boolean enabled;
@@ -63,14 +58,8 @@ public class User {
   @Column(name = "last_name", nullable = false)
   private String lastName;
 
-  @Column(name = "birth_date", nullable = false)
-  private ZonedDateTime birthDate;
-
-  @Column(name = "university", nullable = false)
-  private String university;
-
-  @Column(name = "faculty", nullable = false)
-  private String faculty;
+  @Column(name = "birth_year", nullable = false)
+  private Integer birthYear;
 
   @Column(name = "description")
   private String description;

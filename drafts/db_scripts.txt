@@ -1,21 +1,5 @@
--- POPULATE verified_students
-
-INSERT INTO public.verified_students(birth_date, email, faculty, first_name, gender, last_name, university)
-VALUES ('2001-06-12 00:00:00', 'alex@ubb.ro', 'FMI', 'Alex', 'male', 'Nedelcu', 'UBB'),
-		('2000-01-01 00:00:00', 'steven@ubb.ro', 'FMI', 'Steven', 'male', 'A', 'UBB'),
-		('2000-02-02 00:00:00', 'john@ubb.ro', 'FMI', 'John', 'male', 'B', 'UBB'),
-		('2000-03-15 00:00:00', 'bob@ubb.ro', 'FMI', 'Bob', 'male', 'C', 'UBB'),
-		('2000-04-20 00:00:00', 'dan@ubb.ro', 'FMI', 'Dan', 'male', 'D', 'UBB'),
-		('2000-07-31 00:00:00', 'robin@ubb.ro', 'FMI', 'Robin', 'male', 'E', 'UBB'),
-		('2000-06-30 00:00:00', 'andrew@ubb.ro', 'FMI', 'Andrew', 'male', 'F', 'UBB'),
-		('2000-07-28 00:00:00', 'mike@ubb.ro', 'FMI', 'Mike', 'male', 'G', 'UBB'),
-		('2000-08-18 00:00:00', 'ion@ubb.ro', 'FMI', 'Ion', 'male', 'H', 'UBB'),
-		('2000-09-11 00:00:00', 'raul@ubb.ro', 'FMI', 'Raul', 'male', 'I', 'UBB');
-
-
 -- CLEAR DATABASE
 
-DELETE FROM verified_students;
 DELETE FROM search_profile_bathroom_options;
 DELETE FROM search_profile_bedroom_options;
 DELETE FROM search_profile_gender;
@@ -29,7 +13,7 @@ DELETE FROM rent_mate_proposals;
 DELETE FROM rent_connections;
 
 
--- CLEAR DATABASE (except users, verified students, search profiles)
+-- CLEAR DATABASE (except users, search profiles)
 
 DELETE FROM chat_messages;
 DELETE FROM notifications;

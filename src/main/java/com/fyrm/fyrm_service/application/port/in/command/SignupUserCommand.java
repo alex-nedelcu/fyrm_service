@@ -1,11 +1,13 @@
 package com.fyrm.fyrm_service.application.port.in.command;
 
 import com.fyrm.fyrm_service.infrastructure.validation.SelfValidating;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
@@ -34,11 +36,29 @@ public class SignupUserCommand extends SelfValidating<SignupUserCommand> {
   @Size(min = MINIMUM_LENGTH, max = ROLE_MAXIMUM_LENGTH, message = "error.validation.role.size.is.not.valid")
   String role;
 
-  public SignupUserCommand(String username, String email, String password, String role) {
+  @NotBlank(message = "error.validation.first.name.is.mandatory")
+  String firstName;
+
+  @NotBlank(message = "error.validation.last.name.is.mandatory")
+  String lastName;
+
+  @NotBlank(message = "error.validation.gender.is.mandatory")
+  String gender;
+
+  @NotNull(message = "error.validation.birth.year.is.mandatory")
+  Integer birthYear;
+
+  public SignupUserCommand(String username, String email, String password,
+                           String role, String firstName, String lastName,
+                           String gender, Integer birthYear) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.role = role;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.gender = gender;
+    this.birthYear = birthYear;
     validateSelf();
   }
 }
