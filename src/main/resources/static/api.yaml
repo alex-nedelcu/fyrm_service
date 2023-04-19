@@ -804,7 +804,7 @@ components:
             - MUST_WAIT
             - CAN_FINALISE
             - CAN_CREATE
-        hoursToWait:
+        minutesToWait:
           type: integer
           format: int64
         activeRentConnection:

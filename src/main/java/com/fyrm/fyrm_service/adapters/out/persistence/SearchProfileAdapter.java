@@ -9,10 +9,11 @@ import com.fyrm.fyrm_service.application.port.out.PersistSearchProfilePort;
 import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @OutboundAdapter
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class SearchProfileAdapter implements PersistSearchProfilePort, FindSearc
 
   @Override
   public List<SearchProfile> findAllByUserId(Long userId) {
-    List<SearchProfileEntity> entities = searchProfileRepository.findAllByUser_Id(userId);
+    List<SearchProfileEntity> entities = searchProfileRepository.findAllByUser_IdOrderByIdAsc(userId);
     return searchProfileMapper.toDomainList(entities);
   }
 
