@@ -29,16 +29,20 @@ DELETE FROM rent_mate_proposals;
 DELETE FROM rent_connections;
 
 
--- CLEAR DATABASE (except users and verified students)
+-- CLEAR DATABASE (except users, verified students, search profiles)
 
 DELETE FROM chat_messages;
 DELETE FROM notifications;
+DELETE FROM used_search_profiles;
+DELETE FROM proposed_rent_mates;
+DELETE FROM rent_mate_proposals;
+DELETE FROM rent_connections;
+
+
+-- INCLUDE ALSO SEARCH PROFILES
+
 DELETE FROM search_profile_bathroom_options;
 DELETE FROM search_profile_bedroom_options;
 DELETE FROM search_profile_gender;
 DELETE FROM search_profile_rent_mate_count;
-DELETE FROM used_search_profiles;
 DELETE FROM search_profiles;
-DELETE FROM proposed_rent_mates;
-DELETE FROM rent_mate_proposals;
-DELETE FROM rent_connections;

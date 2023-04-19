@@ -8,7 +8,7 @@ import lombok.Data;
 public class InitiatorCurrentState {
 
   InitiatorStatus status;
-  long hoursToWait;
+  long minutesToWait;
   RentConnection rentConnection;
   RentMateProposal rentMateProposal;
 
@@ -16,10 +16,10 @@ public class InitiatorCurrentState {
     return builder().status(status).build();
   }
 
-  public static InitiatorCurrentState with(InitiatorStatus status, long hoursToWait, RentConnection rentConnection, RentMateProposal rentMateProposal) {
+  public static InitiatorCurrentState with(InitiatorStatus status, long minutesToWait, RentConnection rentConnection, RentMateProposal rentMateProposal) {
     return builder()
         .status(status)
-        .hoursToWait(hoursToWait)
+        .minutesToWait(minutesToWait)
         .rentConnection(rentConnection)
         .rentMateProposal(rentMateProposal)
         .build();

@@ -30,7 +30,7 @@ public class InitiatorCurrentStateConverter implements Converter<InitiatorCurren
 
     return new InitiatorStatusDto()
         .initiatorStatus(initiatorStatusMapper.toGeneratedEnum(initiatorCurrentState.getStatus()))
-        .hoursToWait(initiatorCurrentState.getHoursToWait())
+        .minutesToWait(initiatorCurrentState.getMinutesToWait())
         .activeRentConnection(convertToDtoOrElseNull(rentConnection))
         .associatedRentMateProposal(convertToDtoOrElseNull(proposal));
   }

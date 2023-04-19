@@ -1,10 +1,5 @@
 package com.fyrm.fyrm_service.application.service;
 
-import static com.fyrm.fyrm_service.domain.InitiatorStatus.CAN_CREATE;
-import static com.fyrm.fyrm_service.domain.InitiatorStatus.CAN_FINALISE;
-import static com.fyrm.fyrm_service.domain.InitiatorStatus.MUST_WAIT;
-import static java.time.Duration.between;
-
 import com.fyrm.fyrm_service.application.port.in.command.FindInitiatorStatusCommand;
 import com.fyrm.fyrm_service.application.port.in.usecase.FindInitiatorStatusUseCase;
 import com.fyrm.fyrm_service.application.port.out.FindRentConnectionPort;
@@ -14,14 +9,20 @@ import com.fyrm.fyrm_service.domain.RentConnection;
 import com.fyrm.fyrm_service.domain.RentMateProposal;
 import com.fyrm.fyrm_service.domain.exception.ResourceNotFoundException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
-import java.time.ZonedDateTime;
 import lombok.RequiredArgsConstructor;
+
+import java.time.ZonedDateTime;
+
+import static com.fyrm.fyrm_service.domain.InitiatorStatus.CAN_CREATE;
+import static com.fyrm.fyrm_service.domain.InitiatorStatus.CAN_FINALISE;
+import static com.fyrm.fyrm_service.domain.InitiatorStatus.MUST_WAIT;
+import static java.time.Duration.between;
 
 @UseCase
 @RequiredArgsConstructor
 public class FindInitiatorStatusService implements FindInitiatorStatusUseCase {
 
-  private static final long RENT_CONNECTION_HOURS_LIMIT = 24L;
+  private static final long RENT_CONNECTION_MINUTES_LIMIT = 30L;
   private final FindRentConnectionPort findRentConnectionPort;
   private final FindRentMateProposalPort findRentMateProposalPort;
 
@@ -44,16 +45,16 @@ public class FindInitiatorStatusService implements FindInitiatorStatusUseCase {
       return InitiatorCurrentState.with(CAN_FINALISE, latestActive, proposal);
     }
 
-    long hoursToWait = RENT_CONNECTION_HOURS_LIMIT - getHoursPassedSince(latestActive);
-    return InitiatorCurrentState.with(MUST_WAIT, hoursToWait, latestActive, proposal);
+    long minutesToWait = RENT_CONNECTION_MINUTES_LIMIT - getMinutesPassedSince(latestActive);
+    return InitiatorCurrentState.with(MUST_WAIT, minutesToWait, latestActive, proposal);
   }
 
   private boolean canFinalise(RentConnection latestActive) {
-    long hoursPassed = getHoursPassedSince(latestActive);
-    return hoursPassed >= RENT_CONNECTION_HOURS_LIMIT;
+    long minutesPassed = getMinutesPassedSince(latestActive);
+    return minutesPassed >= RENT_CONNECTION_MINUTES_LIMIT;
   }
 
-  private long getHoursPassedSince(RentConnection rentConnection) {
-    return between(rentConnection.getCreatedAt(), ZonedDateTime.now()).toHours();
+  private long getMinutesPassedSince(RentConnection rentConnection) {
+    return between(rentConnection.getCreatedAt(), ZonedDateTime.now()).toMinutes();
   }
 }
