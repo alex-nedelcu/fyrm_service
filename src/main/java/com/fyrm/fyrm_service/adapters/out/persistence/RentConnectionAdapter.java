@@ -7,7 +7,6 @@ import com.fyrm.fyrm_service.adapters.out.persistence.repository.RentConnectionR
 import com.fyrm.fyrm_service.application.port.out.FindRentConnectionPort;
 import com.fyrm.fyrm_service.application.port.out.PersistRentConnectionPort;
 import com.fyrm.fyrm_service.domain.RentConnection;
-import com.fyrm.fyrm_service.domain.RentConnectionStatus;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import lombok.RequiredArgsConstructor;
 
@@ -57,12 +56,8 @@ public class RentConnectionAdapter implements PersistRentConnectionPort, FindRen
   }
 
   @Override
-  public List<Long> findFailedByUserIdNewerThanDays(Long userId, int days) {
-    return rentConnectionRepository.findAllByInitiatorIdAndStatusAndCreatedAtAfter(
-            userId,
-            RentConnectionStatus.FAILURE,
-            ZonedDateTime.now().minusDays(days)
-        )
+  public List<Long> findAllByUserIdNewerThanDays(Long userId, int days) {
+    return rentConnectionRepository.findAllByInitiatorIdAndCreatedAtAfter(userId, ZonedDateTime.now().minusDays(days))
         .stream()
         .map(Auditable::getId)
         .toList();

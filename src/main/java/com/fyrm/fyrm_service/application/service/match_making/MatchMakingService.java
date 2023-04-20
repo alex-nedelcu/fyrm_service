@@ -1,15 +1,16 @@
 package com.fyrm.fyrm_service.application.service.match_making;
 
 import com.fyrm.fyrm_service.domain.SearchProfile;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.lucene.util.SloppyMath;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,8 @@ public class MatchMakingService {
 
   private static final String ANY = "any";
   private static final double ONE_KILOMETER_IN_METERS = 1000.0;
+  private static final double DIFFERENT_CITY_SCORE = -2000.0;
+  private static final double DIFFERENT_CITY_DISTANCE = 50.0;
   private final List<String> COUNT_OPTIONS_LARGER_THAN_ONE = List.of("2", "3", ">3");
   private final List<Pair<Double, Double>> DISTANCE_CATEGORIES = List.of(Pair.of(1.0, 50.0), Pair.of(3.0, 35.0), Pair.of(5.0, 15.0), Pair.of(8.0, 5.0));
   private final List<Pair<Double, Double>> PRICE_DIFFERENCE_CATEGORIES = List.of(Pair.of(50.0, 50.0), Pair.of(100.0, 30.0), Pair.of(200.0, 10.0));
@@ -29,6 +32,10 @@ public class MatchMakingService {
   private double IS_NOT_MATCH_MULTIPLE_OPTIONS;
   @Value("${fyrm.match.making.weight.bathroom.options}")
   private double BATHROOM_OPTIONS_WEIGHT;
+  @Value("${fyrm.match.making.weight.hobby.options}")
+  private double HOBBY_OPTIONS_WEIGHT;
+  @Value("${fyrm.match.making.weight.age.gap}")
+  private int AGE_GAP_WEIGHT;
   @Value("${fyrm.match.making.weight.count.options}")
   private double COUNT_OPTIONS_WEIGHT;
 
@@ -38,7 +45,17 @@ public class MatchMakingService {
         + computeGenderOptionsMatch(first, second)
         + computeCountOptionsMatch(first, second)
         + computeBedroomOptionsMatch(first, second)
-        + computeBathroomOptionsMatch(first, second);
+        + computeHobbiesMatchingScore(first, second)
+        + computeBathroomOptionsMatch(first, second)
+        + computeAgeGapScore(first, second);
+  }
+
+  private double computeAgeGapScore(SearchProfile first, SearchProfile second) {
+    return (-AGE_GAP_WEIGHT * Math.abs(first.getUser().getBirthYear() - second.getUser().getBirthYear()));
+  }
+
+  private double computeHobbiesMatchingScore(SearchProfile first, SearchProfile second) {
+    return HOBBY_OPTIONS_WEIGHT * commonElementsCount(first.getHobbyOptions(), second.getHobbyOptions());
   }
 
   private double computeBathroomOptionsMatch(SearchProfile first, SearchProfile second) {
@@ -78,6 +95,10 @@ public class MatchMakingService {
 
   private double computeDesiredLocationMatch(SearchProfile first, SearchProfile second) {
     double kilometers = distanceInKilometersBetween(first.getLatitude(), first.getLongitude(), second.getLatitude(), second.getLongitude());
+
+    if (kilometers > DIFFERENT_CITY_DISTANCE) {
+      return DIFFERENT_CITY_SCORE;
+    }
 
     for (Pair<Double, Double> pair : DISTANCE_CATEGORIES) {
       Double kilometersThreshold = pair.getFirst();

@@ -23,9 +23,11 @@ public class SearchProfileByUserConverter implements Converter<SearchProfile, Se
         .rentPriceUpperBound(searchProfile.getRentPriceUpperBound())
         .latitude(searchProfile.getLatitude())
         .longitude(searchProfile.getLongitude())
+        .maximumAgeGapInYears(searchProfile.getMaximumAgeGapInYears())
         .bathroomOptions(searchProfile.getBathroomOptions())
         .bedroomOptions(searchProfile.getBedroomOptions())
         .rentMateCountOptions(searchProfile.getRentMateCountOptions())
+        .hobbyOptions(searchProfile.getHobbyOptions())
         .rentMatesGenderOptions(searchProfile.getRentMatesGenderOptions());
   }
 }

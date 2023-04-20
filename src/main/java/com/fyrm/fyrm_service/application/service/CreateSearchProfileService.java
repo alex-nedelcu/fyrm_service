@@ -27,8 +27,10 @@ public class CreateSearchProfileService implements CreateSearchProfileUseCase {
         .rentPriceUpperBound(createSearchProfileCommand.getRentPriceUpperBound())
         .latitude(createSearchProfileCommand.getLatitude())
         .longitude(createSearchProfileCommand.getLongitude())
+        .maximumAgeGapInYears(createSearchProfileCommand.getMaximumAgeGapInYears())
         .rentMatesGenderOptions(createSearchProfileCommand.getRentMatesGenderOptions())
         .rentMateCountOptions(createSearchProfileCommand.getRentMateCountOptions())
+        .hobbyOptions(createSearchProfileCommand.getHobbyOptions())
         .bedroomOptions(createSearchProfileCommand.getBedroomOptions())
         .bathroomOptions(createSearchProfileCommand.getBathroomOptions())
         .build();

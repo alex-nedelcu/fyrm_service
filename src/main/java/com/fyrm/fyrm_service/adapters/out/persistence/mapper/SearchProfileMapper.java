@@ -15,8 +15,10 @@ public class SearchProfileMapper implements IDomainEntityMapper<SearchProfileEnt
         .rentPriceUpperBound(searchProfile.getRentPriceUpperBound())
         .latitude(searchProfile.getLatitude())
         .longitude(searchProfile.getLongitude())
+        .maximumAgeGapInYears(searchProfile.getMaximumAgeGapInYears())
         .rentMatesGenderOptions(searchProfile.getRentMatesGenderOptions())
         .rentMateCountOptions(searchProfile.getRentMateCountOptions())
+        .hobbyOptions(searchProfile.getHobbyOptions())
         .bedroomOptions(searchProfile.getBedroomOptions())
         .bathroomOptions(searchProfile.getBathroomOptions())
         .build();
@@ -31,8 +33,10 @@ public class SearchProfileMapper implements IDomainEntityMapper<SearchProfileEnt
         .rentPriceUpperBound(searchProfileEntity.getRentPriceUpperBound())
         .latitude(searchProfileEntity.getLatitude())
         .longitude(searchProfileEntity.getLongitude())
+        .maximumAgeGapInYears(searchProfileEntity.getMaximumAgeGapInYears())
         .rentMatesGenderOptions(searchProfileEntity.getRentMatesGenderOptions())
         .rentMateCountOptions(searchProfileEntity.getRentMateCountOptions())
+        .hobbyOptions(searchProfileEntity.getHobbyOptions())
         .bedroomOptions(searchProfileEntity.getBedroomOptions())
         .bathroomOptions(searchProfileEntity.getBathroomOptions())
         .build();

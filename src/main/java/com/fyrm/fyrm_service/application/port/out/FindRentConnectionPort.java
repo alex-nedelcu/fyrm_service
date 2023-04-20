@@ -13,7 +13,7 @@ public interface FindRentConnectionPort {
 
   boolean hasAnyActive(Long userId);
 
-  List<Long> findFailedByUserIdNewerThanDays(Long userId, int days);
+  List<Long> findAllByUserIdNewerThanDays(Long userId, int days);
 
   int findActiveRentConnectionsCount();
 

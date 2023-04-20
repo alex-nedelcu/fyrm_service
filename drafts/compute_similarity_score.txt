@@ -1,16 +1,26 @@
-Avoid users that were already proposed in the last X days but the rent connection was registered as a failure
+Avoid users that were already proposed in the last X days.
 
 ------------------------------------------------------------------------------------------------------------------------------
 
 locations:
   distance in km: x
-  categories:          <1km, <3km, <5km, <8km, >8km
-  scores per category:   50,   35,   15, 5,     -70
+  categories:          <1km, <3km, <5km, <8km, 8km < distance < 50km, >50km
+  scores per category:   50,   35,   15,    5,                   -70, -2000
 
 count options score:
   common elems: x
   weight: 5
   score: x * 5
+
+hobby options score:
+  common elems: x
+  weight: 8
+  score: x * 8
+
+age gap score:
+  age gap: x
+  weight: 10
+  score: - (x * 10)
 
 gender score:
   valid:    + 40

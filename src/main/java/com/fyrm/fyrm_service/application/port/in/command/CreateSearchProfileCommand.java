@@ -1,13 +1,14 @@
 package com.fyrm.fyrm_service.application.port.in.command;
 
 import com.fyrm.fyrm_service.infrastructure.validation.SelfValidating;
-import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import lombok.EqualsAndHashCode;
-import lombok.Value;
+import java.util.List;
 
 @Value
 @EqualsAndHashCode(callSuper = false)
@@ -26,6 +27,9 @@ public class CreateSearchProfileCommand extends SelfValidating<CreateSearchProfi
 
   double longitude;
 
+  @PositiveOrZero(message = "error.validation.search.profile.maximum.age.gap.in.years.must.be.positive")
+  int maximumAgeGapInYears;
+
   @NotNull(message = "error.validation.search.profile.genders.is.mandatory")
   @NotEmpty(message = "error.validation.search.profile.genders.is.empty")
   List<String> rentMatesGenderOptions;
@@ -33,6 +37,10 @@ public class CreateSearchProfileCommand extends SelfValidating<CreateSearchProfi
   @NotNull(message = "error.validation.search.profile.rent.mates.count.is.mandatory")
   @NotEmpty(message = "error.validation.search.profile.rent.mates.count.is.empty")
   List<String> rentMateCountOptions;
+
+  @NotNull(message = "error.validation.search.profile.hobbies.are.mandatory")
+  @NotEmpty(message = "error.validation.search.profile.hobbies.are.empty")
+  List<String> hobbyOptions;
 
   @NotNull(message = "error.validation.search.profile.bedroom.options.is.mandatory")
   @NotEmpty(message = "error.validation.search.profile.bedroom.options.is.empty")
@@ -44,16 +52,18 @@ public class CreateSearchProfileCommand extends SelfValidating<CreateSearchProfi
 
   public CreateSearchProfileCommand(
       Long userId, double rentPriceLowerBound, double rentPriceUpperBound, double latitude, double longitude,
-      List<String> rentMatesGenderOptions, List<String> rentMateCountOptions,
-      List<String> bedroomOptions, List<String> bathroomOptions
+      int maximumAgeGapInYears, List<String> rentMatesGenderOptions, List<String> rentMateCountOptions,
+      List<String> hobbyOptions, List<String> bedroomOptions, List<String> bathroomOptions
   ) {
     this.userId = userId;
     this.rentPriceLowerBound = rentPriceLowerBound;
     this.rentPriceUpperBound = rentPriceUpperBound;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.maximumAgeGapInYears = maximumAgeGapInYears;
     this.rentMatesGenderOptions = rentMatesGenderOptions;
     this.rentMateCountOptions = rentMateCountOptions;
+    this.hobbyOptions = hobbyOptions;
     this.bedroomOptions = bedroomOptions;
     this.bathroomOptions = bathroomOptions;
     validateSelf();

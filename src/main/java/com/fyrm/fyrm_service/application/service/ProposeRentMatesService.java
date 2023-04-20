@@ -20,20 +20,24 @@ import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.domain.exception.ResourceNotFoundException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 @UseCase
 @RequiredArgsConstructor
 public class ProposeRentMatesService implements ProposeRentMatesUseCase {
 
-  private static final int AVOID_FAILED_PROPOSALS_NEWER_THAN_DAYS = 7;
+  private static final int AVOID_RENT_MATES_PROPOSED_DURING_LAST_DAYS = 1;
+  private static final Long BLACKLIST_SCORE_THRESHOLD = -1000L;
   private static final String PROPOSED_RENT_MATE_NOTIFICATION_PREVIEW = "Congratulations, you have been chosen as a potential rent mate! Click here to chat with the initiator";
   private static final Double MINIMUM_VALUE = -Double.MAX_VALUE;
   private final FindUserPort findUserPort;
@@ -76,8 +80,8 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
     var initiatorUsedSearchProfiles = findSearchProfilePort.findAllByIds(proposeRentMatesCommand.getSearchProfileIds());
     var candidates = findUserPort.findSearchingUsersExcept(initiatorId);
 
-    var recentFailedRentConnectionIds = findRentConnectionPort.findFailedByUserIdNewerThanDays(initiatorId, AVOID_FAILED_PROPOSALS_NEWER_THAN_DAYS);
-    var blackListedCandidateIds = findRentMateProposalPort.findProposedUserIdsForRentConnections(recentFailedRentConnectionIds);
+    var recentRentConnectionIds = findRentConnectionPort.findAllByUserIdNewerThanDays(initiatorId, AVOID_RENT_MATES_PROPOSED_DURING_LAST_DAYS);
+    var blackListedCandidateIds = findRentMateProposalPort.findProposedUserIdsForRentConnections(recentRentConnectionIds);
     var proposedRentMates = findMatchingRentMates(initiatorUsedSearchProfiles, candidates, blackListedCandidateIds, proposalMaximumSize, rentConnectionId);
 
     return RentMateProposal.builder()
@@ -94,8 +98,8 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
       Long rentConnectionId
   ) {
     var candidateIdToHighestScore = new HashMap<Long, Double>();
-
     var candidatesSearchProfiles = findSearchProfilePort.findAllByUsers(candidates);
+
     for (var ofInitiator : initiatorSearchProfiles) {
       for (var ofCandidate : candidatesSearchProfiles) {
 
@@ -107,17 +111,46 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
       }
     }
 
-    var whiteListedCandidateIdToHighestScore = new HashMap<>(candidateIdToHighestScore);
-    blackListedIds.forEach(whiteListedCandidateIdToHighestScore::remove);
+    var whiteListedCandidateIdToHighestScore = new HashMap<Long, Double>();
+    var blackListedCandidateIdToHighestScore = new HashMap<Long, Double>();
 
-    var pollutedProposedRentMates = toProposedRentMatesOrderedByBestScores(candidateIdToHighestScore, rentConnectionId);
+    // Split all candidates into:
+    // black listed -> those who were recently suggested or who have a terrible score
+    // white listed -> the others
+    candidateIdToHighestScore.forEach((candidateId, score) -> {
+      if (score < BLACKLIST_SCORE_THRESHOLD || blackListedIds.contains(candidateId)) {
+        blackListedCandidateIdToHighestScore.put(candidateId, score);
+      } else {
+        whiteListedCandidateIdToHighestScore.put(candidateId, score);
+      }
+    });
+
+    var blackListedProposedRentMates = toProposedRentMatesOrderedByBestScores(blackListedCandidateIdToHighestScore, rentConnectionId);
     var whiteListedProposedRentMates = toProposedRentMatesOrderedByBestScores(whiteListedCandidateIdToHighestScore, rentConnectionId);
 
+
     if (!whiteListedProposedRentMates.isEmpty()) {
-      return whiteListedProposedRentMates.subList(0, Math.min(maximumSize, whiteListedProposedRentMates.size()));
+
+      // There are more white listed candidates than the selection size => there are some extra candidates
+      if (whiteListedProposedRentMates.size() > maximumSize) {
+        var bestPartition = whiteListedProposedRentMates.subList(0, maximumSize);
+        var extraPartition = whiteListedProposedRentMates.subList(maximumSize, whiteListedProposedRentMates.size());
+
+        // Replace last candidate from the best partition with one random candidate from extra partition
+        Collections.shuffle(extraPartition);
+        var selected = bestPartition.subList(0, bestPartition.size() - 1);
+        selected.add(extraPartition.get(0));
+
+        return selected;
+      }
+
+      // The number of white listed candidates is less or equal than the selection size => return all of them
+      return whiteListedProposedRentMates.subList(0, whiteListedProposedRentMates.size());
     }
 
-    return pollutedProposedRentMates.subList(0, Math.min(maximumSize, pollutedProposedRentMates.size()));
+    // From the black listed rent mates, suggest completely random
+    Collections.shuffle(blackListedProposedRentMates);
+    return blackListedProposedRentMates.subList(0, Math.min(maximumSize, blackListedProposedRentMates.size()));
   }
 
   private List<ProposedRentMate> toProposedRentMatesOrderedByBestScores(Map<Long, Double> userIdsToScores, Long rentConnectionId) {
@@ -135,7 +168,7 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
             .username(user.getUsername())
             .build()
         )
-        .toList();
+        .collect(Collectors.toList());
   }
 
   private void notifyProposedRentMates(Long initiatorId, List<ProposedRentMate> proposedRentMates) {
