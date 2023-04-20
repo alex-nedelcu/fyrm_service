@@ -19,11 +19,26 @@ import org.apache.commons.lang3.EnumUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
 
 @UseCase
 @RequiredArgsConstructor
 public class SignupUserService implements SignupUserUseCase {
+
+  public static final Map<String, String> UNIVERSITIES_DOMAINS;
+
+  static {
+    UNIVERSITIES_DOMAINS = new HashMap<>();
+    UNIVERSITIES_DOMAINS.put("@stud.ubbcluj.ro", "Babes-Bolyai University");
+    UNIVERSITIES_DOMAINS.put("@stud.ubbbm.ro", "Babes-Bolyai University of Baia Mare");
+    UNIVERSITIES_DOMAINS.put("@stud.ubboradea.ro", "Babes-Bolyai University of Oradea");
+    UNIVERSITIES_DOMAINS.put("@s.unibuc.ro", "University of Bucharest");
+    UNIVERSITIES_DOMAINS.put("@elearn.umf.ro", "Iuliu Hatieganu University of Medicine and Pharmacy");
+    UNIVERSITIES_DOMAINS.put("@stud.trans.ro", "Politehnica University of Bucharest - Transportations");
+    UNIVERSITIES_DOMAINS.put("@stud.fiir.ro", "Politehnica University of Bucharest - Industrial Engineering and Robotics");
+    UNIVERSITIES_DOMAINS.put("@stud.etti.ro", "Politehnica University of Bucharest - Electronics, Telecommunications and IT");
+  }
 
   private final FindUserPort findUserPort;
   private final FindRolePort findRolePort;
@@ -51,6 +66,7 @@ public class SignupUserService implements SignupUserUseCase {
         .birthYear(signupUserCommand.getBirthYear())
         .enabled(false)
         .isSearching(true)
+        .university(UNIVERSITIES_DOMAINS.get(getDomain(signupUserCommand.getEmail())))
         .build();
 
     ConfirmationCode confirmationCode = confirmationCodeService.generateUniqueForUser(user);
@@ -71,11 +87,9 @@ public class SignupUserService implements SignupUserUseCase {
       throw new InvalidSignupInformationException("There is already an account with this email");
     }
 
-    // TODO: fetch these from properties file
-    if (Stream.of("@ubb.ro", "@umf.ro").noneMatch(domain -> signupUserCommand.getEmail().contains(domain))) {
-      throw new InvalidSignupInformationException("Please use your official student email address");
+    if (!UNIVERSITIES_DOMAINS.containsKey(getDomain(signupUserCommand.getEmail()))) {
+      throw new InvalidSignupInformationException("Please check the list of allowed universities domains");
     }
-
 
     if (!EnumUtils.isValidEnum(ERole.class, signupUserCommand.getRole())) {
       throw new InvalidSignupInformationException("Role " + signupUserCommand.getRole() + " not supported!");
@@ -84,5 +98,13 @@ public class SignupUserService implements SignupUserUseCase {
     if (!findRolePort.existsByName(ERole.valueOf(signupUserCommand.getRole()))) {
       throw new InvalidSignupInformationException("Role " + signupUserCommand.getRole() + " not found!");
     }
+  }
+
+  private String getDomain(String email) {
+    if (email.contains("@") && email.indexOf("@") == email.lastIndexOf("@")) {
+      return email.substring(email.indexOf("@"));
+    }
+
+    throw new IllegalArgumentException("Cannot get domain from email " + email);
   }
 }

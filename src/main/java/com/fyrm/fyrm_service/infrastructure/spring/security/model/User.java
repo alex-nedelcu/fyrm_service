@@ -67,6 +67,9 @@ public class User {
   @Column(name = "gender")
   private String gender;
 
+  @Column(name = "university")
+  private String university;
+
   @Column(name = "is_searching", columnDefinition = "boolean default true", nullable = false)
   private Boolean isSearching;
 }

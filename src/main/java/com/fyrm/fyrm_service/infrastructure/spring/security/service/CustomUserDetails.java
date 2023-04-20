@@ -39,6 +39,8 @@ public class CustomUserDetails implements UserDetails {
   @Getter
   private String gender;
   @Getter
+  private String university;
+  @Getter
   private Integer birthYear;
   @Getter
   private Boolean enabled;
@@ -64,6 +66,7 @@ public class CustomUserDetails implements UserDetails {
         user.getFirstName(),
         user.getLastName(),
         user.getGender(),
+        user.getUniversity(),
         user.getBirthYear(),
         user.getEnabled(),
         user.getDescription(),

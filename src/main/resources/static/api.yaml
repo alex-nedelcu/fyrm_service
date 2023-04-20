@@ -515,6 +515,8 @@ components:
           type: string
         gender:
           type: string
+        university:
+          type: string
         role:
           type: string
         birthYear:
@@ -536,6 +538,7 @@ components:
         - firstName
         - lastName
         - gender
+        - university
 
     MessageResponse:
       type: object

@@ -53,6 +53,7 @@ public class LoginUserService implements LoginUserUseCase {
         .firstName(userDetails.getFirstName())
         .lastName(userDetails.getLastName())
         .gender(userDetails.getGender())
+        .university(userDetails.getUniversity())
         .birthYear(userDetails.getBirthYear())
         .tokenType(TOKEN_TYPE)
         .birthYear(userDetails.getBirthYear())
