@@ -577,11 +577,17 @@ components:
         longitude:
           type: number
           format: double
+        maximumAgeGapInYears:
+          type: integer
         rentMatesGenderOptions:
           type: array
           items:
             type: string
         rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        hobbyOptions:
           type: array
           items:
             type: string
@@ -599,8 +605,10 @@ components:
         - rentPriceUpperBound
         - latitude
         - longitude
+        - maximumAgeGapInYears
         - rentMatesGenderOptions
         - rentMateCountOptions
+        - hobbyOptions
         - bedroomOptions
         - bathroomOptions
 
@@ -619,11 +627,17 @@ components:
         longitude:
           type: number
           format: double
+        maximumAgeGapInYears:
+          type: integer
         rentMatesGenderOptions:
           type: array
           items:
             type: string
         rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        hobbyOptions:
           type: array
           items:
             type: string
@@ -640,8 +654,10 @@ components:
         - rentPriceUpperBound
         - latitude
         - longitude
+        - maximumAgeGapInYears
         - rentMatesGenderOptions
         - rentMateCountOptions
+        - hobbyOptions
         - bedroomOptions
         - bathroomOptions
 
@@ -666,11 +682,17 @@ components:
         longitude:
           type: number
           format: double
+        maximumAgeGapInYears:
+          type: integer
         rentMatesGenderOptions:
           type: array
           items:
             type: string
         rentMateCountOptions:
+          type: array
+          items:
+            type: string
+        hobbyOptions:
           type: array
           items:
             type: string
@@ -689,8 +711,10 @@ components:
         - rentPriceUpperBound
         - latitude
         - longitude
+        - maximumAgeGapInYears
         - rentMatesGenderOptions
         - rentMateCountOptions
+        - hobbyOptions
         - bedroomOptions
         - bathroomOptions
 

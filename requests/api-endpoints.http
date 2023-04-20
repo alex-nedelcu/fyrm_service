@@ -5,9 +5,13 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "email": "alex@ubb.ro",
-  "password": "alexAlex1",
-  "role": "ROLE_USER"
+  "email": "alex@stud.ubbcluj.ro",
+  "password": "alex",
+  "role": "ROLE_USER",
+  "firstName": "Alex",
+  "lastName": "Nedelcu",
+  "birthYear": 2001,
+  "gender": "male"
 }
 
 > {%
@@ -15,7 +19,7 @@ Content-Type: application/json
 %}
 
 ### POST confirm account
-POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=248551
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=707668
 accept: */*
 Content-Type: application/json
 
@@ -39,7 +43,7 @@ Content-Type: application/json
 
 {
   "username": "alex",
-  "password": "alexAlex1"
+  "password": "alex"
 }
 
 > {%
@@ -47,7 +51,7 @@ Content-Type: application/json
 %}
 
 ### PATCH update user with description and isSearching flag
-PATCH http://localhost:8080/api/v1/fyrm/users/10
+PATCH http://localhost:8080/api/v1/fyrm/users/1
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
@@ -69,12 +73,17 @@ Authorization: Bearer {{jwt_token}}
   "rentPriceUpperBound": 500.0,
   "latitude": 1.1,
   "longitude": -2.2,
+  "maximumAgeGapInYears": 1,
   "rentMatesGenderOptions": [
     "female"
   ],
   "rentMateCountOptions": [
     "1",
     "2"
+  ],
+  "hobbyOptions": [
+    "cooking",
+    "sport"
   ],
   "bedroomOptions": [
     "shared"
@@ -96,12 +105,18 @@ Authorization: Bearer {{jwt_token}}
   "rentPriceUpperBound": 500.0,
   "latitude": 1.1,
   "longitude": -2.2,
+  "maximumAgeGapInYears": 2,
   "rentMatesGenderOptions": [
     "female"
   ],
   "rentMateCountOptions": [
     "1",
     "2"
+  ],
+  "hobbyOptions": [
+    "cinematography",
+    "sport",
+    "reading"
   ],
   "bedroomOptions": [
     "shared"
@@ -136,13 +151,13 @@ Authorization: Bearer {{jwt_token}}
 }
 
 ### GET initiator status
-GET http://localhost:8080/api/v1/fyrm/find-initiator-status/3
+GET http://localhost:8080/api/v1/fyrm/find-initiator-status/1
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
 
 ### GET statistics
-GET http://localhost:8080/api/v1/fyrm/users/6/statistics
+GET http://localhost:8080/api/v1/fyrm/users/1/statistics
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}
@@ -158,12 +173,12 @@ Authorization: Bearer {{jwt_token}}
 }
 
 ### GET messages by user
-GET http://localhost:8080/api/v1/fyrm/chat-messages/3
+GET http://localhost:8080/api/v1/fyrm/chat-messages/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 
 ### GET notifications received by user
-GET http://localhost:8080/api/v1/fyrm/notifications/3
+GET http://localhost:8080/api/v1/fyrm/notifications/1
 Accept: application/json
 Authorization: Bearer {{jwt_token}}
 

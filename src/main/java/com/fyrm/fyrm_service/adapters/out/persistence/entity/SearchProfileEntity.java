@@ -2,7 +2,13 @@ package com.fyrm.fyrm_service.adapters.out.persistence.entity;
 
 import com.fyrm.fyrm_service.adapters.out.persistence.entity.base.Auditable;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
-import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -14,12 +20,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.util.List;
 
 @Entity
 @Table(name = "search_profiles", schema = "public")
@@ -47,6 +48,9 @@ public class SearchProfileEntity extends Auditable {
   @Column(name = "longitude", nullable = false)
   private double longitude;
 
+  @Column(name = "maximum_age_gap_in_years", nullable = false)
+  private int maximumAgeGapInYears;
+
   @ElementCollection
   @CollectionTable(name = "search_profile_gender", joinColumns = @JoinColumn(name = "search_profile_id"))
   @Column(name = "rent_mates_gender_options", nullable = false)
@@ -56,6 +60,11 @@ public class SearchProfileEntity extends Auditable {
   @CollectionTable(name = "search_profile_rent_mate_count", joinColumns = @JoinColumn(name = "search_profile_id"))
   @Column(name = "rent_mate_count_options", nullable = false)
   private List<String> rentMateCountOptions;
+
+  @ElementCollection
+  @CollectionTable(name = "search_profile_hobbies", joinColumns = @JoinColumn(name = "search_profile_id"))
+  @Column(name = "hobby_options", nullable = false)
+  private List<String> hobbyOptions;
 
   @ElementCollection
   @CollectionTable(name = "search_profile_bedroom_options", joinColumns = @JoinColumn(name = "search_profile_id"))

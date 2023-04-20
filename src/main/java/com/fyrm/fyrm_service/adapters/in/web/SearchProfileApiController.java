@@ -16,11 +16,12 @@ import com.fyrm.fyrm_service.generatedapi.dtos.SearchProfilesByUserDto;
 import com.fyrm.fyrm_service.generatedapi.dtos.UpdateSearchProfileDto;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.InboundAdapter;
 import com.fyrm.fyrm_service.infrastructure.spring.mvc.controller.FyrmApiController;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @FyrmApiController
@@ -42,8 +43,10 @@ public class SearchProfileApiController implements SearchProfileApi {
         searchProfileDto.getRentPriceUpperBound(),
         searchProfileDto.getLatitude(),
         searchProfileDto.getLongitude(),
+        searchProfileDto.getMaximumAgeGapInYears(),
         searchProfileDto.getRentMatesGenderOptions(),
         searchProfileDto.getRentMateCountOptions(),
+        searchProfileDto.getHobbyOptions(),
         searchProfileDto.getBedroomOptions(),
         searchProfileDto.getBathroomOptions()
     );
@@ -73,8 +76,10 @@ public class SearchProfileApiController implements SearchProfileApi {
         updateSearchProfileDto.getRentPriceUpperBound(),
         updateSearchProfileDto.getLatitude(),
         updateSearchProfileDto.getLongitude(),
+        updateSearchProfileDto.getMaximumAgeGapInYears(),
         updateSearchProfileDto.getRentMatesGenderOptions(),
         updateSearchProfileDto.getRentMateCountOptions(),
+        updateSearchProfileDto.getHobbyOptions(),
         updateSearchProfileDto.getBedroomOptions(),
         updateSearchProfileDto.getBathroomOptions()
     );

@@ -25,9 +25,11 @@ public class UpdateSearchProfileService implements UpdateSearchProfileUseCase {
 
     searchProfile.setLatitude(updateSearchProfileCommand.getLatitude());
     searchProfile.setLongitude(updateSearchProfileCommand.getLongitude());
+    searchProfile.setMaximumAgeGapInYears(updateSearchProfileCommand.getMaximumAgeGapInYears());
     searchProfile.setRentPriceLowerBound(updateSearchProfileCommand.getRentPriceLowerBound());
     searchProfile.setRentPriceUpperBound(updateSearchProfileCommand.getRentPriceUpperBound());
     searchProfile.setRentMateCountOptions(updateSearchProfileCommand.getRentMateCountOptions());
+    searchProfile.setHobbyOptions(updateSearchProfileCommand.getHobbyOptions());
     searchProfile.setRentMatesGenderOptions(updateSearchProfileCommand.getRentMatesGenderOptions());
     searchProfile.setBedroomOptions(updateSearchProfileCommand.getBedroomOptions());
     searchProfile.setBathroomOptions(updateSearchProfileCommand.getBathroomOptions());
