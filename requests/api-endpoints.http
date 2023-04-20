@@ -4,9 +4,9 @@ accept: */*
 Content-Type: application/json
 
 {
-  "username": "john",
-  "email": "john@ubb.ro",
-  "password": "testTest1",
+  "username": "alex",
+  "email": "alex@ubb.ro",
+  "password": "alexAlex1",
   "role": "ROLE_USER"
 }
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 %}
 
 ### POST confirm account
-POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=839030
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=248551
 accept: */*
 Content-Type: application/json
 
@@ -47,7 +47,7 @@ Content-Type: application/json
 %}
 
 ### PATCH update user with description and isSearching flag
-PATCH http://localhost:8080/api/v1/fyrm/users/1
+PATCH http://localhost:8080/api/v1/fyrm/users/10
 accept: */*
 Content-Type: application/json
 Authorization: Bearer {{jwt_token}}

@@ -11,10 +11,13 @@
     <suppress checks="HiddenField" files="."/>
     <suppress checks="DesignForExtension" files="."/>
     <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/domain"/>
+    <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/infrastructure/spring/security/model"/>
     <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/application/port/in/command"/>
     <suppress checks="VisibilityModifier" files="com/fyrm/fyrm_service/adapters/out/stomp/dto"/>
     <suppress checks="ParameterNumber"
               files="com/fyrm/fyrm_service/application/port/in/command/CreateSearchProfileCommand.java"/>
+    <suppress checks="ParameterNumber"
+              files="com/fyrm/fyrm_service/application/port/in/command/SignupUserCommand.java"/>
     <suppress checks="ParameterNumber"
               files="com/fyrm/fyrm_service/application/port/in/command/UpdateSearchProfileCommand.java"/>
     <suppress checks="VisibilityModifier"
