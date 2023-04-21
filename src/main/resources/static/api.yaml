@@ -69,7 +69,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/JwtLoginResponse'
         '400':
-          description: Account is not enabled.
+          description: Account is not confirmed.
           content:
             application/json:
               schema:
@@ -100,6 +100,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessException'
 
+  '/authentication/confirmationcode/send-by-email':
+    post:
+      summary: Send confirmation code by user email
+      operationId: sendConfirmationCodeByEmail
+      tags:
+        - authentication
+      requestBody:
+        description: Contains email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendConfirmationCodeByEmailRequest'
+      responses:
+        '204':
+          description: Successfully sent confirmation code by email.
+        '400':
+          description: No user found with the provided email address.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+
   '/authentication/confirm':
     post:
       summary: Confirm user account
@@ -123,6 +146,78 @@ paths:
       responses:
         '200':
           description: Successfully confirm account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Confirmation code is not associated to any account or it is expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+        '400':
+          description: Confirmation code query parameters misses.
+
+  '/authentication/confirm-by-email':
+    post:
+      summary: Confirm user account by email
+      operationId: confirmAccountByEmail
+      tags:
+        - authentication
+      requestBody:
+        description: Contains user email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmAccountByEmailRequest'
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Confirmation code used for confirming the account
+      responses:
+        '200':
+          description: Successfully confirm account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '422':
+          description: Confirmation code is not associated to any account or it is expired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessException'
+        '400':
+          description: Confirmation code query parameters misses.
+
+  '/authentication/reset-password':
+    post:
+      summary: Reset user password
+      operationId: resetPassword
+      tags:
+        - authentication
+      requestBody:
+        description: Contains new password and user email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordRequest'
+      parameters:
+        - in: query
+          name: code
+          required: true
+          schema:
+            type: string
+          description: Confirmation code
+      responses:
+        '200':
+          description: Successfully reset password.
           content:
             application/json:
               schema:
@@ -408,6 +503,7 @@ components:
             * `CONFIRMATION_CODE_NOT_VALID` - Confirmation code is not associated to any account or it is expired
             * `EMAIL_SENDING_FAILED` - Confirmation email sending process failed
             * `RESOURCE_NOT_FOUND` - Resource not found
+            * `PASSWORD_RESET_FAILED` - Something went wrong during password reset
 
           enum:
             - FIELD_NOT_VALID
@@ -416,6 +512,7 @@ components:
             - CONFIRMATION_CODE_NOT_VALID
             - EMAIL_SENDING_FAILED
             - RESOURCE_NOT_FOUND
+            - PASSWORD_RESET_FAILED
         messages:
           type: array
           items:
@@ -462,6 +559,17 @@ components:
         - username
         - password
 
+    ResetPasswordRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
     ConfirmAccountRequest:
       type: object
       properties:
@@ -479,6 +587,22 @@ components:
           format: int64
       required:
         - userId
+
+    SendConfirmationCodeByEmailRequest:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+
+    ConfirmAccountByEmailRequest:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
 
     SignupResponse:
       type: object

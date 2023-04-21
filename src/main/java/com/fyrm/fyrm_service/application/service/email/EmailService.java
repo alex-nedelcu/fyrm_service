@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
   private static final String ENCODING = "utf-8";
-  private static final String CONFIRMATION_MAIL_SUBJECT = "Confirm your Find Your Room Mate account!";
+  private static final String CONFIRMATION_MAIL_SUBJECT = "Your FYRM confirmation code has arrived!";
   private final SendEmailPort sendEmailPort;
   @Value("${fyrm.root.email}")
   private String rootEmail;
@@ -38,18 +38,18 @@ public class EmailService {
         + "\n"
         + "  <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;min-width:100%;width:100%!important\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n"
         + "    <tbody><tr>\n"
-        + "      <td width=\"100%\" height=\"53\" bgcolor=\"#0b0c0c\">\n"
+        + "      <td width=\"100%\" height=\"53\" bgcolor=\"#3B7AD1\">\n"
         + "        \n"
         + "        <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;max-width:580px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\">\n"
         + "          <tbody><tr>\n"
-        + "            <td width=\"70\" bgcolor=\"#0b0c0c\" valign=\"middle\">\n"
+        + "            <td width=\"70\" bgcolor=\"#3B7AD1\" valign=\"middle\">\n"
         + "                <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n"
         + "                  <tbody><tr>\n"
         + "                    <td style=\"padding-left:10px\">\n"
         + "                  \n"
         + "                    </td>\n"
         + "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n"
-        + "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Confirm your email</span>\n"
+        + "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Please find below your confirmation code</span>\n"
         + "                    </td>\n"
         + "                  </tr>\n"
         + "                </tbody></table>\n"
@@ -86,8 +86,8 @@ public class EmailService {
         + "      <td width=\"10\" valign=\"middle\"><br></td>\n"
         + "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n"
         + "        \n" + "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + user.getFirstName()
-        + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. This is your confirmation code: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> "
-        + confirmationCode.getCode() + " </p></blockquote>\n<p>See you soon!</p>"
+        + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> This is your confirmation code: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> "
+        + confirmationCode.getCode() + " </p></blockquote>\n<p>Wish you the best!</p>"
         + "        \n"
         + "      </td>\n"
         + "      <td width=\"10\" valign=\"middle\"><br></td>\n"

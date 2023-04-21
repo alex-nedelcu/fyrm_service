@@ -5,9 +5,10 @@ import com.fyrm.fyrm_service.application.port.out.PersistUserPort;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.OutboundAdapter;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
 import com.fyrm.fyrm_service.infrastructure.spring.security.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 
 @OutboundAdapter
 @RequiredArgsConstructor
@@ -21,8 +22,8 @@ public class UserAdapter implements FindUserPort, PersistUserPort {
   }
 
   @Override
-  public List<User> findAll() {
-    return userRepository.findAll();
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email);
   }
 
   @Override

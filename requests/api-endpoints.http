@@ -18,6 +18,7 @@ Content-Type: application/json
     client.global.set("user_id", response.body.userId);
 %}
 
+
 ### POST confirm account
 POST http://localhost:8080/api/v1/fyrm/authentication/confirm?code=707668
 accept: */*
@@ -27,6 +28,25 @@ Content-Type: application/json
   "userId": {{user_id}}
 }
 
+### POST confirm account by email
+POST http://localhost:8080/api/v1/fyrm/authentication/confirm-by-email?code=456681
+accept: */*
+Content-Type: application/json
+
+{
+  "email": "idk@stud.ubbcluj.ro"
+}
+
+### POST reset password
+POST http://localhost:8080/api/v1/fyrm/authentication/reset-password?code=572541
+accept: */*
+Content-Type: application/json
+
+{
+  "email": "alex@stud.ubbcluj.ro",
+  "password": "newalex"
+}
+
 ### POST resend confirmation code
 POST http://localhost:8080/api/v1/fyrm/authentication/confirmationcode/resend
 accept: */*
@@ -34,6 +54,15 @@ Content-Type: application/json
 
 {
   "userId": {{user_id}}
+}
+
+### POST send confirmation code by email
+POST http://localhost:8080/api/v1/fyrm/authentication/confirmationcode/send-by-email
+accept: */*
+Content-Type: application/json
+
+{
+  "email": "idk@stud.ubbcluj.ro"
 }
 
 ### POST log in
