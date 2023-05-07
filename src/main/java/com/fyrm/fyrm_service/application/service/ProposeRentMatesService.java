@@ -20,9 +20,6 @@ import com.fyrm.fyrm_service.domain.SearchProfile;
 import com.fyrm.fyrm_service.domain.exception.ResourceNotFoundException;
 import com.fyrm.fyrm_service.infrastructure.hexagonal_support.UseCase;
 import com.fyrm.fyrm_service.infrastructure.spring.security.model.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
@@ -127,7 +126,6 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
 
     var blackListedProposedRentMates = toProposedRentMatesOrderedByBestScores(blackListedCandidateIdToHighestScore, rentConnectionId);
     var whiteListedProposedRentMates = toProposedRentMatesOrderedByBestScores(whiteListedCandidateIdToHighestScore, rentConnectionId);
-
 
     if (!whiteListedProposedRentMates.isEmpty()) {
 

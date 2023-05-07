@@ -2,40 +2,40 @@ Avoid users that were already proposed in the last X days.
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-locations:
+location:
   distance in km: x
   categories:          <1km, <3km, <5km, <8km, 8km < distance < 50km, >50km
   scores per category:   50,   35,   15,    5,                   -70, -2000
-
-count options score:
-  common elems: x
-  weight: 5
-  score: x * 5
-
-hobby options score:
-  common elems: x
-  weight: 8
-  score: x * 8
-
-age gap score:
-  age gap: x
-  weight: 10
-  score: - (x * 10)
-
-gender score:
-  valid:    + 40
-  no valid: - 30
 
 price:
   difference between averages: x
   categories:          <50$, <100$, <200$, >200$
   scores per category:   50,    30,    10,   -70
 
-bedroom score:
+gender:
   valid:    + 40
   no valid: - 30
 
-bathroom score:
+bedroom:
+  valid:    + 40
+  no valid: - 30
+
+age gap:
+  age gap: x
+  weight: 10
+  score: - (x * 10)
+
+hobby options:
+  common elems: x
+  weight: 8
+  score: x * 8
+
+count options:
+  common elems: x
+  weight: 5
+  score: x * 5
+
+bathrooms number:
   common elems: x
   weight: 3
   score: x * 3
@@ -44,7 +44,7 @@ bathroom score:
 
 List<String> rentMatesGenderOptions;
   - initaitor search profile gender: any => candidates that have search profile gender any / male / female are valid
-  - initaitor search profile gender: male => candidates that have search profile gender  male are valid
+  - initaitor search profile gender: male => candidates that have search profile gender male are valid
   - initaitor search profile gender: female male => candidates that have search profile gender female male are valid
 
 List<String> bedroomOptions;
