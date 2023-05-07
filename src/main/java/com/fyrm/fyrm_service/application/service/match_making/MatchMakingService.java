@@ -1,16 +1,15 @@
 package com.fyrm.fyrm_service.application.service.match_making;
 
 import com.fyrm.fyrm_service.domain.SearchProfile;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.lucene.util.SloppyMath;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +50,8 @@ public class MatchMakingService {
   }
 
   private double computeAgeGapScore(SearchProfile first, SearchProfile second) {
-    return (-AGE_GAP_WEIGHT * Math.abs(first.getUser().getBirthYear() - second.getUser().getBirthYear()));
+    var excessYears = Math.max(0, Math.abs(first.getUser().getBirthYear() - second.getUser().getBirthYear()) - first.getMaximumAgeGapInYears());
+    return -(AGE_GAP_WEIGHT * excessYears);
   }
 
   private double computeHobbiesMatchingScore(SearchProfile first, SearchProfile second) {
