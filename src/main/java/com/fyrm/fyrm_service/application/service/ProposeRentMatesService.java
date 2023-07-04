@@ -135,9 +135,9 @@ public class ProposeRentMatesService implements ProposeRentMatesUseCase {
         var extraPartition = whiteListedProposedRentMates.subList(maximumSize, whiteListedProposedRentMates.size());
 
         // Replace last candidate from the best partition with one random candidate from extra partition
-        Collections.shuffle(extraPartition);
-        var selected = bestPartition.subList(0, bestPartition.size() - 1);
-        selected.add(extraPartition.get(0));
+//        Collections.shuffle(extraPartition);
+        var selected = bestPartition.subList(0, bestPartition.size());
+//        selected.add(extraPartition.get(0));
 
         return selected;
       }
