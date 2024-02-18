@@ -1,6 +1,8 @@
-# ```Find your rentmate!``` service
+# ```Roommates Matching Engine``` backend
 
-## Local project setup
+### Frontend
+
+Find frontend codebase [here](https://github.com/alex-nedelcu/fyrm_frontend).
 
 ### Prerequisites
 
@@ -9,7 +11,7 @@
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [maildev](https://github.com/maildev/maildev)
 
-### Run application locally
+### Run application in local environment
 
 - start [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - start PostgreSQL server using [Postgres GUI application](https://postgresapp.com/downloads.html)
@@ -24,7 +26,7 @@ docker run -p 1080:1080 -p 1025:1025 maildev/maildev
 - go to http://0.0.0.0:1080 to see the emails
 - start Spring Boot Application
 
-### Run application locally in Docker
+### Run application in Docker
 
 - start [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - go to project root and generate application JAR file: `./mvnw clean package -DskipTests`
@@ -39,11 +41,7 @@ docker run -p 1080:1080 -p 1025:1025 maildev/maildev
 - start [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - start PostgreSQL server using [Postgres GUI application](https://postgresapp.com/downloads.html)
 - `mvn clean install`
-- run tests
-
-### Useful commands
-
-- stop Docker container: `docker stop <container_id>`
+- `mvn clean test`
 
 ### Troubleshooting
 
